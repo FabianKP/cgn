@@ -1,0 +1,66 @@
+[0] Config.pm:304> INFO - This is Biber 2.14 (beta)
+[0] Config.pm:307> INFO - Logfile is 'build/cgn.blg'
+[53] biber:322> INFO - === Do Jun 24, 2021, 10:43:58
+[64] Biber.pm:415> INFO - Reading 'build/cgn.bcf'
+[111] Biber.pm:943> INFO - Found 4 citekeys in bib section 0
+[121] Biber.pm:4256> INFO - Processing section 0
+[121] Utils.pm:75> INFO - Globbing data source 'journals.bib'
+[121] Utils.pm:91> INFO - Globbed data source 'journals.bib' to journals.bib
+[121] Utils.pm:75> INFO - Globbing data source 'articles.bib'
+[121] Utils.pm:91> INFO - Globbed data source 'articles.bib' to articles.bib
+[122] Utils.pm:75> INFO - Globbing data source 'books.bib'
+[122] Utils.pm:91> INFO - Globbed data source 'books.bib' to books.bib
+[122] Utils.pm:75> INFO - Globbing data source 'inproceedings.bib'
+[122] Utils.pm:91> INFO - Globbed data source 'inproceedings.bib' to inproceedings.bib
+[122] Utils.pm:75> INFO - Globbing data source 'incollection.bib'
+[122] Utils.pm:91> INFO - Globbed data source 'incollection.bib' to incollection.bib
+[122] Utils.pm:75> INFO - Globbing data source 'proceedings.bib'
+[122] Utils.pm:91> INFO - Globbed data source 'proceedings.bib' to proceedings.bib
+[122] Utils.pm:75> INFO - Globbing data source 'preprints.bib'
+[122] Utils.pm:91> INFO - Globbed data source 'preprints.bib' to preprints.bib
+[122] Utils.pm:75> INFO - Globbing data source 'infmath.bib'
+[122] Utils.pm:91> INFO - Globbed data source 'infmath.bib' to infmath.bib
+[122] Utils.pm:75> INFO - Globbing data source 'infmath_books.bib'
+[122] Utils.pm:91> INFO - Globbed data source 'infmath_books.bib' to infmath_books.bib
+[122] Utils.pm:75> INFO - Globbing data source 'infmath_report.bib'
+[122] Utils.pm:91> INFO - Globbed data source 'infmath_report.bib' to infmath_report.bib
+[133] Biber.pm:4455> INFO - Looking for bibtex format file 'journals.bib' for section 0
+[221] bibtex.pm:1653> INFO - LaTeX decoding ...
+[429] bibtex.pm:1471> INFO - Found BibTeX data source '/home/fabian/svn/Bibliographie/journals.bib'
+[454] Biber.pm:4455> INFO - Looking for bibtex format file 'articles.bib' for section 0
+[602] bibtex.pm:1653> INFO - LaTeX decoding ...
+[2836] bibtex.pm:1471> INFO - Found BibTeX data source '/home/fabian/svn/Bibliographie/articles.bib'
+[2974] Biber.pm:4455> INFO - Looking for bibtex format file 'books.bib' for section 0
+[3068] bibtex.pm:1653> INFO - LaTeX decoding ...
+[3670] bibtex.pm:1471> INFO - Found BibTeX data source '/home/fabian/svn/Bibliographie/books.bib'
+[3709] Biber.pm:4455> INFO - Looking for bibtex format file 'inproceedings.bib' for section 0
+[3798] bibtex.pm:1653> INFO - LaTeX decoding ...
+[4109] bibtex.pm:1471> INFO - Found BibTeX data source '/home/fabian/svn/Bibliographie/inproceedings.bib'
+[4127] Biber.pm:4455> INFO - Looking for bibtex format file 'incollection.bib' for section 0
+[4212] bibtex.pm:1653> INFO - LaTeX decoding ...
+[4403] bibtex.pm:1471> INFO - Found BibTeX data source '/home/fabian/svn/Bibliographie/incollection.bib'
+[4413] Biber.pm:4455> INFO - Looking for bibtex format file 'proceedings.bib' for section 0
+[4492] bibtex.pm:1653> INFO - LaTeX decoding ...
+[4524] bibtex.pm:1471> INFO - Found BibTeX data source '/home/fabian/svn/Bibliographie/proceedings.bib'
+[4527] Biber.pm:4455> INFO - Looking for bibtex format file 'preprints.bib' for section 0
+[4607] bibtex.pm:1653> INFO - LaTeX decoding ...
+[4692] bibtex.pm:1471> INFO - Found BibTeX data source '/home/fabian/svn/Bibliographie/preprints.bib'
+[4698] Biber.pm:4455> INFO - Looking for bibtex format file 'infmath.bib' for section 0
+[4787] bibtex.pm:1653> INFO - LaTeX decoding ...
+[5182] bibtex.pm:1471> INFO - Found BibTeX data source '/home/fabian/svn/Bibliographie/infmath.bib'
+[5200] Biber.pm:4455> INFO - Looking for bibtex format file 'infmath_books.bib' for section 0
+[5278] bibtex.pm:1653> INFO - LaTeX decoding ...
+[5285] bibtex.pm:1471> INFO - Found BibTeX data source '/home/fabian/svn/Bibliographie/infmath_books.bib'
+[5286] Biber.pm:4455> INFO - Looking for bibtex format file 'infmath_report.bib' for section 0
+[5369] bibtex.pm:1653> INFO - LaTeX decoding ...
+[5526] bibtex.pm:1471> INFO - Found BibTeX data source '/home/fabian/svn/Bibliographie/infmath_report.bib'
+[5535] Utils.pm:293> WARN - I didn't find a database entry for 'LawHan87' (section 0)
+[5535] Utils.pm:293> WARN - I didn't find a database entry for 'WaeBie03' (section 0)
+[5620] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
+[5620] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[5620] Biber.pm:4084> INFO - Sorting list 'nty/global//global/global' of type 'entry' with template 'nty' and locale 'en-US'
+[5620] Biber.pm:4090> INFO - No sort tailoring available for locale 'en-US'
+[5625] bbl.pm:652> INFO - Writing 'build/cgn.bbl' with encoding 'ascii'
+[5625] bbl.pm:653> INFO - Converting UTF-8 to TeX macros on output to .bbl
+[5627] bbl.pm:755> INFO - Output to build/cgn.bbl
+[5627] Biber.pm:128> INFO - WARNINGS: 2

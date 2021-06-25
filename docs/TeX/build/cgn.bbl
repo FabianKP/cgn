@@ -1,0 +1,99 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.1 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{nty/global//global/global}
+    \entry{BroJon97}{article}{}
+      \name{author}{2}{}{%
+        {{hash=0dab75459597bde50fad21e6a545aa0e}{%
+           family={Bro},
+           familyi={B\bibinitperiod},
+           given={R.},
+           giveni={R\bibinitperiod}}}%
+        {{hash=f26e27e0afa81e4a58e6efff8ce2cd00}{%
+           family={De\bibnamedelima Jong},
+           familyi={D\bibinitperiod\bibinitdelim J\bibinitperiod},
+           given={S.},
+           giveni={S\bibinitperiod}}}%
+      }
+      \strng{namehash}{98d8aa10a568591eb607f78dcc5a3dcd}
+      \strng{fullhash}{98d8aa10a568591eb607f78dcc5a3dcd}
+      \strng{bibnamehash}{98d8aa10a568591eb607f78dcc5a3dcd}
+      \strng{authorbibnamehash}{98d8aa10a568591eb607f78dcc5a3dcd}
+      \strng{authornamehash}{98d8aa10a568591eb607f78dcc5a3dcd}
+      \strng{authorfullhash}{98d8aa10a568591eb607f78dcc5a3dcd}
+      \field{sortinit}{B}
+      \field{sortinithash}{8de16967003c7207dae369d874f1456e}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{issn}{0886-9383}
+      \field{journaltitle}{Journal of Chemometrics}
+      \field{number}{5}
+      \field{shortjournal}{J. Chemom.}
+      \field{title}{A fast non-negativity-constrained least squares algorithm}
+      \field{volume}{11}
+      \field{year}{1997}
+      \field{pages}{393\bibrangedash 401}
+      \range{pages}{9}
+      \verb{doi}
+      \verb 10.1002/(sici)1099-128x(199709/10)11:5<393::aid-cem483>3.0.co;2-l
+      \endverb
+      \verb{urlraw}
+      \verb https://onlinelibrary.wiley.com/doi/10.1002/(SICI)1099-128X(199709/10)11:5\%3C393::AID-CEM483\%3E3.0.CO;2-L
+      \endverb
+      \verb{url}
+      \verb https://onlinelibrary.wiley.com/doi/10.1002/(SICI)1099-128X(199709/10)11:5%5C%3C393::AID-CEM483%5C%3E3.0.CO;2-L
+      \endverb
+    \endentry
+    \entry{LawHan74}{book}{}
+      \name{author}{2}{}{%
+        {{hash=80e8b5480d4d2d8f7feb072ab2067999}{%
+           family={Lawson},
+           familyi={L\bibinitperiod},
+           given={C.\bibnamedelimi L.},
+           giveni={C\bibinitperiod\bibinitdelim L\bibinitperiod}}}%
+        {{hash=7e29a465b62cbee662aa72ccb5992ee8}{%
+           family={Hanson},
+           familyi={H\bibinitperiod},
+           given={R.\bibnamedelimi J.},
+           giveni={R\bibinitperiod\bibinitdelim J\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Prentice-Hall}%
+      }
+      \strng{namehash}{f9859475f9a08ec8bfd56018d1b365dc}
+      \strng{fullhash}{f9859475f9a08ec8bfd56018d1b365dc}
+      \strng{bibnamehash}{f9859475f9a08ec8bfd56018d1b365dc}
+      \strng{authorbibnamehash}{f9859475f9a08ec8bfd56018d1b365dc}
+      \strng{authornamehash}{f9859475f9a08ec8bfd56018d1b365dc}
+      \strng{authorfullhash}{f9859475f9a08ec8bfd56018d1b365dc}
+      \field{sortinit}{L}
+      \field{sortinithash}{dad3efd0836470093a7b4a7bb756eb8c}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{series}{Prentice-Hall Series in Automatic Computation}
+      \field{title}{Solving Least Squares Problems}
+      \field{year}{1972}
+    \endentry
+  \enddatalist
+  \missing{LawHan87}
+  \missing{WaeBie03}
+\endrefsection
+\endinput
+

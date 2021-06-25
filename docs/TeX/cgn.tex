@@ -1,0 +1,436 @@
+\documentclass{article}
+
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amssymb,dsfont}
+\numberwithin{equation}{section}
+\usepackage{microtype}
+\usepackage{graphicx,tikz,pgfplots}
+\graphicspath{{images/}}
+\pgfplotsset{compat=newest}
+\usepackage[hyperref,amsmath,thmmarks]{ntheorem}
+\usepackage{aliascnt}
+\usepackage[a4paper,centering,bindingoffset=0cm,marginpar=2cm,margin=2.5cm]{geometry}
+\usepackage[pagestyles]{titlesec}
+\usepackage[font=footnotesize,format=plain,labelfont=sc,textfont=sl,width=0.75\textwidth,labelsep=period]{caption}
+
+\usepackage{bm}
+\usepackage{algorithm, algpseudocode}
+
+%'
+%' biblatex
+%'
+\usepackage[backend=biber,maxnames=10,backref=true,hyperref=true,giveninits=true,safeinputenc]{biblatex}
+%FINALADDBIB
+\addbibresource{journals.bib}%FINALREMOVE
+\addbibresource{articles.bib}%FINALREMOVE
+\addbibresource{books.bib}%FINALREMOVE
+\addbibresource{inproceedings.bib}%FINALREMOVE
+\addbibresource{incollection.bib}%FINALREMOVE
+\addbibresource{proceedings.bib}%FINALREMOVE
+\addbibresource{preprints.bib}%FINALREMOVE
+\addbibresource{infmath.bib}%FINALREMOVE
+\addbibresource{infmath_books.bib}%FINALREMOVE
+\addbibresource{infmath_report.bib}%FINALREMOVE
+
+\DefineBibliographyStrings{english}{%
+	backrefpage = {cited on page},
+	backrefpages = {cited on pages},
+}
+
+\usepackage[pdftex,colorlinks=true,linkcolor=blue,citecolor=green,urlcolor=blue,bookmarks=true,bookmarksnumbered=true]{hyperref}
+\hypersetup
+{
+    pdfauthor={F. Parzer},
+    pdftitle={CGN - Mathematical documentation},
+    pdfkeywords={Gauss-Newton, nonlinear least-squares, constraints, regularization}
+}
+\def\sectionautorefname{Section}
+\def\subsectionautorefname{Section}
+
+%'
+%' defines the pagestyle (ADAPT)
+%'
+\newpagestyle{headers}
+{
+	\headrule
+	\sethead[\footnotesize\thepage][\footnotesize\sc F. Parzer][]{}{\footnotesize\sc GGN --- Mathematical documentation}{\footnotesize\thepage}
+	\setfoot{}{}{}
+}
+\pagestyle{headers}
+
+%'
+%' default paragraph layout.
+%'
+\postdisplaypenalty= 1000
+\widowpenalty = 1000
+\clubpenalty = 1000
+\displaywidowpenalty = 1000
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{1ex}
+\renewcommand{\labelenumi}{\textit{(\roman{enumi})}}
+\renewcommand{\theenumi}{\textit{(\roman{enumi})}}
+
+\newtheorem{lemma}{Lemma}[section]
+\def\lemmaautorefname{Lemma}
+
+\newaliascnt{proposition}{lemma}
+\newtheorem{proposition}[proposition]{Proposition}
+\aliascntresetthe{proposition}
+\def\propositionautorefname{Proposition}
+
+\newaliascnt{corollary}{lemma}
+\newtheorem{corollary}[corollary]{Corollary}
+\aliascntresetthe{corollary}
+\def\corollaryautorefname{Corollary}
+
+\newaliascnt{theorem}{lemma}
+\newtheorem{theorem}[theorem]{Theorem}
+\aliascntresetthe{theorem}
+\def\theoremautorefname{Theorem}
+
+\newaliascnt{remark}{lemma}
+\newtheorem{remark}[remark]{Remark}
+\aliascntresetthe{remark}
+\def\theoremautorefname{Remark}
+
+\theorembodyfont{\normalfont}
+\newaliascnt{definition}{lemma}
+\newtheorem{definition}[definition]{Definition}
+\aliascntresetthe{definition}
+\def\definitionautorefname{Definition}
+
+\newaliascnt{assumption}{lemma}
+\newtheorem{assumption}[assumption]{Assumption}
+\aliascntresetthe{assumption}
+\def\assumptionautorefname{Assumption}
+
+
+\theoremstyle{nonumberplain}
+\theoremseparator{:}
+\theoremheaderfont{\normalfont\itshape}
+
+\theoremsymbol{\ensuremath{\square}}
+\newtheorem{proof}{Proof}
+
+\usepackage{bbm}
+\usepackage{verbatim}
+
+
+\newcommand{\fun}{ F }
+\newcommand{\funk}{ F_k }
+\newcommand{\jac}{ J }
+\newcommand{\jack}{ J_k }
+
+\newcommand{\cgn}{{\texttt{CGN}}~}
+
+
+
+% Imports my custom definitions
+\include{abbreviations}
+
+\graphicspath{{src/}}
+
+\title{CGN: A Gauss-Newton method for solving penalized nonlinear least-squares problems with linear constraints.}
+\author{F. Parzer}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+
+\end{abstract}
+
+
+
+\section{Introduction}
+
+We implement a Gauss-Newton method that solves equality- and inequality constrained nonlinear least-squares problems with multiple regularization terms. That is, the method is applicable to all problems which can be written as
+\begin{equation}\tag{CNLS}\label{eq:cnls}
+\begin{aligned}
+\min_{x \in \R^n} \quad & \frac{1}{2}\norm{F(x_1,\ldots,x_l)}_2^2 + \frac{1}{2} \left( \sum_{i=1}^l \beta_i \norm{P_i(x_i-\bar x_i)}_2^2 \right),\\
+\text{s. t. } \quad & Ax = b, \\
+& C x \geq d,
+& x_i \in \R^{n_i}, \quad n = \sum_i n_i.
+\end{aligned}
+\end{equation}
+where we call the term $ \norm{F(x)}_2^2$ the \textbf{misfit term}, and the terms $ \norm{P_i(x_i-\bar x_i)}_{p_i}^{p_i}$ the \textbf{regularization terms}, and
+\begin{itemize}
+\item $F: \R^n \to \R^{m_1}$ is a continuously differentiable \textbf{misfit function}. As an example, in nonlinear regression we typically have
+\begin{align*}
+\fun(x) = \Gamma^{-1/2}(\mathcal G(x) - y),
+\end{align*}
+where $\mathcal G$ is a nonlinear observation operator,$y$ a given measurement, and $\Gamma \in \R^{m_1\times m_1}$ the covariance matrix of the measurement noise;
+\item $\beta > 0$ is a tunable regularization parameter that determines how strongly the regularization terms are weighted with respect to the data term. There are iterative strategies of choosing $\beta$ in case the user does not want to choose it manually; 
+\item $P_i \in \R^{r_i \times n_i}$ are weighting matrices of rank $n_i$. We assume throughout that $r_i \geq n_i$ and that $P_i$ has full column rank, which implies that a left-inverse $P_i^+$ of $P_i$ is avaiable, i.e. that
+\begin{align*}
+P_i^+ P_i = \Idmat_{n_i}.
+\end{align*}
+In the case of MAP estimation with Gaussian priors ($p_i=2$), $(P_i P_i^\top)^{-1}$ corresponds to the \textbf{prior covariance}. We allow the case where $r_i \neq n_i$, since it is relevant for compressed-sensing applications, where $P_i$ will map into a large redundant dictionary, and we have $r_i \gg n_i$.
+\item $\bar x_i \in \R^{n_i}$ is an initial guess which regularizes our fit. In the case of MAP estimation, it corresponds to the \textbf{prior mean};
+\item $A \in \R^{c_1 \times n}$ and $b \in \R^{c_1}$ define equality constraints.
+\item $C \in \R^{c_2 \times n}$ and $d \in \R^{c_2}$ define the inequality constraints.
+\item We will assume throughout that the problem is feasible, i.e. the set $\Set{ x \in \R^n }{ Ax = b, Cx \geq d}$ is nonempty.
+\end{itemize}
+
+The \cgn package is a library for solving problem \eqref{eq:cnls} using a generalized version of the Gauss-Newton method.
+
+
+\section{Main loop}
+
+\subsection{Getting rid of the equality constraints}
+
+First, we explain how the assumption that $A$ has full rank means that we can assume wlog that no equality constraints are present.
+
+Since $A$ is by assumption of full rank, we can compute its QR-decomposition
+\begin{align*}
+& A^\top = \begin{bmatrix} Q & S \end{bmatrix} \begin{bmatrix}
+R \\ 0
+\end{bmatrix},\\
+& \text{where } Q \in \R^{n \times c_1}, \quad S \in \R^{n \times (n - c_1)},
+\end{align*}
+and where $[Q, S]\in \R^{n\times n}$ is an orthogonal matrix and $R \in \R^{c_1 \times c_1}$ is an invertible upper triangular matrix.
+Then, we define a new variable $q \in \R^n$ by 
+\begin{align*}
+\begin{bmatrix}
+q \\ s
+\end{bmatrix} = [Q, S]^\top x = \begin{bmatrix}
+Q^\top x \\ S^\top x
+\end{bmatrix}, \quad q \in \R^{c_1}, s \in \R^{n-c_1}.
+\end{align*}
+Then, the constraint $Ax=b$ becomes
+\begin{align*}
+& \begin{bmatrix}
+R^\top & 0
+\end{bmatrix} \begin{bmatrix}
+Q^\top \\ S^\top
+\end{bmatrix} x = b, \\
+\Leftrightarrow \quad & R^\top Q^\top = b \\
+\Leftrightarrow \quad & R^\top q = b.
+\end{align*}
+Consequently $q^*$ is determined by $R^\top q^* = b$.
+
+We then reduce the minimization with respect to $x$ to the free variable $s$ through the identity
+\begin{align*}
+x = [Q, S] [Q, S]^\top x = [Q, S] \begin{bmatrix}
+q \\ s
+\end{bmatrix} = Q q + S s.
+\end{align*}
+The fully constrained least-squares problem \eqref{eq:cnls} is consequently equivalent to the inequality-constrained problem
+\begin{equation}
+\begin{aligned}
+\min_{s \in \R^{n-c_1}} \quad & \frac{1}{2} \norm{\tilde F(s)}^2 + \frac{\beta}{2} \norm{\tilde P s - \tilde s}^2, \\
+& \tilde C s \geq \tilde d,\\
+\text{where } \quad & \tilde F(s)=F(x_1^* + S s), \quad \tilde P = P S, &  \tilde s = P(\bar x - x_1^*), \\
+& \tilde C = C S, \quad \tilde d = d - C x_1^*. \\
+\end{aligned}
+\end{equation}
+If $s^*$ is a minimizer of the reduced problem, then
+\begin{align*}
+& x^* = x_1^* + S s^*
+\end{align*}
+is a minimizer for \eqref{eq:cnls}.
+
+\subsection{Main loop}
+
+By the preceding section, we can consider without loss of generality the reduced problem
+\begin{equation}\tag{CNLS2}\label{eq:cnls2}
+\begin{aligned}
+\min_{x \in \R^n} \quad & \frac{1}{2}\norm{F(x)}_2^2 + \frac{1}{2} \norm{P x - \tilde x}_2^2,\\
+\text{s. t.} \quad & C x \geq d.
+\end{aligned}
+\end{equation}
+
+The main idea to solve this problem is consecutive linearization. Given the current iterate $x^k$, we define
+\begin{align*}
+\funk & := F(x^k), \\
+\jack & := F'(x^k),
+\end{align*}
+and solve the linearized problem
+\begin{equation}\tag{CLS}\label{eq:cls}
+\begin{aligned}
+\Delta x^{k+1} = \argmin_{\Delta x \in \R^n} \quad & \frac{1}{2}\norm{\funk + \jack \Delta x}_2^2 + \frac{1}{2} \norm{P \Delta x + P x^k - \tilde x}_2^2,\\
+\text{s. t. } \quad & C \Delta x \geq d - C x^k.
+\end{aligned}
+\end{equation}
+
+Then we define a search path
+\begin{align*}
+x^{k+1}(h) := x^k + h \Delta x^{k+1}, \qquad h > 0
+\end{align*}
+and choose a step size $h^k$ using a line search. The next iterate is then
+\begin{align*}
+x^{k+1} := x^{k+1}(h^k),
+\end{align*}
+and the procedure is repeated.
+
+\subsection{Solving \eqref{eq:cls}}
+
+Most of this section is based on the classical reference on least-squares problems by Lawson and Hanson \cite{LawHan74}.
+
+It remains to solve the inequality-constrained least-squares problem \eqref{eq:cls}. It is easy to check that \eqref{eq:cls} can be brought into the form
+\begin{equation}\tag{LSI}\label{eq:lsi}
+\begin{aligned}
+\min_x \quad & \frac{1}{2} \norm{ Gx - h }_2^2 \\
+\text{s. t. } \quad & C x \geq f,
+\end{aligned}
+\end{equation}
+by setting
+\begin{align*}
+G &= \begin{bmatrix}
+\jack \\ P
+\end{bmatrix}, \quad h = \begin{bmatrix}
+- \funk \\ \tilde x - P x^k
+\end{bmatrix}, \quad f = d - C x^k.
+\end{align*}
+This problem is an \textbf{inequality-constrained linear least-squares problem (LSI)}, for which a solution can be obtained by solving an associated \textbf{nonnegative least-squares problem}. We describe next how this is done.
+
+\subsubsection{From LSI to LDP}
+
+Since $P$ has full column rank by assumption, so does $G$. Hence, $G$ admits a QR decomposition of the form
+\begin{align*}
+G = \begin{bmatrix}
+U_1 & U_2
+\end{bmatrix} \begin{bmatrix} T \\ 0 \end{bmatrix},
+\end{align*}
+where $T$ is a square upper triangular matrix of full rank.
+If we plug this decomposition in the objective function of problem \eqref{eq:lsi}, we have
+\begin{align*}
+\norm{G x - h}_2^2 & = \norm{ U^\top(Gx-h) }_2^2 \\
+& = \norm{ T x - U_1^\top h }_2^2 + \norm{U_2^\top h}_2^2.
+\end{align*}
+The second term is constant and can therefore be ignored in the optimization. Making the change of variables
+\begin{align*}
+u = T x - U_1^\top h \quad \Longleftrightarrow \quad x = T^{-1}(u + U_1^\top h).
+\end{align*}
+problem \eqref{eq:lsi} is now equivalent to
+\begin{equation}\tag{LDP}\label{eq:ldp}
+\begin{aligned}
+\min_u  \quad & \frac{1}{2} \norm{ u }_2^2 \notag\\
+\text{s. t.} \quad  & K u \geq l
+\\ \text{where} \quad & K = C T^{-1}, \quad l =  d  - K U_1^\top h. \notag
+\end{aligned}
+\end{equation}
+This is a \textbf{least distance problem (LDP)}, for which a solution can be obtained by solving an associated nonnegative least-squares problem (see next section). The solution $x^*$ of problem \eqref{eq:lsi} can then be computed by reverting the change of variables. That is, if $u^*$ solves \eqref{eq:ldp}, then
+\begin{align*}
+x^* = T^{-1}(u^* + U_1^\top h)
+\end{align*}
+solves \eqref{eq:lsi}.
+
+\subsubsection{From LDP to NNLS}
+
+Finally, it can be shown (see \cite[chapter 23.4]{LawHan74}) that the LDP problem
+\begin{align*}
+\min_u \quad &  \frac{1}{2} \norm{u}_2^2 \notag\\
+ & Ku \geq l
+\end{align*}
+is equivalent to the following \textbf{nonnegative least-squares problem (NNLS)}:
+\begin{equation}\tag{NNLS}\label{eq:nnls}
+\begin{aligned}
+\min_v \quad & \frac{1}{2} \norm{Mv - e_{n+1}}_2^2\\
+\text{s.t.} \quad & v \geq 0, \\
+& \text{where } M = \begin{bmatrix} K^\top \\ l^\top \end{bmatrix}, \text{ and } e_{n+1} = \begin{bmatrix} 0 \\ \vdots \\ 0 \\ 1 \end{bmatrix} \in \R^{n+1}.
+\end{aligned}
+\end{equation}
+If $v_*$ solves this problem, then the solution $u_*$ of \eqref{eq:ldp} is given by
+\begin{align*}
+u_i^* = - \frac{r_i^*}{r_{n+1}^*}, \quad i=1,\ldots,n,
+\end{align*}
+where $r^* = M v^*-e_{n+1}$ is the residual of problem \eqref{eq:nnls}.
+
+An algorithm for solving \eqref{eq:nnls} is provided in \cite{LawHan87}. At the moment, we use the implementation of the Lawson-Hanson algorithm given by \texttt{scipy.optimize.nnls}. In the future, we might substitute this with the faster \textbf{FNNLS} algorithm by Bro and de Jong \cite{BroJon97}. However, since the time of computing the QR decompositions usually outweighs the solution of the NNLS problem, this is not a priority.
+
+\subsection{Line search with the Wächter-Biegler filter}
+
+Due to the presence of constraints, we cannot use the same line search strategy for the generalized Gauss-Newton method as in the unconstrained case. Instead, we will use the line search filter by Wächter and Biegler. We provide a rough outline and pseudocode of the method, and refer to the original paper \cite{WaeBie03} for further details.
+
+The idea of a line search filter is to start with a stepsize $h_0 > 0$ and then decrease the steplenght until there is either sufficient decrease in the objective function $\phi$ or in an infeasibility measure, which quantifies how well the proposed iterate satisfies the constraints.
+
+For our case of mixed equality and inequality constraints, we define the infeasibility measure
+\begin{align*}
+\theta(x) = \norm{ Ax-b }_1 + \abs{ Cx-d }^-,
+\end{align*}
+where 
+\begin{align*}
+\abs{z}^- = \sum_{i=1}^n \max(0, -z_i), \qquad \text{for } z \in \R^n.
+\end{align*}
+A new step $w_{k+1}(h) = w_k + h\Delta w_k$ is then accepted if 
+\begin{align*}
+& \theta(w_{k+1}(h)) \leq (1-\gamma_\theta) \theta(w_k), \\
+\text{or} \quad & \phi(w_{k+1}(h)) \leq \phi(w_k) - \gamma_\phi \theta(w_k),
+\end{align*}
+where $\phi$ is the least-squares cost function defined in \autoref{sec:gn}, while $\gamma_\theta \in (0,1)$ and $\gamma_\phi \in (0,1)$ are small constants which determine what constitutes "sufficient decrease".
+
+Furthermore, there is a switching condition which ensures that the algorithm still reduces the objective function. A stepsize $h$ meets the switching condition if
+\begin{align}
+h m_k < 0 \quad \text{and} \quad (-h m_k)^{s_\varphi} h^{1-s_\varphi} > \delta \theta(w_k)^{s_\theta}, \label{eq:switching}
+\end{align}
+where $m_k =\phi'(w_k)\Delta w_k$ and $\delta > 0$, $s_\theta > 1$ and $s_\varphi > 2 s_\theta$ are tunable parameters. If the switching condition is satisfied, we enforce sufficient decrease in the objective function by accepting the step if and only if
+\begin{align}
+\phi(w_{k+1}(h)) \leq \phi(w_k) + \eta m_k(h), \label{eq:armijo}
+\end{align}
+where $\eta \in (0,\frac{1}{2})$ is a small constant.
+
+Finally, we have to keep track of a name-giving filter, which ensures that there are no cycles in the trajectory of our optimization method. A new step is only accepted if it satisfies
+\begin{align*}
+& \theta(w_{k+1}(h)) < (1-\gamma_\theta)\theta(w), \\
+\text{or} \quad & \phi(w_{k+1}(h)) < \phi(w) - \gamma_\phi \theta(w),
+\end{align*}
+for all iterates $w \in \mathcal F$ in the filter. The new iterate $w_{k+1}$ is then added to the filter if it did not satisfy the switching condition or the Armijo condition.
+
+If no acceptable steplength can be found, a feasibility restoration phase is invoked which computes a new iterate $w_{k+1}$ that is close to the last iterate $w_k$ but also satisfies all constraints. This happens if the stepsize $h$ is decreased below the value
+\begin{align*}
+h_k^\mathrm{min} := \gamma_h \cdot \begin{cases}
+\min \lbrace \gamma_\theta, \frac{\gamma_\phi \theta(w_k)}{- m_k}, \frac{\delta \theta(w_k)^{s_\theta}}{(-m_k)^{s_\phi}} \rbrace, & \text{if } m_k < 0, \\
+\gamma_\theta, & \text{otherwise}.
+\end{cases}
+\end{align*}
+
+\begin{algorithm}[H]
+\caption{\texttt{linesearchFilter}}
+Given $w_k$, $\Delta w_k$, the current filter $\mathcal F$, and tunable constants $c \in (0,1)$, $\gamma_\theta, \gamma_\phi \in (0,1)$, $\delta > 0$, $s_\theta > 1$, $s_\varphi > 2 s_\theta$, $\eta_\phi \in (0,\frac{1}{2})$ and $\gamma_h \in (0,1)$.
+\begin{algorithmic}[1]\label{alg:cgn}
+\State $h = 1$;
+\State $m_k = \phi'(w_k)\Delta w_k$;
+\State $h^\mathrm{min} = \gamma_h \cdot \begin{cases}
+\min \lbrace \gamma_\theta, \frac{\gamma_\phi \theta(w_k)}{- m_k}, \frac{\delta \theta(w_k)^{s_\theta}}{(-m_k)^{s_\phi}} \rbrace, & \text{if } m_k < 0, \\
+\gamma_\theta, & \text{otherwise}.
+\end{cases}$
+\Repeat
+\State $w_{k+1} = w_k + h \Delta w_k$;
+%check switching condition
+\If{ $h m_k < 0$ and $(-h m_k)^{s_\varphi} h^{1-s_\varphi} > \delta \theta(w_k)^{s_\theta}$}
+%check Armijo condition
+\If{ $\phi(w_{k+1}) \leq \phi(w_k) + \eta_\phi h m_k$ }
+\If{ $\theta(w_{k+1}) \leq (1-\gamma_\theta) \theta(w)$ or $\phi(w_{k+1}) \leq \phi(w) - \gamma_\phi \theta(w)$ for all $w \in \mathcal F$}
+\State break;
+\EndIf
+\EndIf
+\ElsIf{ $\theta(w_{k+1}) \leq (1-\gamma_\theta) \theta(w_k)$ or $\phi(w_{k+1}) \leq \phi(w_k) - \gamma_\phi \theta(w_k)$}
+\If{ $\theta(w_{k+1}) \leq (1-\gamma_\theta) \theta(w)$ or $\phi(w_{k+1}) \leq \phi(w) - \gamma_\phi \theta(w)$ for all $w \in \mathcal F$}
+% If Armijo does not hold, add step to filter
+\If{ $\phi(w_{k+1}) > \phi(w_k) + \eta_\phi h m_k$ }
+\State add $w_{k+1}$ to $\mathcal F$;
+\EndIf
+\State break;
+\EndIf
+\EndIf
+
+\State $h = c \cdot h$;
+\Until {$h \leq h^\mathrm{min}$}
+\If {$h \leq h^\mathrm{min}$}
+\State find $w_{k+1}$ using feasibility restoration;
+\State add $w_k$ to $\mathcal F$;
+\EndIf
+\State return $w_{k+1}$ and $\mathcal F$;
+\end{algorithmic}
+\end{algorithm}
+
+
+\addcontentsline{toc}{section}{Bibliography}
+
+\printbibliography
+
+\end{document}
