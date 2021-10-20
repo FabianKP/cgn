@@ -1,5 +1,0 @@
-One-dimensional test took 0.0305635929107666 seconds.
-Linear test took 0.09561681747436523 seconds.
-Linear test with equality constraint took 0.323148250579834 seconds.
-Nonlinear test with equality and inequality constraints took 0.41008663177490234 seconds.
-Osborne test took 0.21509456634521484 seconds.

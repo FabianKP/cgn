@@ -1,0 +1,24 @@
+# This aspects have to be incorporated in future versions of ggn to make it less embarassing.
+
+
+
+SHORT-TERM
+
+- REDUCE COUPLING! The user should not have to deal with regops! He should be able to provide only the matrix (and maybe its inverse). Providing regops should at best be an option but not a requirement.
+
+- Why is the program so bad at solving the linear problem in uq_astro? It should only take 2 iterations!!!
+
+- Parameters should have names. The misfit and constraint functions should correspondingly take a dict as argument.
+
+- Write a problem template, so that the user knows how to use cgn and basically only has to fill in his stuff.
+
+- The equality- and inequality constraints should be defined globally, like func and jac, and not locally, so that one can define constraints that involve multiple parameters.
+
+- The reduction of the equality constraint should only happen once, at the beginning of the iteration.
+
+- Write Matrices etc. with capital letters.
+
+
+LONG-TERM
+
+- Remove dependencies by implementing subroutines yourself (in C++).

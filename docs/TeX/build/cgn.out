@@ -1,9 +1,0 @@
-\BOOKMARK [1][-]{section.1}{1 Introduction}{}% 1
-\BOOKMARK [1][-]{section.2}{2 Main loop}{}% 2
-\BOOKMARK [2][-]{subsection.2.1}{2.1 Getting rid of the equality constraints}{section.2}% 3
-\BOOKMARK [2][-]{subsection.2.2}{2.2 Main loop}{section.2}% 4
-\BOOKMARK [2][-]{subsection.2.3}{2.3 Solving \(CLS\)}{section.2}% 5
-\BOOKMARK [3][-]{subsubsection.2.3.1}{2.3.1 From LSI to LDP}{subsection.2.3}% 6
-\BOOKMARK [3][-]{subsubsection.2.3.2}{2.3.2 From LDP to NNLS}{subsection.2.3}% 7
-\BOOKMARK [2][-]{subsection.2.4}{2.4 Line search with the W\344chter-Biegler filter}{section.2}% 8
-\BOOKMARK [1][-]{algorithm.1}{Bibliography}{}% 9
