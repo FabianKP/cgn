@@ -28,5 +28,13 @@ which will be installed automatically during installation:
 - prettytable
 
 
-Tutorial
+Usage
 ========
+
+You can implement a problem of the above form by filling out the template below.
+
+.. include:: template.py
+    :language: php
+
+
+For a more details, for example on how to configure solver options, see the `tutorial <tutorial>`_ and `documentation <docs>`_.
