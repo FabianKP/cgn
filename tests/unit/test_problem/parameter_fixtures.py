@@ -2,7 +2,8 @@
 import numpy as np
 import pytest
 
-from cgn import Parameter, IdentityOperator, MatrixOperator, DiagonalOperator
+from cgn import Parameter
+from cgn.regop import MatrixOperator, DiagonalOperator
 
 
 @pytest.fixture

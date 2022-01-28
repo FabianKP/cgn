@@ -2,7 +2,7 @@
 import numpy as np
 
 from cgn.cnls_solve.cgn_state import CGNState
-from cgn import IdentityOperator
+from cgn.regop import IdentityOperator
 
 
 def test_cgn():

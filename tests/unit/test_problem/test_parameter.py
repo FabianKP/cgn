@@ -2,7 +2,8 @@
 import numpy as np
 import pytest
 
-from cgn import Parameter, IdentityOperator, MatrixOperator
+from cgn import Parameter
+from cgn.regop import IdentityOperator, MatrixOperator
 
 
 def test_parameter():

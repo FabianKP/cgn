@@ -2,7 +2,8 @@
 import numpy as np
 import pytest
 
-from cgn import LinearConstraint, Parameter, Problem, IdentityOperator
+from cgn import LinearConstraint, Parameter, Problem
+from cgn.regop import IdentityOperator
 
 
 

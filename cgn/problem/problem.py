@@ -4,10 +4,10 @@ Contains class "MultiParameterProblem"
 
 from copy import deepcopy
 import numpy as np
-from numpy.typing import ArrayLike
+from scipy.sparse.linalg import LinearOperator
 from typing import List, Tuple, Union
 
-from ..regop import RegularizationOperator, IdentityOperator, MatrixOperator
+from ..regop import RegularizationOperator, IdentityOperator, MatrixOperator, linop_to_regop
 from .constraint import Constraint
 from .parameter import Parameter
 
@@ -25,7 +25,7 @@ class Problem:
     :ivar n: The dimension of the concatenated parameter vector :math:``x = (x_1, x_2, ..., x_p)``.
     """
     def __init__(self, parameters: List[Parameter], fun: callable, jac: callable,
-                 q: Union[np.ndarray, RegularizationOperator] = None, constraints: List[Constraint] = None,
+                 q: Union[np.ndarray, LinearOperator] = None, constraints: List[Constraint] = None,
                  scale: float = 1.):
         """
         :param parameters: The parameters on which the problem depends, e.g. [x1, x2, ..., xp].
@@ -35,7 +35,7 @@ class Problem:
         :param jac: The Jacobian corresponding to `fun`. It should accept the same argument as `fun`, and the output
             should be a numpy array with shape (m, n), where n is the sum of the dimensions of the parameters.
         :param q: The regularization of the misfit term. Typically, this will be a square root of the noise precision
-            matrix. Can either be a numpy array or a :py:class:`RegularizationOperator`.
+            matrix. Can either be a numpy array or a :py:class:`LinearOperator`.
         :param scale: The scale of the cost function. This only matters for the optimization.
             If provided, the cost function is divided by the scale.
             A good default choice for this parameter is m.
@@ -141,7 +141,7 @@ class Problem:
     # PROTECTED
 
     def _check_input(self, parameters: List[Parameter], fun: callable, jac: callable,
-                     q: Union[np.ndarray, RegularizationOperator],
+                     q: Union[np.ndarray, LinearOperator],
                      constraints: Union[List[Constraint], None], scale: float):
         # Check that no two parameters have the same name
         self._no_duplicate_names(parameters)
@@ -175,7 +175,7 @@ class Problem:
                                 "'parameters'.")
 
     @staticmethod
-    def _default_regop( regop: Union[ArrayLike, RegularizationOperator, None], dim: int) -> RegularizationOperator:
+    def _default_regop(regop: Union[np.ndarray, LinearOperator, None], dim: int) -> RegularizationOperator:
         if regop is None:
             # default to identity
             regop = IdentityOperator(dim=dim)
@@ -185,7 +185,7 @@ class Problem:
             else:
                 regop = MatrixOperator(mat=regop)
         else:
-            regop = deepcopy(regop)
+            regop = linop_to_regop(regop)
         return regop
 
     @staticmethod
