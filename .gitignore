@@ -3,4 +3,5 @@ tests/cgn.log
 tests/test.log
 TODO.txt
 cgn.egg-info
+docs
 .idea
