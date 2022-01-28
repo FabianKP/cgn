@@ -1,6 +1,0 @@
-numpy
-scipy
-qpsolvers
-typing
-prettytable
-logging
