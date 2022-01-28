@@ -2,6 +2,7 @@
 tests/cgn.log
 tests/test.log
 TODO.txt
+build
 cgn.egg-info
 docs
 .idea
