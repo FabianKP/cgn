@@ -1,0 +1,13 @@
+Metadata-Version: 1.2
+Name: cgn
+Version: 0.9.9
+Summary: An implementation of the Gauss-Newton method for solving regularized nonlinear least-squares problemswith nonlinear constraints.
+Home-page: UNKNOWN
+Author: Fabian Parzer
+Author-email: fabian.kai.parzer@univie.ac.at
+License: MIT
+Description: UNKNOWN
+Platform: UNKNOWN
+Classifier: Intended Audience :: Researchers
+Classifier: License :: OSI Approved :: GNU GPLv3Programming Language :: Python :: 3.8
+Requires-Python: >=3.8
