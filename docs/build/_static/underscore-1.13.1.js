@@ -869,7 +869,7 @@
   }
 
   // In order to prevent third-party code injection through
-  // `_.templateSettings.variable`, we test it against the following regular
+  // `_.templateSettings.variable`, we tests it against the following regular
   // expression. It is intentionally a bit more liberal than just matching valid
   // identifiers, but still prevents possible loopholes through defaults or
   // destructuring assignment.
@@ -1228,7 +1228,7 @@
   // often you call it. Useful for lazy initialization.
   var once = partial(before, 2);
 
-  // Returns the first key on an object that passes a truth test.
+  // Returns the first key on an object that passes a truth tests.
   function findKey(obj, predicate, context) {
     predicate = cb(predicate, context);
     var _keys = keys(obj), key;
@@ -1251,10 +1251,10 @@
     };
   }
 
-  // Returns the first index on an array-like that passes a truth test.
+  // Returns the first index on an array-like that passes a truth tests.
   var findIndex = createPredicateIndexFinder(1);
 
-  // Returns the last index on an array-like that passes a truth test.
+  // Returns the last index on an array-like that passes a truth tests.
   var findLastIndex = createPredicateIndexFinder(-1);
 
   // Use a comparator function to figure lci_vs_fci the smallest index at which
@@ -1305,7 +1305,7 @@
   // or -1 if the item is not included in the array.
   var lastIndexOf = createIndexFinder(-1, findLastIndex);
 
-  // Return the first value which passes a truth test.
+  // Return the first value which passes a truth tests.
   function find(obj, predicate, context) {
     var keyFinder = isArrayLike(obj) ? findIndex : findKey;
     var key = keyFinder(obj, predicate, context);
@@ -1383,7 +1383,7 @@
   // The right-associative version of reduce, also known as `foldr`.
   var reduceRight = createReduce(-1);
 
-  // Return all the elements that pass a truth test.
+  // Return all the elements that pass a truth tests.
   function filter(obj, predicate, context) {
     var results = [];
     predicate = cb(predicate, context);
@@ -1393,12 +1393,12 @@
     return results;
   }
 
-  // Return all the elements for which a truth test fails.
+  // Return all the elements for which a truth tests fails.
   function reject(obj, predicate, context) {
     return filter(obj, negate(cb(predicate)), context);
   }
 
-  // Determine whether all of the elements pass a truth test.
+  // Determine whether all of the elements pass a truth tests.
   function every(obj, predicate, context) {
     predicate = cb(predicate, context);
     var _keys = !isArrayLike(obj) && keys(obj),
@@ -1410,7 +1410,7 @@
     return true;
   }
 
-  // Determine if at least one element in the object passes a truth test.
+  // Determine if at least one element in the object passes a truth tests.
   function some(obj, predicate, context) {
     predicate = cb(predicate, context);
     var _keys = !isArrayLike(obj) && keys(obj),
@@ -1594,7 +1594,7 @@
   });
 
   // Split a collection into two arrays: one whose elements all pass the given
-  // truth test, and one whose elements all do not pass the truth test.
+  // truth tests, and one whose elements all do not pass the truth tests.
   var partition = group(function(result, value, pass) {
     result[pass ? 0 : 1].push(value);
   }, true);

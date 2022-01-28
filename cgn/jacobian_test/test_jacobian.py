@@ -23,15 +23,15 @@ def second_order_remainder(fun, grad, x, dx, h):
 
 def taylor_test(fun, jac, x, dx, verbose, tol, c):
     """
-    Performs Taylor remainder test.
+    Performs Taylor remainder tests.
     :param fun: User-defined function.
     :param jac: Candiate for its Jacobian.
-    :param x: Point at which the test is performed.
+    :param x: Point at which the tests is performed.
     :param dx: Direction.
     :param verbose: if True, prints additional information.
     :param tol: Determines up to which precision jac must hold.
     :param c: Determines the reduction factor of h in every step.
-    :return: True, if test is passed.
+    :return: True, if tests is passed.
     """
     rtol = 0.01  #1% relative tolerance for not satisfying O(h^2) exactly
     h = 1.0
@@ -62,7 +62,7 @@ def taylor_test(fun, jac, x, dx, verbose, tol, c):
 def test_jacobian(fun, jac, x, verbose=False, ntests=42, tol=1e-13, reduction=0.5, nonneg = False, ratio=0.75):
     """
     Tests the validity of the Jacobian in a small neighbourhood of x.
-    It performs two tests, one is the Taylor remainder test,
+    It performs two tests, one is the Taylor remainder tests,
     the second is based on scipy.optimize.check_grad.
     What is actually tested is the gradient of x -> 0.5*||fun(x)||^2
     which is given by jac(x).T @ fun(x).
@@ -71,10 +71,10 @@ def test_jacobian(fun, jac, x, verbose=False, ntests=42, tol=1e-13, reduction=0.
     :param x: point around which Jacobian is tested.
     :param verbose: determines if it should talk or not
     :param ntests: number of random points near x where Jacobian is tested.
-    :param tol: the tolerance for the Taylor remainder test
+    :param tol: the tolerance for the Taylor remainder tests
     :param reduction: factor by which h is reduced in every step
     :param nonneg: only tests the Jacobian at points with nonnegative components
-    :param ratio: The fraction of tests that must be passed so that the overall test counts as passed. Defaults to 0.75.
+    :param ratio: The fraction of tests that must be passed so that the overall tests counts as passed. Defaults to 0.75.
     :return: True if at least 'ratio' of all tests passed. Otherwise False.
     """
     assert 0. < reduction < 1., "'reduction must be float between excl. 0 and 1"
@@ -96,6 +96,6 @@ def test_jacobian(fun, jac, x, verbose=False, ntests=42, tol=1e-13, reduction=0.
         print(colored("Jacobian validated.", "green"))
     if verbose and not enough_tests:
         print(colored(f"{tests_passed} out of {ntests} passed.", "red"))
-        print(colored("Jacobian test failed.", "red"))
+        print(colored("Jacobian tests failed.", "red"))
     return enough_tests
 

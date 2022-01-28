@@ -2,7 +2,7 @@ import numpy as np
 
 from cgn.regop import IdentityOperator
 from cgn.cnls_solve.cnls import CNLS
-from cgn.problem.linear_constraint import LinearConstraint
+from cgn.cnls_solve import ConcreteConstraint
 
 def test_cnls():
     m = 50
@@ -21,9 +21,18 @@ def test_cnls():
     c = a.copy()
     d = b - 1
     # make CNLS
-    eqcon = LinearConstraint(dim=n, mat=a, vec=b)
-    incon = LinearConstraint(dim=n, mat=c, vec=d)
-    cnls = CNLS(func=fun, jac=jac, q=IdentityOperator(dim=n), m=mean, r=regop, eqcon=eqcon, incon=incon, lb=lb,
+    def eqfun(x):
+        return a @ x - b
+    def eqjac(x):
+        return a
+    def infun(x):
+        return c @ x - d
+    def injac(x):
+        return c
+    eqcon = ConcreteConstraint(dim=n, fun=eqfun, jac=injac)
+    incon = ConcreteConstraint(dim=n, fun=infun, jac=injac)
+    ub = np.inf * np.ones((n, ))
+    cnls = CNLS(func=fun, jac=jac, q=IdentityOperator(dim=n), m=mean, r=regop, eqcon=eqcon, incon=incon, lb=lb, ub=ub,
                 scale=1.)
     # first, check that x indeed satisfies the constraints.
     assert cnls.satisfies_constraints(x)

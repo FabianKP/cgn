@@ -4,7 +4,7 @@ import pytest
 
 from cgn.regop import IdentityOperator
 from cgn.cnls_solve import CNLS, cnls_solve
-from cgn.problem.linear_constraint import LinearConstraint
+from cgn.cnls_solve.cnls_constraint import ConcreteConstraint
 from cgn.cnls_solve.solveroptions import Solveroptions
 from cgn.cnls_solve.linesearch_options import LinesearchOptions
 
@@ -25,14 +25,23 @@ def test_cnls_solve():
         return h
 
     lb = np.zeros(n)
+    ub = np.inf * np.ones(n)
     a = np.ones((1, n))
     b = np.sum(x) * np.ones((1,))
     c = a.copy()
     d = b - 1
     # make CNLS
-    eqcon = LinearConstraint(dim=n, mat=a, vec=b)
-    incon = LinearConstraint(dim=n, mat=c, vec=d)
-    cnls = CNLS(func=fun, jac=jac, q=IdentityOperator(dim=n), m=mean, r=regop, eqcon=eqcon, incon=incon, lb=lb,
+    def eqfun(x):
+        return a @ x - b
+    def eqjac(x):
+        return a
+    def infun(x):
+        return c @ x - d
+    def injac(x):
+        return c
+    eqcon = ConcreteConstraint(dim=n, fun=eqfun, jac=injac)
+    incon = ConcreteConstraint(dim=n, fun=infun, jac=injac)
+    cnls = CNLS(func=fun, jac=jac, q=IdentityOperator(dim=n), m=mean, r=regop, eqcon=eqcon, incon=incon, lb=lb, ub=ub,
                 scale=1.)
     # solve
     options = Solveroptions()

@@ -78,11 +78,12 @@ class OsborneProblem(TestProblem):
         TestProblem.__init__(self)
         self._minimum = ropt
         self._tol = 1e-8
-        self._problem = cgn.Problem(dims=[n], fun=misfit, jac=misfit_jac)
+        x = cgn.Parameter(dim=n, name="x")
         # only very mild regularization
-        self._problem.set_regularization(paramno=0, beta=1e-5)
+        x.beta = 1e-5
         # add inequality constraints
-        self._problem.add_inequality_constraint(c=C, d=d)
+        incon = cgn.LinearConstraint(parameters=[x], a=C, b=d, ctype="ineq")
+        self._problem = cgn.Problem(parameters=[x], fun=misfit, jac=misfit_jac, constraints=[incon])
         self._start = [xstart]
 
 

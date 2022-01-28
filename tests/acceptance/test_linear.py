@@ -55,6 +55,9 @@ def solve_problem(a, y, b):
 class LinearProblem(TestProblem):
     def __init__(self):
         TestProblem.__init__(self)
+        x = cgn.Parameter(dim=n, name="x")
+        # standard regularization
+        x.beta = 1.
         y = np.ones(m)
         b = - np.ones(m)
         j = assemble_jacobian()
@@ -62,9 +65,7 @@ class LinearProblem(TestProblem):
             return observation_operator(x) + b - y
         def jac(x):
             return j
-        self._problem = cgn.Problem([n], fun=observation_operator, jac=jac)
-        # add standard regularization term (||x||^2)
-        self._problem.set_regularization(paramno=0)
+        self._problem = cgn.Problem(parameters=[x], fun=misfit, jac=jac)
         # compute actual minimum
         x_ref = solve_problem(a=j, y=y, b=b)
         self._minimizer = x_ref

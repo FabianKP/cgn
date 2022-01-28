@@ -23,8 +23,7 @@ class BlockOperator(RegularizationOperator):
         # Continue
         self._operators = deepcopy(operator_list)
         self._n_split_positions, self._r_split_positions = self._get_split_positions()
-        mat = self._concatenate_matrices()
-        RegularizationOperator.__init__(self, mat)
+        self._mat = self._concatenate_matrices()
 
     def fwd(self, v: np.ndarray) -> np.ndarray:
         """

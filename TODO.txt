@@ -1,0 +1,22 @@
+# This aspects have to be incorporated in future versions of cgn to make it less embarassing.
+
+BEFORE PUBLICATION
+
+- Interface should only depend on scipy-linear operator, use RegularizationOperator only internally.
+
+- Edit .gitignore to make sure that only the relevant files (no cache, log, etc) are in git.
+
+- Write the README
+	1. Write installation guide (should be easy).
+	2. Write tutorial.
+
+
+AFTER PUBLICATION (in order of urgency)
+
+- Ensure that CGN satisfies SOLID.
+
+- Write a problem template, so that the user knows how to use cgn and basically only has to fill in his stuff.
+
+- Put default parameters in separate file.
+
+- Write a ReadTheDocs

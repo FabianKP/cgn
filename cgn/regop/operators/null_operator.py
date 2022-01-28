@@ -9,8 +9,7 @@ class NullOperator(RegularizationOperator):
     The null operator :math:`R(v) = 0`.
     """
     def __init__(self, dim: int):
-        mat = np.zeros((1, dim))
-        RegularizationOperator.__init__(self, mat)
+        self._mat = np.zeros((1, dim))
         self._rdim = 0
 
     def adj(self, v: np.ndarray):

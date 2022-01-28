@@ -2,7 +2,7 @@ import setuptools
 
 # python3 setup.py sdist bdist_wheel
 
-with open("README.md", "r") as fh:
+with open("README.rst", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
@@ -14,11 +14,14 @@ setuptools.setup(
     author='Fabian Parzer',
     author_email='fabian.kai.parzer@univie.ac.at',
     description='An implementation of the Gauss-Newton method for solving regularized nonlinear least-squares problems'
-                'with linear constraints.',
+                'with nonlinear constraints.',
     install_requires=[
         'numpy',
         'scipy',
-        'qpsolvers'
+        'qpsolvers',
+        'typing',
+        'prettytable',
+        'logging'
     ],
     python_requires='>=3.8',
     classifiers=[

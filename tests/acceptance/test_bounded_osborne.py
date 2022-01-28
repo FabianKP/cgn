@@ -11,7 +11,7 @@ class BoundedOsborneProblem(OsborneProblem):
         # add nonnegativity constraints
         n = self._problem.n
         lb = np.zeros(n)
-        self._problem.set_lower_bound(lb=lb, i=0)
+        self._problem.parameter("x").lb = lb
         # rest is same ...
 
 

@@ -14,11 +14,14 @@ def cls_solve(cls: CLS) -> np.ndarray:
     :return: Of shape (n,). The minimizer of the constrained least-squares problem.
     """
     # Bring the CLS problem in the right format.
-    r, s, g, h, a, b, lb = _bring_problem_in_right_form(cls)
+    r, s, g, h, a, b, lb, ub = _bring_problem_in_right_form(cls)
     # Solve the problem with qpsolvers.
-    x_min = qp.solve_ls(R=r, s=s, G=g, h=h, A=a, b=b, lb=lb)
+    x_min = qp.solve_ls(R=r, s=s, G=g, h=h, A=a, b=b, lb=lb, ub=ub, solver="quadprog")
     if x_min is None:
         raise RuntimeError("Linear solver could not find a solution.")
+    if cls.c is not None:
+        constraint_error = np.linalg.norm((cls.c @ x_min - cls.d).clip(max=0.), ord=1)
+        print(f"Constraint error = {constraint_error}")
     return x_min
 
 
@@ -44,6 +47,8 @@ def _bring_problem_in_right_form(cls: CLS):
         b = None
     if cls.bound_constrained:
         lb = cls.l
+        ub = cls.u
     else:
         lb = None
-    return r, s, g, h, a, b, lb
+        ub = None
+    return r, s, g, h, a, b, lb, ub

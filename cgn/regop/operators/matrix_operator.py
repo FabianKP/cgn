@@ -9,7 +9,7 @@ class MatrixOperator(RegularizationOperator):
     Builds regularization operator from matrix.
     """
     def __init__(self, mat: np.ndarray):
-        RegularizationOperator.__init__(self, mat)
+        self._mat = mat
 
     def adj(self, v: np.ndarray) -> np.ndarray:
         """

@@ -10,14 +10,14 @@ class CLS:
     """
     Represents an inequality-constrained least-squares problem.
     min_x ||H x - y||_2^2 / scale
-    s.t. A x = b, C x >= d, x >= l.
+    s.t. A x = b, C x >= d, l <= x <= u
     """
 
     def __init__(self, h: np.ndarray, y: np.ndarray,
                  a: np.ndarray = None, b: np.ndarray = None,
                  c: np.ndarray = None, d: np.ndarray = None,
-                 l: np.ndarray = None, scale: float = 1.):
-        self._check_consistency(h, y, a, b, c, d, l)
+                 l: np.ndarray = None, u: np.ndarray = None, scale: float = 1.):
+        self._check_consistency(h, y, a, b, c, d, l, u)
         self.h = h / sqrt(scale)
         self.y = y / sqrt(scale)
         self.a = a
@@ -29,18 +29,25 @@ class CLS:
         else:
             n = self.h.shape[1]
             self.l = -np.inf * np.ones(n)
+        if u is not None:
+            self.u = u
+        else:
+            n = self.h.shape[1]
+            self.u = np.inf * np.ones(n)
         # Next, determine the constraint-type of the problem.
         self.equality_constrained = (self.a is not None)
         self.inequality_constrained = (self.c is not None)
-        self.bound_constrained = np.isfinite(self.l).any()
+        self.bound_constrained = np.isfinite(self.l).any() or np.isfinite(self.u).any()
 
-    def _check_consistency(self, h, y, a, b, c, d, l):
+    def _check_consistency(self, h, y, a, b, c, d, l, u):
         m, n = h.shape
         assert y.shape == (m, )
         self._check_constraint(a, b, n)
         self._check_constraint(c, d, n)
         if l is not None:
             assert l.shape == (n, )
+        if u is not None:
+            assert u.shape == (n, )
 
     @staticmethod
     def _check_constraint(mat, vec, n):

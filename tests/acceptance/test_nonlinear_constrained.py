@@ -1,6 +1,6 @@
 """
 Test CGN for an equality-constrained nonlinear least-squares problem.
-Based on test (29) in More, Garbow and Hillstrom "Testing Unconstrained Optimization Software"
+Based on tests (29) in More, Garbow and Hillstrom "Testing Unconstrained Optimization Software"
 """
 
 import numpy as np
@@ -50,11 +50,10 @@ class NonlinearConstrainedProblem(TestProblem):
     def __init__(self):
         TestProblem.__init__(self)
         x0 = t * (1 - t)
+        x = cgn.Parameter(dim=n, name="x")
+        x.beta = 0.
         self._start = [x0]
-        self._problem = cgn.Problem(dims=[n], fun=dbv, jac=dbv_jac)
-        # no regularization
-        self._problem.set_regularization(paramno=0, beta=0.)
-
+        self._problem = cgn.Problem(parameters=[x], fun=dbv, jac=dbv_jac)
         # compute reference solution with scipy.optimize:
         loss_fun = self._problem.costfun
         loss_grad = self._problem.costgrad
@@ -68,7 +67,8 @@ class NonlinearConstrainedProblem(TestProblem):
         assert np.isclose(a @ x0, b).all()
         self._start = [x0]
         # Add the constraint to the cgn.Problem object
-        self._problem.add_equality_constraint(a=a, b=b)
+        eqcon = cgn.LinearConstraint(parameters=[x], a=a, b=b, ctype="eq")
+        self._problem.constraints.append(eqcon)
         # Resolve problem with SLSQP
         def eqfun(x):
             return a @ x - b

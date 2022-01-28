@@ -2,7 +2,8 @@
 import numpy as np
 from typing import List
 
-from .problem import Problem, ProblemSolution, Translator
+from .problem import Problem, ProblemSolution
+from .translator import Translator
 from .cnls_solve import cnls_solve
 from .cnls_solve.linesearch_options import LinesearchOptions
 from .cnls_solve.solveroptions import Solveroptions
@@ -31,6 +32,8 @@ class CGN:
             The length of the list must be equal to :py:attr:`Problem.nparams`.
         :return: The solution to the optimization problem.
         """
+        # Check that the starting values are consistent with constraints.
+        self._check_starting_values(starting_values, problem)
         translator = Translator(problem)
         # Translate the multi-parameter problem to a CNLS problem.
         cnls = translator.translate()
@@ -45,3 +48,19 @@ class CGN:
         solution = translator.translate_solution(cnls_solution)
         # Finally, this solution is returned.
         return solution
+
+    @staticmethod
+    def _check_starting_values(starting_values: List[np.ndarray], problem: Problem):
+        """
+        Checks that the starting values match the problem parameter.
+
+        :raises Exception: If the starting values do not match.
+        """
+        p = problem.nparams
+        if not len(starting_values) == p:
+            raise Exception(f"'starting_values' must be a list of length {p}")
+        for i in range(p):
+            if not starting_values[i].shape == (problem.shape[i], ):
+                raise Exception(f"The {i}-th starting value must have shape ({problem.shape[i]}, )")
+
+

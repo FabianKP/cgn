@@ -27,8 +27,7 @@ class DiagonalOperator(RegularizationOperator):
                 raise ValueError("s must be float or vector of shape (dim,).")
         self._isfloat = isfloat
         self._s = s
-        mat = s * np.identity(dim)
-        RegularizationOperator.__init__(self, mat)
+        self._mat = s * np.identity(dim)
 
     def adj(self, v: np.ndarray):
         """

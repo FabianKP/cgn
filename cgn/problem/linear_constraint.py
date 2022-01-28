@@ -1,56 +1,55 @@
 
-from copy import deepcopy
 import numpy as np
-from typing import Union
+from typing import List, Literal
+
+from .constraint import Constraint
+from .parameter import Parameter
 
 
-class LinearConstraint:
+class LinearConstraint(Constraint):
     """
     Represents a linear constraint. Either an equality constraint :math:`Ax = b`, or an inequality constraint
-    :math:`Ax \geq b`, where :math:`A \in \mathbb{R}^{c \times n}.
+    :math:`Ax \\geq b`, where :math:`A \\in \\mathbb{R}^{c \\times n}.
     """
-    def __init__(self, dim: int, mat: np.ndarray = None, vec: np.ndarray = None):
-        if mat is None:
-            # empty constraint
-            self._dim = dim
-            self._cdim = 0
-            self._mat = None
-            self._vec = None
-            self._empty = True
-        else:
-            assert mat.shape[1] == dim
-            self._dim = dim
-            self._cdim = mat.shape[0]
-            self._mat = deepcopy(mat)
-            self._vec = deepcopy(vec)
-            self._empty = False
+    def __init__(self, parameters: List[Parameter], a: np.ndarray, b: np.ndarray, ctype: Literal["eq", "ineq"]):
+        """
+        Represents a linear constraint. Either an equality constraint :math:`Ax = b`, or an inequality constraint
+        :math:`Ax \geq b`, where :math:`A \in \mathbb{R}^{c \times n}.
+
+        :param parameters: A list of the parameters involved in the constraint. If the list contains more than one
+            element, the constraint will be defined with respect to the concatenated parameter vector.
+        :param a: Of shape (c, n). The constraint matrix. The number of columns `n` must be equal to the dimension of
+            the concatenated parameter vector.
+        :param b: The right hand side of the constraint. Must have shape (c,).
+        :param ctype: The type of the constraint.
+        """
+        self._check_input_linear(parameters, a, b, ctype)
+        self._cdim = a.shape[0]
+        self._a = a
+        self._b = b
+
+        def linfun(*args):
+            xvec = np.concatenate(args)
+            y = self._a @ xvec - b
+            return y
+
+        def linjac(*args):
+            return self._a
+        Constraint.__init__(self, parameters=parameters, fun=linfun, jac=linjac, ctype=ctype)
 
     @property
-    def mat(self) -> Union[np.ndarray, None]:
+    def a(self) -> np.ndarray:
         """
         The constraint matrix :math:`A`.
         """
-        if self._mat is None:
-            return None
-        else:
-            return self._mat.copy()
+        return self._a
 
     @property
-    def vec(self) -> Union[np.ndarray, None]:
+    def b(self) -> np.ndarray:
         """
         The constraint vector :math:`b`.
         """
-        if self._vec is None:
-            return None
-        else:
-            return self._vec.copy()
-
-    @property
-    def dim(self) -> int:
-        """
-        The parameter dimension :math:`n`.
-        """
-        return self._dim
+        return self._b
 
     @property
     def cdim(self) -> int:
@@ -59,12 +58,18 @@ class LinearConstraint:
         """
         return self._cdim
 
-    @property
-    def empty(self) -> bool:
-        """
-        `True`, if the constraint is empty. Otherwise `False`.
-        """
-        return self._empty
+    def _check_input_linear(self, parameters: List[Parameter], a: np.ndarray, b: np.ndarray,
+                            ctype: Literal["eq", "ineq"]):
+        if ctype not in ["eq", "ineq"]:
+            raise Exception("'ctype' must either be 'eq' or 'ineq'.")
+        n = 0
+        for param in parameters:
+            n += param.dim
+        if not a.shape[1] == n:
+            raise Exception(f"'a' must have shape[1] = {n}")
+        m = a.shape[0]
+        if not b.shape == (m, ):
+            raise Exception(f"'b' must have shape ({m},).")
 
 
 

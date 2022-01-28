@@ -14,7 +14,7 @@ def do_test(test: TestProblem):
     solution = solver.solve(problem=test.cgnproblem, starting_values=test.start)
     # Compute the cost of the cgn-minimizer.
     cost = solution.cost
-    minimizer = solution.minimizer
+    minimizer = solution.minimizer_tuple
     cost_min = test.cgnproblem.costfun(*minimizer)
     assert np.isclose(cost, cost_min)
     # Compare the cost to the reference value

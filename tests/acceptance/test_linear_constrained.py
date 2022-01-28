@@ -6,8 +6,8 @@ Tests ggn_new.solvers.GaussNewton on an unconstrained linear least-squares probl
 # Copyright owned by the University of Vienna, 2020. All rights reserved.
 
 import numpy as np
-import cgn
 
+import cgn
 from tests.acceptance.test_linear import LinearProblem
 from tests.acceptance.do_test import do_test
 
@@ -16,7 +16,7 @@ class LinearConstrainedProblem(LinearProblem):
 
     def __init__(self):
         LinearProblem.__init__(self)
-        # add sum_to_one constraint
+        # Add sum-to-one constraint
         n = self._problem.n
         a = np.ones((1, n))
         b = a @ self._minimizer
@@ -24,7 +24,8 @@ class LinearConstrainedProblem(LinearProblem):
         x0 = np.ones(n)
         x0 = x0 / np.sum(x0) * b
         assert np.isclose(a @ x0, b).all()
-        self._problem.add_equality_constraint(a, b)
+        eqcon = cgn.LinearConstraint(parameters=self._problem._parameter_list, a=a, b=b, ctype="eq")
+        self._problem.constraints.append(eqcon)
 
 
 def test_linear_constrained():

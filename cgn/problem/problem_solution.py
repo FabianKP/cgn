@@ -1,22 +1,55 @@
 
-from dataclasses import dataclass
 import numpy as np
-from typing import List
+from typing import Sequence
 
 
-@dataclass(frozen=True)
 class ProblemSolution:
     """
     Container for the solution of an optimization problem defined as instance of :py:class:`cgn.Problem`.
-
-    :ivar minimizer: The minimizer of the optimization problem, given as a list [x0, x1, ...].
-    :ivar precision: The posterior precision matrix. Of shape (n,n), where n is the overall parameter dimension.
-    :ivar cost: The minimum of the cost function.
-    :ivar success: `True`, if the iteration converged successfully. `False`, if the iteration stopped for other reasons.
-    :ivar niter: The number of iterations.
     """
-    minimizer: List[np.ndarray]
-    precision: np.ndarray
-    cost: float
-    success: bool
-    niter: int
+    _minimizer_tuple: Sequence[np.ndarray]
+    _precision: np.ndarray
+    _cost: float
+    _success: bool
+    _niter: int
+
+    def minimizer(self, pname: str) -> np.ndarray:
+        """
+        Returns the minimizer for the parameter of given name.
+        """
+        raise NotImplementedError
+
+    @property
+    def minimizer_tuple(self) -> Sequence[np.ndarray]:
+        """
+        The tuple of minimizers.
+        """
+        return self._minimizer_tuple
+
+    @property
+    def precision(self) -> np.ndarray:
+        """
+        The posterior precision matrix. Of shape (n,n), where n is the overall parameter dimension.
+        """
+        return self._precision
+
+    @property
+    def cost(self) -> float:
+        """
+        The minimum of the cost function.
+        """
+        return self._cost
+
+    @property
+    def success(self) -> bool:
+        """
+        `True`, if the iteration converged successfully. `False`, if the iteration stopped for other reasons.
+        """
+        return self._success
+
+    @property
+    def niter(self) -> int:
+        """
+        The number of iterations.
+        """
+        return self._niter

@@ -9,26 +9,21 @@ class RegularizationOperator:
     Each child of RegularizationOperator must implement the methods `fwd` and `adj`, which give the forward and the
     adjoint action of the regularization operator.
     """
-    def __init__(self, mat: np.ndarray):
-        if mat.ndim != 2:
-            raise ValueError
-        self._mat = deepcopy(mat)
-        self._dim = mat.shape[1]
-        self._rdim = mat.shape[0]
+    _mat: np.ndarray
 
     @property
     def dim(self) -> int:
         """
         The dimension of the domain of the regularization operator.
         """
-        return deepcopy(self._dim)
+        return deepcopy(self._mat.shape[1])
 
     @property
     def rdim(self) -> int:
         """
         The dimension of the codomain of the regularization operator.
         """
-        return deepcopy(self._rdim)
+        return deepcopy(self._mat.shape[0])
 
     @property
     def mat(self) -> np.ndarray:

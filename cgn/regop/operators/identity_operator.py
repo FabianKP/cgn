@@ -9,8 +9,7 @@ class IdentityOperator(RegularizationOperator):
     Corresponds to to the identity operator :math:`I(v) = v`.
     """
     def __init__(self, dim):
-        mat = np.identity(dim)
-        RegularizationOperator.__init__(self, mat)
+        self._mat = np.identity(dim)
 
     def fwd(self, v: np.ndarray) -> np.ndarray:
         """

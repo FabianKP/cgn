@@ -26,7 +26,7 @@ class WaechterBiegler:
     """
     Implements the Lagrange-multiplier-free linesearch algorithm proposed by
     Wächter and Biegler in
-    "Line Search Filter Methods for Nonlinear Programming: Motivation and Global Convergence" (2005).
+    "Line Search LinearFilter Methods for Nonlinear Programming: Motivation and Global Convergence" (2005).
     """
     def __init__(self, create_state, cnls: CNLS, costfun: callable, options: LinesearchOptions):
         self.p = options
@@ -35,11 +35,10 @@ class WaechterBiegler:
         self._equality_constrained = cnls.equality_constrained
         self._inequality_constrained = cnls.inequality_constrained
         self._bound_constrained = cnls.bound_constrained
-        self._a = cnls.a
-        self._b = cnls.b
-        self._c = cnls.c
-        self._d = cnls.d
+        self._g = cnls.g
+        self._h = cnls.h
         self._lb = cnls.lb
+        self._ub = cnls.ub
         self._history = []
 
     def _theta(self, state: CGNState):
@@ -49,12 +48,14 @@ class WaechterBiegler:
         :return:
         """
         penalty = 0
+        x = state.x
         if self._equality_constrained:
-            penalty += np.linalg.norm(self._a @ state.x - self._b, ord=1)
+            penalty += np.linalg.norm(self._g(x), ord=1)
         if self._inequality_constrained:
-            penalty += self._negative_norm(self._c @ state.x - self._d)
+            penalty += self._negative_norm(self._h(x))
         if self._bound_constrained:
-            penalty += self._negative_norm(state.x - self._lb)
+            penalty += self._negative_norm(x - self._lb)
+            penalty += self._negative_norm(self._ub - x)
         # ignore penalty if less than tolerance:
         if penalty < self.p.ctol:
             penalty = 0
@@ -74,7 +75,8 @@ class WaechterBiegler:
         """
         phiw = state.phi
         thetaw = state.theta
-        if all(ref[0] > thetaw or ref[1] > phiw for ref in self._history):
+        constraint_ok = thetaw <= self.p.maxviol
+        if all(ref[0] > thetaw or ref[1] > phiw for ref in self._history) and constraint_ok:
             return True
         else:
             return False

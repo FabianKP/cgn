@@ -26,10 +26,11 @@ class OneDimensionalProblem(TestProblem):
         # make initial uncertainty very high, so that we do not get
         # influence from the regularization term
         x0 = np.array([0.0])
-        self._start = [x0]
-        self._problem = cgn.Problem(dims=[1], fun=beale, jac=bealegrad)
+        x = cgn.Parameter(dim=1, name="x")
         # no regularization
-        self._problem.set_regularization(paramno=0, beta=0)
+        x.beta = 0
+        self._start = [x0]
+        self._problem = cgn.Problem(parameters=[x], fun=beale, jac=bealegrad)
         self._minimum = self._problem.costfun(xtruemin)
         self._tol = 1e-2
         self._options = cgn.Solveroptions()

@@ -7,7 +7,7 @@ from cgn.cnls_solve.solveroptions import Solveroptions
 
 class TestProblem:
     """
-    Base class for test problems.
+    Base class for tests problems.
     """
     def __init__(self):
         self._problem = None

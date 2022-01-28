@@ -16,7 +16,7 @@ def test_unconstrained():
 
 def test_constrained():
     n = 1000
-    # create test problem
+    # create tests problem
     h = np.eye(n)
     x = np.arange(n)
     y = h @ x

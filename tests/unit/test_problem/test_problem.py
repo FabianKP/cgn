@@ -1,39 +1,104 @@
 
 import numpy as np
+import pytest
 
 from cgn.regop import IdentityOperator
-from cgn import Problem
+from cgn import LinearConstraint, Parameter, Problem
 
 
 def test_problem():
+    # Initialize parameters
     n1 = 20
     n2 = 50
-    beta1 = 0.384
-    beta2 = 32.2
-    lb1 = np.zeros(n1)
+    x = Parameter(dim=n1, name="x")
+    y = Parameter(dim=n2, name="y")
+    x.beta = 0.384
+    y.beta = 32.2
+    x.lb = np.zeros(n1)
+    x.mean = np.random.randn(n1)
+    y.mean = np.random.randn(n2)
+    x.regop = IdentityOperator(dim=n1)
+    y.regop = IdentityOperator(dim=n2)
+    # Initialize constraints
     a = np.ones((1, n1 + n2))
-    b = np.ones((1, ))
+    b = np.ones((1,))
+    eqcon = LinearConstraint(parameters=[x, y], a=a, b=b, ctype="eq")
     c = np.eye(n2)
     d = np.ones(n2)
-    mean1 = np.random.randn(n1)
-    mean2 = np.random.randn(n2)
-    regop1 = IdentityOperator(dim=n1)
-    regop2 = IdentityOperator(dim=n2)
+    incon = LinearConstraint(parameters=[y], a=c, b=d, ctype="ineq")
     scale = 0.1
+    # Initialize misfit function and Jacobian
     def fun(x1, x2):
         return np.square(np.concatenate((x1, x2), axis=0))
     def jac(x1, x2):
         return 2 * np.diagflat(np.concatenate((x1, x2), axis=0))
-    problem = Problem(dims=[n1, n2], fun=fun, jac=jac, scale=scale)
+    problem = Problem(parameters=[x, y], fun=fun, jac=jac, scale=scale, constraints=[eqcon, incon])
+    # Check that the correct problem was initialized
     assert isinstance(problem.q, IdentityOperator)
-    problem.set_regularization(paramno=0, m=mean1, beta=beta1, r=regop1)
-    problem.set_regularization(paramno=1, m=mean2, beta=beta2, r=regop2)
-    problem.set_lower_bound(i=0, lb=lb1)
-    assert problem.lower_bound.size == n1 + n2
-    problem.add_equality_constraint(a=a, b=b)
-    assert problem.equality_constraint.mat.shape == (1, n1+n2)
-    problem.add_inequality_constraint(c=c, d=d, i=1)
-    assert problem.inequality_constraints.mat.shape == (n2, n1+n2)
+    assert problem.nparams == 2
+    assert problem.n == n1 + n2
+
+
+def test_constraints_must_depend_on_problem_parameters():
+    n1 = 20
+    n2 = 50
+    n3 = 1
+    x = Parameter(dim=n1, name="x")
+    y = Parameter(dim=n2, name="y")
+    z = Parameter(dim=n3, name="z")
+    a1 = np.random.randn(n1 + n2 + n3, n1 + n2 + n3)
+    b1 = np.random.randn(n1 + n2 + n3)
+    con1 = LinearConstraint(parameters=[x, y, z], a=a1, b=b1, ctype="eq")
+    def fun(x1, x2):
+        return np.square(np.concatenate((x1, x2), axis=0))
+    def jac(x1, x2):
+        return 2 * np.diagflat(np.concatenate((x1, x2), axis=0))
+    with pytest.raises(Exception) as e1:
+        prob1 = Problem(parameters=[x, y], fun=fun, jac=jac, constraints=[con1])
+    a2 = np.random.randn(n3, n3)
+    b2 = np.random.randn(n3)
+    con2 = LinearConstraint(parameters=[z], a=a2, b=b2, ctype="ineq")
+    with pytest.raises(Exception) as e2:
+        prob2 = Problem(parameters=[x, y], fun=fun, jac=jac, constraints=[con2])
+
+
+def test_modify_problem_after_initialization():
+    n1 = 20
+    n2 = 50
+    x = Parameter(dim=n1, name="x")
+    y = Parameter(dim=n2, name="y")
+    def fun(x1, x2):
+        return np.square(np.concatenate((x1, x2), axis=0))
+    def jac(x1, x2):
+        return 2 * np.diagflat(np.concatenate((x1, x2), axis=0))
+    problem = Problem(parameters=[x, y], fun=fun, jac=jac)
+    # Adapt the regularization
+    beta = 42
+    problem.parameter("x").beta = beta
+    assert problem._parameter_list[0].beta == beta
+    # Add constraint
+    a = np.ones((1, n1 + n2))
+    b = np.ones((1,))
+    eqcon = LinearConstraint(parameters=[x, y], a=a, b=b, ctype="eq")
+    problem.constraints.append(eqcon)
+    # Check that the constraint was really added.
+    assert eqcon in problem.constraints
+
+
+def test_no_duplicate_names_allowed():
+    n1 = 10
+    n2 = 20
+    x1 = Parameter(dim=n1, name="x")
+    x2 = Parameter(dim=n2, name="x")
+    def fun(x1, x2):
+        return np.square(np.concatenate((x1, x2), axis=0))
+    def jac(x1, x2):
+        return 2 * np.diagflat(np.concatenate((x1, x2), axis=0))
+    with pytest.raises(Exception) as e:
+        problem = Problem(fun=fun, jac=jac, parameters=[x1, x2])
+
+
+
 
 
 

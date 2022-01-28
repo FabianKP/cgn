@@ -23,8 +23,7 @@ class MultipliedOperator(RegularizationOperator):
         """
         self._op = deepcopy(regop)
         self._q = q.copy()
-        mat = regop._mat @ q
-        RegularizationOperator.__init__(self, mat)
+        self._mat = regop._mat @ q
 
     def fwd(self, v: np.ndarray):
         """

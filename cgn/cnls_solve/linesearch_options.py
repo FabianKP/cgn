@@ -16,3 +16,4 @@ class LinesearchOptions:
         self.gamma_h = 1e-10
         self.h0 = 1.
         self.ctol = 1e-15
+        self.maxviol = 1000   # maximum error tolerance for constraint.
