@@ -9,6 +9,7 @@ class OptimizationStatus(Enum):
     timeout = "timeout"
     maxout = "maxout"
     error = "error"
+    constraint_violated = "constraint violated"
 
 
 @dataclass(frozen=True)

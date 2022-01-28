@@ -19,7 +19,7 @@ class Solveroptions:
         self.timeout = 60
         self._verbose = 1
         self.logfile = "cgn.log"
-        self.ctol = 1e-15
+        self.ctol = 1e-10
 
     @property
     def verbosity(self):

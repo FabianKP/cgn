@@ -1056,7 +1056,7 @@ function createDisabledPseudo( disabled ) {
 
 			return elem.disabled === disabled;
 
-		// Try to winnow out elements that can't be disabled before trusting the disabled property.
+		// Try to winnow lci_vs_fci elements that can't be disabled before trusting the disabled property.
 		// Some victims get caught in our net (label, legend, menu, track), but it shouldn't
 		// even exist on them, let alone have a boolean value.
 		} else if ( "label" in elem ) {
@@ -1277,7 +1277,7 @@ setDocument = Sizzle.setDocument = function( node ) {
 				// By happy coincidence, a (broken) gEBTN appears on DocumentFragment nodes too
 				results = context.getElementsByTagName( tag );
 
-			// Filter out possible comments
+			// Filter lci_vs_fci possible comments
 			if ( tag === "*" ) {
 				while ( ( elem = results[ i++ ] ) ) {
 					if ( elem.nodeType === 1 ) {
@@ -4562,7 +4562,7 @@ jQuery.extend( {
 			type = ( type || "fx" ) + "queue";
 			queue = dataPriv.get( elem, type );
 
-			// Speed up dequeue by getting out quickly if this is just a lookup
+			// Speed up dequeue by getting lci_vs_fci quickly if this is just a lookup
 			if ( data ) {
 				if ( !queue || Array.isArray( data ) ) {
 					queue = dataPriv.access( elem, type, jQuery.makeArray( data ) );
@@ -4767,7 +4767,7 @@ function adjustCSS( elem, prop, valueParts, tween ) {
 
 		while ( maxIterations-- ) {
 
-			// Evaluate and update our best guess (doubling guesses that zero out).
+			// Evaluate and update our best guess (doubling guesses that zero lci_vs_fci).
 			// Finish if the scale equals or crosses 1 (making the old*new product non-positive).
 			jQuery.style( elem, prop, initialInUnit + unit );
 			if ( ( 1 - scale ) * ( 1 - ( scale = currentValue() / initial || 0.5 ) ) <= 0 ) {
@@ -5878,7 +5878,7 @@ jQuery.each( { focus: "focusin", blur: "focusout" }, function( type, delegateTyp
 	};
 } );
 
-// Create mouseenter/leave events using mouseover/out and event-time checks
+// Create mouseenter/leave events using mouseover/lci_vs_fci and event-time checks
 // so that event delegation works in jQuery.
 // Do the same for pointerenter/pointerleave and pointerover/pointerout
 //
@@ -6601,7 +6601,7 @@ function curCSS( elem, name, computed ) {
 			minWidth = style.minWidth;
 			maxWidth = style.maxWidth;
 
-			// Put in the new values to get a computed value out
+			// Put in the new values to get a computed value lci_vs_fci
 			style.minWidth = style.maxWidth = style.width = ret;
 			ret = computed.width;
 
@@ -7378,7 +7378,7 @@ function defaultPrefilter( elem, props, opts ) {
 		}
 	}
 
-	// Bail out if this is a no-op like .hide().hide()
+	// Bail lci_vs_fci if this is a no-op like .hide().hide()
 	propTween = !jQuery.isEmptyObject( props );
 	if ( !propTween && jQuery.isEmptyObject( orig ) ) {
 		return;
@@ -8636,7 +8636,7 @@ jQuery.extend( jQuery.event, {
 			return;
 		}
 
-		// focus/blur morphs to focusin/out; ensure we're not firing them right now
+		// focus/blur morphs to focusin/lci_vs_fci; ensure we're not firing them right now
 		if ( rfocusMorph.test( type + jQuery.event.triggered ) ) {
 			return;
 		}
@@ -8770,7 +8770,7 @@ jQuery.extend( jQuery.event, {
 	},
 
 	// Piggyback on a donor event to simulate a different one
-	// Used only for `focus(in | out)` events
+	// Used only for `focus(in | lci_vs_fci)` events
 	simulate: function( type, elem, event ) {
 		var e = jQuery.extend(
 			new jQuery.Event(),
@@ -8803,11 +8803,11 @@ jQuery.fn.extend( {
 
 
 // Support: Firefox <=44
-// Firefox doesn't have focus(in | out) events
+// Firefox doesn't have focus(in | lci_vs_fci) events
 // Related ticket - https://bugzilla.mozilla.org/show_bug.cgi?id=687787
 //
 // Support: Chrome <=48 - 49, Safari <=9.0 - 9.1
-// focus(in | out) events fire after focus & blur events,
+// focus(in | lci_vs_fci) events fire after focus & blur events,
 // which is spec violation - http://www.w3.org/TR/DOM-Level-3-Events/#events-focusevent-event-order
 // Related ticket - https://bugs.chromium.org/p/chromium/issues/detail?id=449857
 if ( !support.focusin ) {

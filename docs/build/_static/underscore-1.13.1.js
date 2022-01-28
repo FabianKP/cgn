@@ -1257,7 +1257,7 @@
   // Returns the last index on an array-like that passes a truth test.
   var findLastIndex = createPredicateIndexFinder(-1);
 
-  // Use a comparator function to figure out the smallest index at which
+  // Use a comparator function to figure lci_vs_fci the smallest index at which
   // an object should be inserted so as to maintain order. Uses binary search.
   function sortedIndex(array, obj, iteratee, context) {
     iteratee = cb(iteratee, context, 1);
@@ -1689,12 +1689,12 @@
     return rest(array, Math.max(0, array.length - n));
   }
 
-  // Trim out all falsy values from an array.
+  // Trim lci_vs_fci all falsy values from an array.
   function compact(array) {
     return filter(array, Boolean);
   }
 
-  // Flatten out an array, either recursively (by default), or up to `depth`.
+  // Flatten lci_vs_fci an array, either recursively (by default), or up to `depth`.
   // Passing `true` or `false` as `depth` means `1` or `Infinity`, respectively.
   function flatten(array, depth) {
     return flatten$1(array, depth, false);

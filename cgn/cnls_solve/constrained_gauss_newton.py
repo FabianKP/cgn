@@ -26,6 +26,7 @@ class ConstrainedGaussNewton:
         # Read options
         self.maxiter = options.maxiter
         self.tol = options.tol
+        self.ctol = options.ctol
         self.logfile = options.logfile
         self.timeout = options.timeout
         self._residual_list = []
@@ -68,6 +69,9 @@ class ConstrainedGaussNewton:
                 status = OptimizationStatus.timeout
         if k == self.maxiter-1:
             status = OptimizationStatus.maxout
+        # check that MAP satisfies constraint
+        if not self._cnls.satisfies_constraints(state.x, self.ctol):
+            status = OptimizationStatus.constraint_violated
         cnls_solution = self._build_solution(state=state, niter=k+1, status=status)
         self._logger.print_epilogue(cnls_solution)
         return cnls_solution
@@ -102,8 +106,6 @@ class ConstrainedGaussNewton:
         precision = self._posterior_precision(state)
         # create costfunction that is returned as part of the solution
         current_cost = self._cost(state)
-        # check that MAP satisfies constraint
-        assert self._cnls.satisfies_constraints(state.x)
         # put maxiter in info
         solution = OptimizationSolution(minimizer=state.x, precision=precision, min_cost=current_cost, niter=niter,
                                         status=status)

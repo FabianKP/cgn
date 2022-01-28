@@ -61,6 +61,9 @@ class Logger:
             self._logger.info(f"The iteration stopped as it reached the maximum number of iterations.")
         elif status == OptimizationStatus.timeout:
             self._logger.info(f"The iteration stopped due to timeout.")
+        elif status == OptimizationStatus.constraint_violated:
+            self._logger.info(f"Warning: The optimization was not able to satisfy the constraints within the"
+                              f" given tolerance.")
         else:
             self._logger.info(f"The iteration stopped due to an unknown error.")
         for handler in self._logger.handlers[:]:

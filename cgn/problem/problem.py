@@ -17,9 +17,9 @@ class Problem:
     Class for formulating regularized nonlinear least-squares problems with linear constraints:
 
     .. math::
-        \\min_{x_1,...,x_p} \quad & ||Q F(x_1,...,x_p)||_2^2 + \\beta_1 * ||R_1(x_1 - m_1)||_2^2 + \ldots +
+        \\min_{x_1,...,x_p} \\quad & ||Q F(x_1,...,x_p)||_2^2 + \\beta_1 * ||R_1(x_1 - m_1)||_2^2 + \ldots +
         \\beta_2 * ||R_p(x_p - m_p)||_2^2 \\\\
-          s.t. \quad & Ax = b, \quad Cx \geq d, \quad x \geq l.
+          s.t. \\quad & Ax = b, \\quad Cx \geq d, \quad x \geq l.
     """
     def __init__(self, dims: List[int], fun: callable, jac: callable,
                  q: Union[np.ndarray, RegularizationOperator] = None,
@@ -181,28 +181,28 @@ class Problem:
         i0 = self._params.position(i)
         self._lower_bound[i0:i0 + paramdim] = lb
 
-    def set_regularization(self, paramno: int, m: np.ndarray = None, beta: float = 1.,
+    def set_regularization(self, i: int, m: np.ndarray = None, beta: float = 1.,
                            r: Union[RegularizationOperator, np.ndarray, None] = None):
         """
         Specify a regularization term for the desired parameter. The regularization term will be of the form
         :math:`\\beta * ||R (x - m)||_2^2`.
         
-        :param paramno: Number of the parameter for which you want to specify a regularization term.
+        :param i: Number of the parameter for which you want to specify a regularization term.
         :param m: Of shape (n,). If not provided, defaults to zero.
         :param beta: The regularization parameter. Defaults to 1. You can turn off regularization by setting beta = 0.
         :param r: The regularization operator for the parameter. Defaults to the identity.
         :raises ValueError: If the input is inconsistent.
         """
         # check that paramno is valid
-        assert 0 <= paramno < self._nparams
+        assert 0 <= i < self._nparams
         # check that input is of the right dimension
-        dim = self._dims[paramno]
+        dim = self._dims[i]
         if m is not None:
             if m.size != dim:
                 raise ValueError(f"'mean' must have dimension {dim}")
         regop = self._default_regop(r, self.n)
         # modify parameter
-        self._params.change_parameter(paramno=paramno, mean=m, regop=regop, beta=beta)
+        self._params.change_parameter(paramno=i, mean=m, regop=regop, beta=beta)
 
     # PROTECTED
 

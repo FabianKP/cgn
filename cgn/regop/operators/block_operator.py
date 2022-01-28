@@ -10,8 +10,8 @@ from .null_operator import NullOperator
 
 class BlockOperator(RegularizationOperator):
     """
-    Given a list of regularization operators :math:`P_1, \ldots, P_l`, we form the block operator
-    :math:`P = \mathrm{diag}(P_1, P_2, ..., P_l)`.
+    Given a list of regularization operators :math:`P_1, \\ldots, P_l`, we form the block operator
+    :math:`P = \\mathrm{diag}(P_1, P_2, ..., P_l)`.
     """
     def __init__(self, operator_list: List[RegularizationOperator]):
         """
