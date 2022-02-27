@@ -22,8 +22,8 @@ class CGNState:
         """
         If called for the first time, it computes the Jacobian at State.x.
         If called a second time, it uses the stored value.
-        :return: ndarray
-            The Jacobian at State.x
+
+        :return: The Jacobian at State.x
         """
         if self._jac is None:
             self._jac = self._q.fwd(self._jacfun(self.x))

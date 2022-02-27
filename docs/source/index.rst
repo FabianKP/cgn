@@ -10,6 +10,9 @@ Welcome to cgn's documentation!
    :maxdepth: 2
    :caption: Contents:
 
+   tutorial.rst
+   installation.rst
+
 .. automodule:: cgn
    :members:
    :imported-members:
