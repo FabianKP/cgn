@@ -20,8 +20,7 @@ setuptools.setup(
         'scipy',
         'qpsolvers',
         'typing',
-        'prettytable',
-        'logging'
+        'prettytable'
     ],
     python_requires='>=3.8',
     classifiers=[

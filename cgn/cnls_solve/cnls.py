@@ -4,7 +4,6 @@ Contains class CNLS.
 
 from copy import deepcopy
 import numpy as np
-from numpy.typing import ArrayLike
 
 from ..regop import RegularizationOperator
 from .cnls_constraint import CNLSConstraint, NullConstraint
@@ -20,8 +19,8 @@ class CNLS:
         s.t. G(x) = 0, H(x) \\geq 0, l \\leq x \\leq u.
     The regularization term is optional.
     """
-    def __init__(self, func: callable, jac: callable, q: RegularizationOperator, m: ArrayLike, r: RegularizationOperator,
-                 eqcon: CNLSConstraint, incon: CNLSConstraint, lb: ArrayLike, ub: ArrayLike, scale: float):
+    def __init__(self, func: callable, jac: callable, q: RegularizationOperator, m: np.ndarray, r: RegularizationOperator,
+                 eqcon: CNLSConstraint, incon: CNLSConstraint, lb: np.ndarray, ub: np.ndarray, scale: float):
         self._check_input(m, r, eqcon, incon, lb, ub)
         self.func = deepcopy(func)
         self.jac = deepcopy(jac)
