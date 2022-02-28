@@ -10,9 +10,8 @@ class CLS:
     """
     Represents an inequality-constrained least-squares problem.
     min_x ||H x - y||_2^2 / scale
-    s.t. A x = b, C x >= d, l <= x <= u
+    s.t. A x = b, C x >= d, l <= x <= u.
     """
-
     def __init__(self, h: np.ndarray, y: np.ndarray,
                  a: np.ndarray = None, b: np.ndarray = None,
                  c: np.ndarray = None, d: np.ndarray = None,
