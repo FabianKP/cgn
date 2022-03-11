@@ -19,9 +19,6 @@ def cls_solve(cls: CLS) -> np.ndarray:
     x_min = qp.solve_ls(R=r, s=s, G=g, h=h, A=a, b=b, lb=lb, ub=ub, solver="quadprog")
     if x_min is None:
         raise RuntimeError("Linear solver could not find a solution.")
-    if cls.c is not None:
-        constraint_error = np.linalg.norm((cls.c @ x_min - cls.d).clip(max=0.), ord=1)
-        print(f"Constraint error = {constraint_error}")
     return x_min
 
 

@@ -54,6 +54,7 @@ class NonlinearEqualityConstraint1(TestProblem):
         loss_grad = self._problem.costgrad
         eqcon = {"type": "eq", "fun": constraint1, "jac": constraintjac1}
         x_ref = sciopt.minimize(fun=loss_fun, jac=loss_grad, x0=xstart, constraints=(eqcon)).x
+        print(x_ref)
         self._minimum = loss_fun(x_ref)
 
 
