@@ -5,8 +5,8 @@ Tests ggn_new.solvers.GaussNewton on an unconstrained, nonlinear, one-dimensiona
 import numpy as np
 
 import cgn
-from tests.acceptance.problem import TestProblem
-from tests.acceptance.do_test import do_test
+from problem import TestProblem
+from do_test import do_test
 
 
 def beale(x):
@@ -26,10 +26,9 @@ class OneDimensionalProblem(TestProblem):
         # make initial uncertainty very high, so that we do not get
         # influence from the regularization term
         x0 = np.array([0.0])
-        x = cgn.Parameter(dim=1, name="x")
+        x = cgn.Parameter(start=x0, name="x")
         # no regularization
         x.beta = 0
-        self._start = [x0]
         self._problem = cgn.Problem(parameters=[x], fun=beale, jac=bealegrad)
         self._minimum = self._problem.costfun(xtruemin)
         self._tol = 1e-2

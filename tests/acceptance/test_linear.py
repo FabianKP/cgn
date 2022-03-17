@@ -55,7 +55,7 @@ def solve_problem(a, y, b):
 class LinearProblem(TestProblem):
     def __init__(self):
         TestProblem.__init__(self)
-        x = cgn.Parameter(dim=n, name="x")
+        x = cgn.Parameter(start=np.zeros(n), name="x")
         # standard regularization
         x.beta = 1.
         y = np.ones(m)
@@ -71,7 +71,6 @@ class LinearProblem(TestProblem):
         self._minimizer = x_ref
         self._minimum = self._problem.costfun(x_ref)
         self._tol = 1e-6
-        self._start = [np.zeros(n)]
 
 def test_linear():
     lp = LinearProblem()

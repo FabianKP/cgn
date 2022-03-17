@@ -12,7 +12,7 @@ def x_parameter():
     beta = 42
     mean = np.arange(n)
     regop = DiagonalOperator(dim=n, s=np.arange(1, n+1)**2)
-    x = Parameter(dim=n, name="x")
+    x = Parameter(start=np.zeros(n), name="x")
     x.beta = beta
     x.mean = mean
     x.regop = regop
@@ -23,7 +23,7 @@ def x_parameter():
 def y_parameter():
     n = 3
     beta = 0.
-    y = Parameter(dim=n, name="y")
+    y = Parameter(start=np.zeros(n), name="y")
     y.beta = beta
     y.lb = np.zeros(3)
     return y
@@ -35,7 +35,7 @@ def z_parameter():
     beta = 12
     mean = np.ones(n)
     rmat = np.ones((n, n))
-    z = Parameter(dim=n, name="z")
+    z = Parameter(start=np.zeros(n), name="z")
     z.beta = beta
     z.mean = mean
     z.regop = MatrixOperator(rmat)
@@ -47,7 +47,7 @@ def u_parameter():
     n = 4
     r = np.eye(n)[:2, :]
     regop = MatrixOperator(mat=r)
-    u = Parameter(dim=n, name="u")
+    u = Parameter(start=np.zeros(n), name="u")
     u.regop = regop
     u.beta = 1.
     return u

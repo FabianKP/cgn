@@ -61,12 +61,11 @@ def _compute_starting_value():
     """
     Finds a feasible point x0 s.t. constraintjac2(x0) = 0.
     """
-    x = cgn.Parameter(dim=n, name="x")
+    x = cgn.Parameter(start=2 * np.ones(n), name="x")
     x.beta = 1e-6   # small regularization so that problem is well-posed
     solver = cgn.CGN()
-    x_init = 2 * np.ones(n)
     problem = cgn.Problem(parameters=[x], fun=constraint2, jac=constraintjac2)
-    solution = solver.solve(problem=problem, starting_values=[x_init])
+    solution = solver.solve(problem=problem)
     x0 = solution.minimizer("x")
     return x0
 
@@ -75,14 +74,12 @@ class NonlinearEqualityConstraint2(TestProblem):
     def __init__(self):
         TestProblem.__init__(self)
         self._tol = 1e-5
-        x = cgn.Parameter(dim=n, name="x")
+        x = cgn.Parameter(start=_compute_starting_value(), name="x")
         # add inequality constraints
         incon = cgn.NonlinearConstraint(parameters=[x], fun=constraint2, jac=constraintjac2, ctype="eq")
         self._problem = cgn.Problem(parameters=[x], fun=misfit2, jac=misfitjac2, constraints=[incon])
         # Perform nonlinear equation solving to find starting value (using CGN, no less!)
-        xstart = _compute_starting_value()
-        self._start = [xstart]
-        c0 = np.linalg.norm(constraint2(xstart), ord=1)
+        c0 = np.linalg.norm(constraint2(x.start), ord=1)
         # Reduce ctol
         self._options.ctol = c0 * 10.
         # The true solution is known

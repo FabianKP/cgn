@@ -3,8 +3,9 @@ Contains class "Parameter".
 """
 
 import numpy as np
+from typing import Union
 
-from ..regop import RegularizationOperator, IdentityOperator
+from ..regop import RegularizationOperator, IdentityOperator, MatrixOperator
 
 EPS = np.finfo(float).eps
 
@@ -21,9 +22,12 @@ class Parameter:
 
     :ivar name: The name of the parameter.
     """
-    def __init__(self, dim: int, name: str):
+    def __init__(self, name: str, start: np.ndarray):
+        if start.ndim != 1:
+            raise ValueError("'start' must be a numpy array of shape (dim, ).")
         self.name = name
-        self._dim = dim
+        self._start = start
+        self._dim = start.size
         self._beta, self._mean, self._regop, self._lb, self._ub = self._default_values()
         self._rdim = self._regop.rdim
 
@@ -87,12 +91,31 @@ class Parameter:
         return self._regop
 
     @regop.setter
-    def regop(self, value: RegularizationOperator):
-        if value.dim != self._dim:
-            raise Exception(f"'regop' must be of dimension {self._dim}.")
+    def regop(self, value: Union[np.ndarray, RegularizationOperator]):
+        if isinstance(value, RegularizationOperator):
+            if value.dim != self._dim:
+                raise Exception(f"Dimension mismatch: 'regop' must be of dimension {self._dim}.")
+            else:
+                self._regop = value
+                self._rdim = value.rdim
         else:
-            self._regop = value
-            self._rdim = value.rdim
+            if value.shape[1] != self._dim:
+                raise Exception(f"Dimension mismatch: 'regop.shape[1]' must equal {self._dim}.")
+            self._regop = MatrixOperator(mat=value)
+
+    @property
+    def start(self) -> np.ndarray:
+        """
+        The starting value for this parameter.
+        """
+        return self._start.copy()
+
+    @start.setter
+    def start(self, value: np.ndarray):
+        if value.shape != (self._dim, ):
+            raise ValueError(f"Dimension mismatch. 'start' must have shape ({self._dim}, ).")
+        else:
+            self._start = value
 
     # constant properties
 

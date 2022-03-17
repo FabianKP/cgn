@@ -5,7 +5,7 @@ Contains class "MultiParameterProblem"
 from copy import deepcopy
 import numpy as np
 from scipy.sparse.linalg import LinearOperator
-from typing import List, Tuple, Union
+from typing import List, Sequence, Tuple, Union
 
 from ..regop import RegularizationOperator, IdentityOperator, MatrixOperator, linop_to_regop
 from .constraint import Constraint
@@ -40,7 +40,7 @@ class Problem:
             If provided, the cost function is divided by the scale.
             A good default choice for this parameter is m.
         """
-        self._check_input(parameters, fun, jac, q, constraints, scale)
+        self._check_input(parameters=parameters, fun=fun, jac=jac, q=q, constraints=constraints, scale=scale)
         self._parameter_list = parameters
         # Initialize constraints
         if constraints is None:
@@ -50,12 +50,12 @@ class Problem:
         self._nparams = len(parameters)
         # Set the shape-attribute
         self._shape = self._determine_shape(parameters)
-        # get measurement dimension m
-        self.m, self.n = self._find_m_n(parameters, fun)
-        self.scale = scale
-        self.q = self._default_regop(q, self.n)
         self.fun = deepcopy(fun)
         self.jac = deepcopy(jac)
+        # get measurement dimension m
+        self.m, self.n = self._find_m_n()
+        self.scale = scale
+        self.q = self._default_regop(q, self.m)
 
     @property
     def nparams(self) -> int:
@@ -141,19 +141,19 @@ class Problem:
     # PROTECTED
 
     def _check_input(self, parameters: List[Parameter], fun: callable, jac: callable,
-                     q: Union[np.ndarray, LinearOperator],
-                     constraints: Union[List[Constraint], None], scale: float):
+                     q: Union[np.ndarray, LinearOperator], constraints: Union[List[Constraint], None], scale: float):
         # Check that no two parameters have the same name
         self._no_duplicate_names(parameters)
-        # Check that fun and jac can take arguments that are of the form suggested by dims
-        m, n = self._find_m_n(parameters, fun)
-        #   Check that the dimensions of the output of jac match fun and the parameter dimension
-        x_list = []
-        for param in parameters:
-            x_list.append(np.zeros(param.dim))
-        j = jac(*x_list)
-        if j.shape != (m, n):
-            raise Exception("Dimensions are inconsistent.")
+        # Check that output of 'fun' and 'jac' has correct dimensions.
+        start_list = [param.start for param in parameters]
+        f_out = fun(*start_list)
+        j_out = jac(*start_list)
+        if f_out.ndim != 1:
+            raise Exception("Inconsistent specifications: The misfit function must return a numpy array of shape (m,).")
+        m = f_out.size
+        n = np.sum([param.dim for param in parameters])
+        if j_out.shape != (m, n):
+            raise Exception(f"Inconsistent specifications: The misfit Jacobian must have shape ({m}, {n}).")
         # Check that regop is either None or ArrayLike or RegularizationOperator, and of right dimension
         self._check_regop(q, m)
         # Check that the constraints are defined with respect to the given parameters.
@@ -212,17 +212,6 @@ class Problem:
             return True
 
     @staticmethod
-    def _find_m_n(parameters: List[Parameter], fun: callable):
-        x_list = []
-        n = 0
-        for param in parameters:
-            x_list.append(np.zeros(param.dim))
-            n += param.dim
-        y = fun(*x_list)
-        m = y.size
-        return m, n
-
-    @staticmethod
     def _no_duplicate_names(parameters: List[Parameter]):
         """
         Checks that no two parameters have the same name.
@@ -237,3 +226,13 @@ class Problem:
         contains_duplicates = len(name_list) != len(set(name_list))
         if contains_duplicates:
             raise Exception("'parameters' contains duplicate names.")
+
+    def _find_m_n(self):
+        """
+        Determine the output dimension m and the parameter dimension n.
+        """
+        n = np.sum([param.dim for param in self._parameter_list])
+        start_list = [param.start for param in self._parameter_list]
+        f_out = self.fun(*start_list)
+        m = f_out.size
+        return m, n

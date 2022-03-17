@@ -21,7 +21,8 @@ class Constraint:
         :param ctype: The type of the constraint.
         """
         # Check input
-        self._check_input(parameters, fun, jac, ctype)
+        self._check_consistency(parameters=parameters, fun=fun, jac=jac, ctype=ctype)
+
         # Compute parameter dimension.
         dim = 0
         for param in parameters:
@@ -80,20 +81,21 @@ class Constraint:
         return self._parameters
 
     @staticmethod
-    def _check_input(parameters: List[Parameter], fun: callable, jac: callable, ctype: Literal["eq", "ineq"]):
+    def _check_consistency(parameters: List[Parameter], fun: callable, jac: callable, ctype: Literal["eq", "ineq"]):
+        """
+        Given a feasible vector, checks whether the specifications are consistent.
+        """
         if ctype not in ["eq", "ineq"]:
             raise Exception("'ctype' must be either 'eq' or 'ineq'.")
-        n = 0
-        for param in parameters:
-            n += param.dim
-        testarg = [param.mean for param in parameters]
-        y = fun(*testarg)
+        n = sum([param.dim for param in parameters])
+        start_list = [param.start for param in parameters]
+        y = fun(*start_list)
         m = y.size
-        y_good_shape = y.shape == (m, )
+        y_good_shape = y.shape == (m,)
         if not y_good_shape:
             raise Exception(f"The function 'fun' must return numpy arrays of shape ({m}, ).")
-        j = jac(*testarg)
+        j = jac(*start_list)
         jac_shape_good = j.shape == (m, n)
         if not jac_shape_good:
             raise Exception(f"The function 'jac' must return arrays of shape ({m}, {n}) but return arrays of shape "
-                            f"{jac.shape}")
+                            f"{j.shape}")

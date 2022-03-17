@@ -2,7 +2,7 @@ import numpy as np
 
 from cgn.translator.multiparameter import MultiParameter
 
-from ..test_problem.parameter_fixtures import x_parameter, z_parameter, u_parameter
+from tests.unit.test_problem.parameter_fixtures import x_parameter, z_parameter, u_parameter
 
 
 def test_multi_parameter(x_parameter, z_parameter, u_parameter):

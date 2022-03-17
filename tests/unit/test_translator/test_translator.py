@@ -1,11 +1,10 @@
 
 import numpy as np
-import pytest
 
 from cgn.translator import Translator
 from cgn.cnls_solve import CNLS, NullConstraint
 
-from ..test_problem.problem_fixtures import three_parameter_problem, unconstrained_problem
+from tests.unit.test_problem.problem_fixtures import three_parameter_problem, unconstrained_problem
 
 
 def test_translate(three_parameter_problem):

@@ -1,6 +1,6 @@
 
 import numpy as np
-from typing import List
+from typing import List, Sequence
 
 from .problem import Problem, ProblemSolution
 from .translator import Translator
@@ -22,7 +22,7 @@ class CGN:
         self.options = Solveroptions()
         self.linesearch = LinesearchOptions()
 
-    def solve(self, problem: Problem, starting_values: List[np.ndarray]) -> ProblemSolution:
+    def solve(self, problem: Problem) -> ProblemSolution:
         """
         Computes the solution of the constrained nonlinear least-squares problem using the
         constrained Gauss-Newton method.
@@ -32,8 +32,8 @@ class CGN:
             The length of the list must be equal to :py:attr:`Problem.nparams`.
         :return: The solution to the optimization problem.
         """
-        # Check that the starting values are consistent with constraints.
-        self._check_starting_values(starting_values, problem)
+        # Check consistency of the given problem.
+        starting_values = [param.start for param in problem.parameters]
         translator = Translator(problem)
         # Translate the multi-parameter problem to a CNLS problem.
         cnls = translator.translate()

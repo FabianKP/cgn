@@ -2,7 +2,7 @@
 import numpy as np
 
 import cgn
-from tests.acceptance.problem import TestProblem
+from problem import TestProblem
 
 
 def do_test(test: TestProblem):
@@ -11,7 +11,7 @@ def do_test(test: TestProblem):
     # Set solver options equal to the problem-specific options
     solver.options = test.options
     # Solve problem with cgn:
-    solution = solver.solve(problem=test.cgnproblem, starting_values=test.start)
+    solution = solver.solve(problem=test.cgnproblem)
     # Compute the cost of the cgn-minimizer.
     cost = solution.cost
     minimizer = solution.minimizer_tuple

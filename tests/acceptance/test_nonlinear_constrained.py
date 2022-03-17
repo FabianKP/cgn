@@ -50,9 +50,8 @@ class NonlinearConstrainedProblem(TestProblem):
     def __init__(self):
         TestProblem.__init__(self)
         x0 = t * (1 - t)
-        x = cgn.Parameter(dim=n, name="x")
+        x = cgn.Parameter(start=np.zeros(n), name="x")
         x.beta = 0.
-        self._start = [x0]
         self._problem = cgn.Problem(parameters=[x], fun=dbv, jac=dbv_jac)
         # compute reference solution with scipy.optimize:
         loss_fun = self._problem.costfun
@@ -65,7 +64,7 @@ class NonlinearConstrainedProblem(TestProblem):
         b = np.array(a @ x_ref).reshape((1,))
         x0 = x0 / np.sum(x0) * np.sum(x_ref)
         assert np.isclose(a @ x0, b).all()
-        self._start = [x0]
+        x.start = x0 * np.ones(n)
         # Add the constraint to the cgn.Problem object
         eqcon = cgn.LinearConstraint(parameters=[x], a=a, b=b, ctype="eq")
         self._problem.constraints.append(eqcon)

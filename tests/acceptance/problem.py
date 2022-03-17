@@ -15,8 +15,6 @@ class TestProblem:
         self._tol = None
         self._options = Solveroptions()
         self._options.set_verbosity(1)
-        self._start = None
-
     @property
     def cgnproblem(self) -> cgn.Problem:
         return self._problem

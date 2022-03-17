@@ -10,8 +10,8 @@ def test_problem():
     # Initialize parameters
     n1 = 20
     n2 = 50
-    x = Parameter(dim=n1, name="x")
-    y = Parameter(dim=n2, name="y")
+    x = Parameter(start=np.zeros(n1), name="x")
+    y = Parameter(start=np.zeros(n2), name="y")
     x.beta = 0.384
     y.beta = 32.2
     x.lb = np.zeros(n1)
@@ -32,7 +32,7 @@ def test_problem():
         return np.square(np.concatenate((x1, x2), axis=0))
     def jac(x1, x2):
         return 2 * np.diagflat(np.concatenate((x1, x2), axis=0))
-    problem = Problem(parameters=[x, y], fun=fun, jac=jac, scale=scale, constraints=[eqcon, incon])
+    problem = Problem(parameters=[x, y], fun=fun, jac=jac, constraints=[eqcon, incon], scale=scale)
     # Check that the correct problem was initialized
     assert isinstance(problem.q, IdentityOperator)
     assert problem.nparams == 2
@@ -43,9 +43,9 @@ def test_constraints_must_depend_on_problem_parameters():
     n1 = 20
     n2 = 50
     n3 = 1
-    x = Parameter(dim=n1, name="x")
-    y = Parameter(dim=n2, name="y")
-    z = Parameter(dim=n3, name="z")
+    x = Parameter(start=np.zeros(n1), name="x")
+    y = Parameter(start=np.zeros(n2), name="y")
+    z = Parameter(start=np.zeros(n3), name="z")
     a1 = np.random.randn(n1 + n2 + n3, n1 + n2 + n3)
     b1 = np.random.randn(n1 + n2 + n3)
     con1 = LinearConstraint(parameters=[x, y, z], a=a1, b=b1, ctype="eq")
@@ -65,8 +65,8 @@ def test_constraints_must_depend_on_problem_parameters():
 def test_modify_problem_after_initialization():
     n1 = 20
     n2 = 50
-    x = Parameter(dim=n1, name="x")
-    y = Parameter(dim=n2, name="y")
+    x = Parameter(start=np.zeros(n1), name="x")
+    y = Parameter(start=np.zeros(n2), name="y")
     def fun(x1, x2):
         return np.square(np.concatenate((x1, x2), axis=0))
     def jac(x1, x2):
@@ -88,14 +88,14 @@ def test_modify_problem_after_initialization():
 def test_no_duplicate_names_allowed():
     n1 = 10
     n2 = 20
-    x1 = Parameter(dim=n1, name="x")
-    x2 = Parameter(dim=n2, name="x")
+    x1 = Parameter(start=np.zeros(n1), name="x")
+    x2 = Parameter(start=np.zeros(n2), name="x")
     def fun(x1, x2):
         return np.square(np.concatenate((x1, x2), axis=0))
     def jac(x1, x2):
         return 2 * np.diagflat(np.concatenate((x1, x2), axis=0))
     with pytest.raises(Exception) as e:
-        problem = Problem(fun=fun, jac=jac, parameters=[x1, x2])
+        problem = Problem(parameters=[x1, x2], fun=fun, jac=jac)
 
 
 

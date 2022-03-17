@@ -24,9 +24,9 @@ def three_parameter_problem():
     n1 = 20
     n2 = 50
     n3 = 1
-    x = Parameter(dim=n1, name="x")
-    y = Parameter(dim=n2, name="y")
-    z = Parameter(dim=n3, name="z")
+    x = Parameter(start=np.zeros(n1), name="x")
+    y = Parameter(start=np.zeros(n2), name="y")
+    z = Parameter(start=np.zeros(n3), name="z")
     x.beta = 0.384
     y.beta = 32.2
     x.lb = np.zeros(n1)
@@ -48,7 +48,7 @@ def three_parameter_problem():
 
     def jac(x, y, z):
         return 2 * np.diagflat(np.concatenate((x, y, z), axis=0))
-    problem = Problem(parameters=[x, y, z], fun=fun, jac=jac, scale=scale, constraints=[eqcon, incon])
+    problem = Problem(parameters=[x, y, z], fun=fun, jac=jac, constraints=[eqcon, incon], scale=scale)
     return problem
 
 
@@ -56,8 +56,8 @@ def three_parameter_problem():
 def unconstrained_problem():
     n1 = 20
     n2 = 3
-    x = Parameter(dim=n1, name="x")
-    y = Parameter(dim=n2, name="y")
+    x = Parameter(start=np.zeros(n1), name="x")
+    y = Parameter(start=np.zeros(n2), name="y")
     x.beta = 3
     y.mean = np.arange(n2)
     def fun(x, y):

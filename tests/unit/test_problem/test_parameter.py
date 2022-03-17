@@ -9,7 +9,7 @@ from cgn.regop import IdentityOperator, MatrixOperator
 def test_parameter():
     d1 = 10
     d2 = 1
-    x = Parameter(dim=d1, name="x")
+    x = Parameter(start=np.zeros(d1), name="x")
     # Check defaults
     assert x.dim == d1
     assert x.beta == 0.
@@ -27,21 +27,21 @@ def test_parameter():
     x.regop = MatrixOperator(mat=r)
     assert np.isclose(x.regop.mat, r).all()
     assert x.rdim == r1
-    y = Parameter(dim=d2, name="y")
+    y = Parameter(start=np.zeros(d2), name="y")
     assert np.isclose(y.mean, np.zeros((d2,))).all()
 
 
 def test_parameter_exceptions():
     d = 10
     d_wrong = 7
-    x = Parameter(dim=d, name="x")
+    x = Parameter(start=np.zeros(d), name="x")
     with pytest.raises(Exception) as e1:
         x.beta = np.arange(d)   # cannot assign vector to beta
         print(x.beta)
     with pytest.raises(Exception) as e2:
         x.mean = np.arange(d_wrong)     # mean must have correct dimension
     with pytest.raises(Exception) as e3:
-        x.regop = np.random.randn(d, d)     # cannot assign matrix to regularization operator
+        x.regop = np.random.randn(d, d_wrong)     # matrix must have correct dimension
     with pytest.raises(Exception) as e4:
         r = IdentityOperator(dim=d_wrong)
         x.regop = r     # regularization operator must have correct dimension.
@@ -52,7 +52,7 @@ def test_bound():
     d_wrong = 7
     lb1 = np.zeros(d)
     lb2 = np.zeros(d_wrong)
-    x = Parameter(dim=d, name="x")
+    x = Parameter(start=np.zeros(d), name="x")
     # check that default is no lower bound
     assert np.all(x.lb <= - np.inf)
     x.lb = lb1
@@ -64,7 +64,7 @@ def test_bound():
 def test_rdim():
     d = 10
     r = 20
-    x = Parameter(dim=d, name="x")
+    x = Parameter(start=np.zeros(d), name="x")
     regop = np.random.randn(r, d)
     x.regop = MatrixOperator(regop)
     assert x.rdim == r

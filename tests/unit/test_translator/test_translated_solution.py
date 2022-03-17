@@ -10,8 +10,8 @@ def test_translated_solution():
     n1 = 10
     n2 = 3
     n = n1 + n2
-    x = Parameter(dim=n1, name="x")
-    y = Parameter(dim=n2, name="y")
+    x = Parameter(start=np.zeros(n1), name="x")
+    y = Parameter(start=np.zeros(n2), name="y")
     p = np.random.randn(n, n)
     cost = 4.2
     success = False

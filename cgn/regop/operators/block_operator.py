@@ -41,6 +41,7 @@ class BlockOperator(RegularizationOperator):
         else:
             # matrix case
             w = self._mat @ v
+        assert w.shape[0] == self.rdim
         return w
 
     def adj(self, v: np.ndarray) -> np.ndarray:

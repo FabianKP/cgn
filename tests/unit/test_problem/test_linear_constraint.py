@@ -9,7 +9,7 @@ def test_linear_constraint():
     n = 13
     c = 3
     # create parameter
-    x = Parameter(dim=n, name="x")
+    x = Parameter(start=np.zeros(n), name="x")
     a = np.random.randn(c, n)
     b = np.random.randn(c)
     eqcon = LinearConstraint(parameters=[x], a=a, b=b, ctype="eq")
@@ -24,7 +24,7 @@ def test_linear_constraint():
         eqcon.b = np.random.randn(c)
         eqcon.ctype = "foo"
     # Check that dimensions must match
-    y = Parameter(dim=n+2, name="y")
+    y = Parameter(start=np.zeros(n+2), name="y")
     with pytest.raises(Exception) as e:
         newcon = LinearConstraint(parameters=[y], a=a, b=b, ctype="ineq")
     # Check that ctype is checked
@@ -37,8 +37,8 @@ def test_multiple_parameters():
     n1 = 13
     n2 = 1
     c = 1
-    x1 = Parameter(dim=n1, name="x1")
-    x2 = Parameter(dim=n2, name="x2")
+    x1 = Parameter(start=np.zeros(n1), name="x1")
+    x2 = Parameter(start=np.zeros(n2), name="x2")
     a = np.random.randn(c, n1+n2)
     b = np.random.randn(c)
     eqcon = LinearConstraint(parameters=[x1, x2], a=a, b=b, ctype="eq")

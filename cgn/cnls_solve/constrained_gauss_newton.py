@@ -183,7 +183,7 @@ class ConstrainedGaussNewton:
         else:
             lb = None
             ub = None
-        if self._cnls.r is NullOperator:
+        if isinstance(self._cnls.r, NullOperator):
             h = j
             y = - f
         else:
@@ -206,7 +206,7 @@ class ConstrainedGaussNewton:
             return False
 
     def _compute_w(self, x):
-        if self._cnls.r is None:
+        if self._cnls.r is NullOperator:
             w = 0.
         else:
             w = self._cnls.r.fwd(x - self._cnls.m)

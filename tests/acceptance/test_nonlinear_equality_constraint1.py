@@ -43,17 +43,15 @@ class NonlinearEqualityConstraint1(TestProblem):
     def __init__(self):
         TestProblem.__init__(self)
         self._tol = 1e-6
-        x = cgn.Parameter(dim=n, name="x")
+        x = cgn.Parameter(start=np.zeros(n), name="x")
         # add inequality constraints
         incon = cgn.NonlinearConstraint(parameters=[x], fun=constraint1, jac=constraintjac1, ctype="eq")
         self._problem = cgn.Problem(parameters=[x], fun=misfit1, jac=misfitjac1, constraints=[incon])
-        xstart = np.zeros(2)
-        self._start = [xstart]
         # Solve the problem with SLSQP for comparison
         loss_fun = self._problem.costfun
         loss_grad = self._problem.costgrad
         eqcon = {"type": "eq", "fun": constraint1, "jac": constraintjac1}
-        x_ref = sciopt.minimize(fun=loss_fun, jac=loss_grad, x0=xstart, constraints=(eqcon)).x
+        x_ref = sciopt.minimize(fun=loss_fun, jac=loss_grad, x0=x.start, constraints=(eqcon)).x
         print(x_ref)
         self._minimum = loss_fun(x_ref)
 

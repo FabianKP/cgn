@@ -14,12 +14,12 @@ class NullOperator(RegularizationOperator):
 
     def adj(self, v: np.ndarray):
         """
-        Always returns 0.
+        Always returns Nothing.
         """
-        return np.zeros((1,))
+        return np.zeros(self.dim)
 
     def fwd(self, v: np.ndarray):
         """
-        Always return 0.
+        Always return Nothing.
         """
-        return np.zeros((1,))
+        return np.array([])
