@@ -10,17 +10,9 @@
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #
-# This guarantees that ReadTheDocs compiles with numpy.
-# See https://blog.rtwilson.com/how-to-make-your-sphinx-documentation-compile-with-readthedocs-when-youre-using-numpy-and-scipy/
 import os
 import sys
 sys.path.insert(0, os.path.abspath('../../'))
-
-import mock
-
-MOCK_MODULES = ['numpy', 'scipy', 'scipy.linalg', 'qpsolvers', 'prettytable', 'typing']
-for mod_name in MOCK_MODULES:
-    sys.modules[mod_name] = mock.Mock()
 
 
 # -- Project information -----------------------------------------------------
