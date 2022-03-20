@@ -1,6 +1,4 @@
-"""
-Contains class "TestProblem"
-"""
+
 import cgn
 from cgn.cnls_solve.solveroptions import Solveroptions
 

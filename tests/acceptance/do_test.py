@@ -2,7 +2,7 @@
 import numpy as np
 
 import cgn
-from problem import TestProblem
+from tests.acceptance.problem import TestProblem
 
 
 def do_test(test: TestProblem):

@@ -1,0 +1,2 @@
+To run all tests, execute "python -m pytest" in the top project folder (assuming that you have all pytest and all other
+dependencies installed).
