@@ -17,6 +17,7 @@ with constraints.
 
    installation.rst
    tutorial.rst
+   cgn.rst
 
 Mathematical background
 -----------------------
@@ -59,12 +60,6 @@ The steplength :math:`h_k` is determined using a line-search filter developed by
 
     Wächter, A., & Biegler, L. T. (2006). On the implementation of an interior-point filter line-search algorithm for
     large-scale nonlinear programming. Mathematical programming, 106(1), 25-57.
-
-
-.. automodule:: cgn
-   :members:
-   :imported-members:
-   :show-inheritance:
 
 
 Indices and tables

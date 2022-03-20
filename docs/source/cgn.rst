@@ -9,7 +9,6 @@ Subpackages
 
    cgn.cls_solve
    cgn.cnls_solve
-   cgn.jacobian_test
    cgn.problem
    cgn.regop
    cgn.translator

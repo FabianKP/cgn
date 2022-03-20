@@ -48,15 +48,17 @@ In order to use ``cgn``, you have to create a :py:class:`cgn.Problem` object tha
 represents your optimization problem.
 
 .. autoclass:: cgn.Problem
+    :noindex:
 
 
 Defining linear constraints
---------------------
+---------------------------
 
 Linear constraints of the form :math:`\mathbf A \mathbf x = \mathbf b` or :math:`\mathbf C \mathbf
 x \geq \mathbf d`, have to be defined as :py:class:`cgn.LinearConstraint` objects.
 
 .. autoclass:: cgn.LinearConstraint
+    :noindex:
 
 
 Defining nonlinear constraints
@@ -66,6 +68,7 @@ Nonlinear constraints of the form :math:`\mathbf G(\mathbf x) = \mathbf 0` or
 :math:`\mathbf H(\mathbf x) \geq \mathbf 0` have to be defined as :py:class:`cgn.NonlinearConstraint` objects.
 
 .. autoclass:: cgn.NonlinearConstraint
+    :noindex:
 
 
 Defining bound constraints
@@ -126,6 +129,7 @@ This represent the solver.
     solver = cgn.CGN()
 
 .. autoclass:: cgn.CGN
+    :noindex:
 
 You can then set the solver options by modifying the :py:attr:`cgn.CGN.solveroptions` attribute.
 As an example, the following code changes the maximum number of iterations to 300:
@@ -135,6 +139,7 @@ As an example, the following code changes the maximum number of iterations to 30
     solver.options.maxiter = 300
 
 .. autoclass:: cgn.Solveroptions
+    :noindex:
 
 
 Solving the optimization problem
@@ -156,6 +161,7 @@ Afterwards, you can call the solver using the code
 The output `solution` is an object of type :py:class:`cgn.ProblemSolution`.
 
 .. autoclass:: cgn.ProblemSolution
+    :noindex:
 
 Template
 ========

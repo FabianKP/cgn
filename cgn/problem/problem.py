@@ -1,6 +1,3 @@
-"""
-Contains class "MultiParameterProblem"
-"""
 
 from copy import deepcopy
 import numpy as np
@@ -16,12 +13,9 @@ class Problem:
     Class for formulating regularized nonlinear least-squares problems with linear constraints:
 
     .. math::
-        \\min_{x_1,...,x_p} \\quad & ||Q F(x_1,...,x_p)||_2^2 + \\beta_1 * ||R_1(x_1 - m_1)||_2^2 + \\ldots +
-        \\beta_2 * ||R_p(x_p - m_p)||_2^2 \\\\
+        \\min_{x_1,...,x_p} \\quad & ||Q F(x_1,...,x_p)||_2^2 + \\beta_1 ||R_1(x_1 - m_1)||_2^2 + \\ldots +
+        \\beta_2 ||R_p(x_p - m_p)||_2^2 \\\\
           s.t. \\quad & Ax = b, \\quad Cx \\geq d, G(x) = 0, H(x) \\geq 0, \\quad l \\leq x \\leq u.
-
-    :ivar m: The dimension of the codomain of the function :math:``F``.
-    :ivar n: The dimension of the concatenated parameter vector :math:``x = (x_1, x_2, ..., x_p)``.
     """
     def __init__(self, parameters: List[Parameter], fun: callable, jac: callable,
                  q: Union[np.ndarray, RegularizationOperator] = None, constraints: List[Constraint] = None,
@@ -30,12 +24,13 @@ class Problem:
         :param parameters: The parameters on which the problem depends, e.g. [x1, x2, ..., xp].
         :param fun: A function accepting arguments corresponding to ``parameters``.
             For example, if ``parameters = [x, y, z]``, then ``fun(u, v, w)`` should be defined, where e.g. v would
-             be a numpy array of shape (y.dim,). The output of ``fun(u, v, w)`` should be a numpy array of shape (m,).
+            be a numpy array of shape (y.dim,). The output of ``fun(u, v, w)`` should be a numpy array of shape (m,).
         :param jac: The Jacobian corresponding to `fun`. It should accept the same argument as `fun`, and the output
             should be a numpy array with shape (m, n), where n is the sum of the dimensions of the parameters.
         :param q: The regularization of the misfit term. Typically, this will be a square root of the noise precision
             matrix. Can either be a numpy array or a :py:class:`RegularizationOperator` (the latter is recommended if
             the evaluation of ``q`` can be implemented much faster than a matrix-product, e.g. is ``q`` is diagonal).
+        :param constraints: List of constraints that the parameters have to satisfy.
         :param scale: The scale of the cost function. This only matters for the optimization.
             If provided, the cost function is divided by the scale. A good default choice for this parameter is m.
         """
@@ -124,6 +119,7 @@ class Problem:
         """
         Gives access to the parameter of the given name.
 
+        :param pname: The name of the parameter.
         :raises Exception: If no parameter of name ``pname`` is found.
         """
         for param in self._parameter_list:

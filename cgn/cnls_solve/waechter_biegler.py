@@ -3,6 +3,7 @@ Contains classes "WaechterBiegler" and "WBState"
 """
 
 import numpy as np
+from typing import Tuple
 
 from .cnls import CNLS
 from .linesearch_options import LinesearchOptions
@@ -25,8 +26,8 @@ class WBState:
 class WaechterBiegler:
     """
     Implements the Lagrange-multiplier-free linesearch algorithm proposed by
-    Wächter and Biegler in
-    "Line Search LinearFilter Methods for Nonlinear Programming: Motivation and Global Convergence" (2005).
+    Wächter and Biegler in "Line Search LinearFilter Methods for Nonlinear Programming: Motivation and
+    Global Convergence" (2005).
     """
     def __init__(self, create_state, cnls: CNLS, costfun: callable, options: LinesearchOptions):
         self.p = options
@@ -41,11 +42,9 @@ class WaechterBiegler:
         self._ub = cnls.ub
         self._history = []
 
-    def _theta(self, state: CGNState):
+    def _theta(self, state: CGNState) -> float:
         """
         The penalty function for the constraint.
-        :param state: State
-        :return:
         """
         penalty = 0
         x = state.x
@@ -63,7 +62,7 @@ class WaechterBiegler:
 
     def _add_corner(self, state: WBState):
         """
-        adds corner entry to filter
+        Adds corner entry to filter
         """
         phi_w = state.phi
         theta_w = state.theta
@@ -71,7 +70,7 @@ class WaechterBiegler:
 
     def _filter_allows(self, state: WBState):
         """
-        :return: True if w satisfies filter condition.
+        Checks if the given state satisfies the filter condition.
         """
         phiw = state.phi
         thetaw = state.theta
@@ -104,7 +103,7 @@ class WaechterBiegler:
 
     def _armijo(self, state: WBState, h, m, phi_now):
         """
-        Checks if proposed step satisfies Armijo condition.
+        Checks if proposed step satisfies the Armijo condition.
         """
         if state.phi <= phi_now + self.p.eta * h * m:
             return True
@@ -122,14 +121,18 @@ class WaechterBiegler:
         else:
             return False
 
-    def next_position(self, state, p, cost_gradient):
+    def next_position(self, state, p, cost_gradient) -> Tuple[CGNState, float, bool, float]:
         """
         Implements the actual line search iteration.
-        :param state: current state
-        :param p: proposed direction
-        :param cost_gradient: (n,) array
-            Gradient of cost function at current position.
-        :return: next position w_next, computed with optimal steplength.
+
+        :param state: Current state.
+        :param p: Proposed direction vector.
+        :param cost_gradient: Gradient of cost function associated to current state.
+        :return: (next_state, phi_next, aborted, h)
+            next_state: The state at the next position.
+            phi_next: The cost function at the next position.
+            aborted: A Boolean that indicates whether the line search was unsuccessful (True) or successful (False).
+            h: The determined step length.
         """
         phi_now = self._phi(state)
         theta_now = self._theta(state)
@@ -162,18 +165,16 @@ class WaechterBiegler:
             next_state = new_state
         return next_state.state, next_state.phi, aborted, h
 
-    def _create_wbstate(self, x) -> WBState:
+    def _create_wbstate(self, x: np.ndarray) -> WBState:
         """
-        :param x: ndarray
-        :return: WBState
-            WBState object corresponding to x
+        Given a vector, computes the associated WBState.
         """
         state = self._create_state(x)
         wbstate = WBState(state, phi=self._phi(state), theta=self._theta(state))
         return wbstate
 
     @staticmethod
-    def _negative_norm(x):
+    def _negative_norm(x: np.ndarray):
         x_neg = x.clip(max=0.)
         norm_neg = np.linalg.norm(x_neg, ord=1)
         return norm_neg
