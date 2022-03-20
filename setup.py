@@ -23,6 +23,6 @@ setuptools.setup(
     classifiers=[
         'Intended Audience :: Researchers',
         'License :: OSI Approved :: GNU GPLv3'
-        'Programming Language :: Python :: 3.8',
+        'Programming Language :: Python :: 3.10',
     ],
 )
