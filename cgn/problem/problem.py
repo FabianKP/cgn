@@ -4,10 +4,9 @@ Contains class "MultiParameterProblem"
 
 from copy import deepcopy
 import numpy as np
-from scipy.sparse.linalg import LinearOperator
-from typing import List, Sequence, Tuple, Union
+from typing import List, Tuple, Union
 
-from ..regop import RegularizationOperator, IdentityOperator, MatrixOperator, linop_to_regop
+from ..regop import RegularizationOperator, IdentityOperator, MatrixOperator
 from .constraint import Constraint
 from .parameter import Parameter
 
@@ -25,7 +24,7 @@ class Problem:
     :ivar n: The dimension of the concatenated parameter vector :math:``x = (x_1, x_2, ..., x_p)``.
     """
     def __init__(self, parameters: List[Parameter], fun: callable, jac: callable,
-                 q: Union[np.ndarray, LinearOperator] = None, constraints: List[Constraint] = None,
+                 q: Union[np.ndarray, RegularizationOperator] = None, constraints: List[Constraint] = None,
                  scale: float = 1.):
         """
         :param parameters: The parameters on which the problem depends, e.g. [x1, x2, ..., xp].
@@ -35,10 +34,10 @@ class Problem:
         :param jac: The Jacobian corresponding to `fun`. It should accept the same argument as `fun`, and the output
             should be a numpy array with shape (m, n), where n is the sum of the dimensions of the parameters.
         :param q: The regularization of the misfit term. Typically, this will be a square root of the noise precision
-            matrix. Can either be a numpy array or a :py:class:`LinearOperator`.
+            matrix. Can either be a numpy array or a :py:class:`RegularizationOperator` (the latter is recommended if
+            the evaluation of ``q`` can be implemented much faster than a matrix-product, e.g. is ``q`` is diagonal).
         :param scale: The scale of the cost function. This only matters for the optimization.
-            If provided, the cost function is divided by the scale.
-            A good default choice for this parameter is m.
+            If provided, the cost function is divided by the scale. A good default choice for this parameter is m.
         """
         self._check_input(parameters=parameters, fun=fun, jac=jac, q=q, constraints=constraints, scale=scale)
         self._parameter_list = parameters
@@ -141,7 +140,8 @@ class Problem:
     # PROTECTED
 
     def _check_input(self, parameters: List[Parameter], fun: callable, jac: callable,
-                     q: Union[np.ndarray, LinearOperator], constraints: Union[List[Constraint], None], scale: float):
+                     q: Union[np.ndarray, RegularizationOperator], constraints: Union[List[Constraint], None],
+                     scale: float):
         # Check that no two parameters have the same name
         self._no_duplicate_names(parameters)
         # Check that output of 'fun' and 'jac' has correct dimensions.
@@ -175,7 +175,7 @@ class Problem:
                                 "'parameters'.")
 
     @staticmethod
-    def _default_regop(regop: Union[np.ndarray, LinearOperator, None], dim: int) -> RegularizationOperator:
+    def _default_regop(regop: Union[np.ndarray, RegularizationOperator, None], dim: int) -> RegularizationOperator:
         if regop is None:
             # default to identity
             regop = IdentityOperator(dim=dim)
@@ -185,7 +185,7 @@ class Problem:
             else:
                 regop = MatrixOperator(mat=regop)
         else:
-            regop = linop_to_regop(regop)
+            regop = regop
         return regop
 
     @staticmethod

@@ -1,10 +1,3 @@
-"""
-Contains the functions testJacobian, taylor_test and second_order_remainder.
-"""
-
-# This software was written by Fabian Parzer.
-# Copyright owned by the University of Vienna, 2020. All rights reserved.
-
 
 from numpy.linalg import norm
 from numpy.random import normal
@@ -61,9 +54,7 @@ def taylor_test(fun, jac, x, dx, verbose, tol, c):
 
 def test_jacobian(fun, jac, x, verbose=False, ntests=42, tol=1e-13, reduction=0.5, nonneg = False, ratio=0.75):
     """
-    Tests the validity of the Jacobian in a small neighbourhood of x.
-    It performs two tests, one is the Taylor remainder tests,
-    the second is based on scipy.optimize.check_grad.
+    Tests the validity of the Jacobian in a small neighbourhood of x using the Taylor remainder test.
     What is actually tested is the gradient of x -> 0.5*||fun(x)||^2
     which is given by jac(x).T @ fun(x).
     :param fun: the function, must return numpy vector
