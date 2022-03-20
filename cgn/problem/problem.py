@@ -123,6 +123,7 @@ class Problem:
     def parameter(self, pname: str) -> Parameter:
         """
         Gives access to the parameter of the given name.
+
         :raises Exception: If no parameter of name ``pname`` is found.
         """
         for param in self._parameter_list:

@@ -17,6 +17,7 @@ class CNLS:
     .. math::
         min_x (1/scale) * ( 0.5*||Q F(x) ||^2 + 0.5*||R(x-m)||^2 )
         s.t. G(x) = 0, H(x) \\geq 0, l \\leq x \\leq u.
+
     The regularization term is optional.
     """
     def __init__(self, func: callable, jac: callable, q: RegularizationOperator, m: np.ndarray, r: RegularizationOperator,
@@ -42,9 +43,12 @@ class CNLS:
     def constraint_violation(self, x: np.ndarray) -> float:
         """
         Computes the constraint violation
-            cv = ||(ub - x)^-||_1 + ||(x - lb)^-||_1 + ||g(x)||_1 + ||h(x)^-||_1.
-        :param x:
-        :return:
+
+        .. math::
+            v = ||(ub - x)^-||_1 + ||(x - lb)^-||_1 + ||g(x)||_1 + ||h(x)^-||_1.
+
+        :param x: Of shape (`self.dim`, ). The input vector.
+        :return: The constraint violation :math:`v`.
         """
         constraint_error = 0.
         if self.equality_constrained:

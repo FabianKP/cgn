@@ -12,14 +12,6 @@ Subpackages
 Submodules
 ----------
 
-cgn.regop.linear\_to\_regop module
-----------------------------------
-
-.. automodule:: cgn.regop.linear_to_regop
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
 cgn.regop.regularization\_operator module
 -----------------------------------------
 

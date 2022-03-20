@@ -9,12 +9,12 @@ from .parameter import Parameter
 class LinearConstraint(Constraint):
     """
     Represents a linear constraint. Either an equality constraint :math:`Ax = b`, or an inequality constraint
-    :math:`Ax \\geq b`, where :math:`A \\in \\mathbb{R}^{c \\times n}.
+    :math:`Ax \\geq b`, where :math:`A \\in \\mathbb{R}^{c \\times n}`.
     """
     def __init__(self, parameters: List[Parameter], a: np.ndarray, b: np.ndarray, ctype: Literal["eq", "ineq"]):
         """
         Represents a linear constraint. Either an equality constraint :math:`Ax = b`, or an inequality constraint
-        :math:`Ax \geq b`, where :math:`A \in \mathbb{R}^{c \times n}.
+        :math:`Ax \\geq b`, where :math:`A \\in \\mathbb{R}^{c \\times n}`.
 
         :param parameters: A list of the parameters involved in the constraint. If the list contains more than one
             element, the constraint will be defined with respect to the concatenated parameter vector.
@@ -58,7 +58,8 @@ class LinearConstraint(Constraint):
         """
         return self._cdim
 
-    def _check_input_linear(self, parameters: List[Parameter], a: np.ndarray, b: np.ndarray,
+    @staticmethod
+    def _check_input_linear(parameters: List[Parameter], a: np.ndarray, b: np.ndarray,
                             ctype: Literal["eq", "ineq"]):
         if ctype not in ["eq", "ineq"]:
             raise Exception("'ctype' must either be 'eq' or 'ineq'.")
@@ -70,6 +71,3 @@ class LinearConstraint(Constraint):
         m = a.shape[0]
         if not b.shape == (m, ):
             raise Exception(f"'b' must have shape ({m},).")
-
-
-

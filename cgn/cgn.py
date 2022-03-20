@@ -1,6 +1,6 @@
 
 import numpy as np
-from typing import List, Sequence
+from typing import List
 
 from .problem import Problem, ProblemSolution
 from .translator import Translator
@@ -28,8 +28,6 @@ class CGN:
         constrained Gauss-Newton method.
 
         :param problem: The optimization problem to solve.
-        :param starting_values: The starting values for the optimization.
-            The length of the list must be equal to :py:attr:`Problem.nparams`.
         :return: The solution to the optimization problem.
         """
         # Check consistency of the given problem.
@@ -62,5 +60,3 @@ class CGN:
         for i in range(p):
             if not starting_values[i].shape == (problem.shape[i], ):
                 raise Exception(f"The {i}-th starting value must have shape ({problem.shape[i]}, )")
-
-
