@@ -20,4 +20,4 @@ Usage
 
 For some simple end-to-end use cases, see the [Examples](https://github.com/FabianKP/cgn/tree/main/examples). For a 
 more detailed explanation of the interface to ``cgn``, see the [Tutorial](). For full details on the individual classes 
-and functions, please refer to the [Documentation]().the [tutorial](TODO) and [documentation](TODO).
+and functions, please refer to the [Documentation]().
