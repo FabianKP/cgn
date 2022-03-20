@@ -2,12 +2,9 @@ import setuptools
 
 # python3 setup.py sdist bdist_wheel
 
-with open("README.md", "r") as fh:
-    long_description = fh.read()
-
 setuptools.setup(
     name='cgn',
-    version='0.9.9',
+    version='1.0.0',
     packages=setuptools.find_packages(),
     url='',
     license='MIT',
