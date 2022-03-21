@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tutorial &mdash; cgn 1.0.0 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="cgn package" href="cgn.html" />
+    <link rel="prev" title="Installation Guide" href="installation.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> cgn
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation Guide</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Tutorial</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#examples">Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#defining-parametes">Defining parametes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#setting-up-optimization-problems">Setting up optimization problems</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#defining-linear-constraints">Defining linear constraints</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#defining-nonlinear-constraints">Defining nonlinear constraints</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#defining-bound-constraints">Defining bound constraints</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#defining-regularization-terms">Defining regularization terms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#setting-up-the-solver">Setting up the solver</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#solving-the-optimization-problem">Solving the optimization problem</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#template">Template</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="cgn.html">cgn package</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">cgn</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Tutorial</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/tutorial.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="tutorial">
+<h1>Tutorial<a class="headerlink" href="#tutorial" title="Permalink to this headline"></a></h1>
+<section id="examples">
+<h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline"></a></h2>
+<p>For various example applications of <code class="docutils literal notranslate"><span class="pre">cgn</span></code>, see the <a class="reference external" href="https://github.com/FabianKP/cgn/tree/main/examples">examples</a>
+folder.</p>
+</section>
+<section id="defining-parametes">
+<h2>Defining parametes<a class="headerlink" href="#defining-parametes" title="Permalink to this headline"></a></h2>
+<p>The free parameter <span class="math notranslate nohighlight">\(\mathbf x\)</span> has to be declared as a <code class="xref py py-class docutils literal notranslate"><span class="pre">cgn.Parameter</span></code> object.</p>
+<p>For example, the following code declares a parameter <code class="docutils literal notranslate"><span class="pre">x</span></code> of dimension 12 with name “x”.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">cgn</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">cgn</span><span class="o">.</span><span class="n">Parameter</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>In a lot of applications, your free parameter <span class="math notranslate nohighlight">\(\mathbf x\)</span> will actually be a concatenation
+of various one- or multi-dimensional parameters that deal with different aspects of your model.</p>
+<p>For example, in time series regression it might be the case that <span class="math notranslate nohighlight">\(\mathbf x\)</span> can be written as</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\mathbf x = \left( \begin{matrix} \mathbf z \\ \mathbf \theta \end{matrix} \right),\end{split}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\mathbf z \in \mathbb R^{n_z}\)</span> corresponds to the values of your time series, and
+<span class="math notranslate nohighlight">\(\mathbf \theta \in \mathbb R^{n_\theta}\)</span>
+corresponds to some hyperparameters of your model.
+In that case, it might be more convenient do define the function <span class="math notranslate nohighlight">\(\mathbf F\)</span> or the
+various constraints directly in terms of <span class="math notranslate nohighlight">\(\mathbf z\)</span> and <span class="math notranslate nohighlight">\(\mathbf \theta\)</span>.
+This can be achieved in <code class="docutils literal notranslate"><span class="pre">cgn</span></code>, which lets you define your problem in terms of
+multiple <code class="xref py py-class docutils literal notranslate"><span class="pre">cgn.Parameter</span></code> objects.</p>
+</section>
+<section id="setting-up-optimization-problems">
+<h2>Setting up optimization problems<a class="headerlink" href="#setting-up-optimization-problems" title="Permalink to this headline"></a></h2>
+<p>In order to use <code class="docutils literal notranslate"><span class="pre">cgn</span></code>, you have to create a <code class="xref py py-class docutils literal notranslate"><span class="pre">cgn.Problem</span></code> object that
+represents your optimization problem.</p>
+<dl class="py class">
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Problem</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parameters</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fun</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">jac</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">q</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">constraints</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Class for formulating regularized nonlinear least-squares problems with linear constraints:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\min_{x_1,...,x_p} \quad &amp; ||Q F(x_1,...,x_p)||_2^2 + \beta_1 ||R_1(x_1 - m_1)||_2^2 + \ldots +
+\beta_2 ||R_p(x_p - m_p)||_2^2 \\
+  s.t. \quad &amp; Ax = b, \quad Cx \geq d, G(x) = 0, H(x) \geq 0, \quad l \leq x \leq u.\end{split}\]</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>parameters</strong> (<em>List</em><em>[</em><a class="reference internal" href="cgn.problem.html#cgn.problem.parameter.Parameter" title="cgn.problem.parameter.Parameter"><em>cgn.problem.parameter.Parameter</em></a><em>]</em>) – The parameters on which the problem depends, e.g. [x1, x2, …, xp].</p></li>
+<li><p><strong>fun</strong> (<em>callable</em>) – A function accepting arguments corresponding to <code class="docutils literal notranslate"><span class="pre">parameters</span></code>.
+For example, if <code class="docutils literal notranslate"><span class="pre">parameters</span> <span class="pre">=</span> <span class="pre">[x,</span> <span class="pre">y,</span> <span class="pre">z]</span></code>, then <code class="docutils literal notranslate"><span class="pre">fun(u,</span> <span class="pre">v,</span> <span class="pre">w)</span></code> should be defined, where e.g. v would
+be a numpy array of shape (y.dim,). The output of <code class="docutils literal notranslate"><span class="pre">fun(u,</span> <span class="pre">v,</span> <span class="pre">w)</span></code> should be a numpy array of shape (m,).</p></li>
+<li><p><strong>jac</strong> (<em>callable</em>) – The Jacobian corresponding to <cite>fun</cite>. It should accept the same argument as <cite>fun</cite>, and the output
+should be a numpy array with shape (m, n), where n is the sum of the dimensions of the parameters.</p></li>
+<li><p><strong>q</strong> (<em>Union</em><em>[</em><em>numpy.ndarray</em><em>, </em><a class="reference internal" href="cgn.regop.html#cgn.regop.regularization_operator.RegularizationOperator" title="cgn.regop.regularization_operator.RegularizationOperator"><em>cgn.regop.regularization_operator.RegularizationOperator</em></a><em>]</em>) – The regularization of the misfit term. Typically, this will be a square root of the noise precision
+matrix. Can either be a numpy array or a <code class="xref py py-class docutils literal notranslate"><span class="pre">RegularizationOperator</span></code> (the latter is recommended if
+the evaluation of <code class="docutils literal notranslate"><span class="pre">q</span></code> can be implemented much faster than a matrix-product, e.g. is <code class="docutils literal notranslate"><span class="pre">q</span></code> is diagonal).</p></li>
+<li><p><strong>constraints</strong> (<em>List</em><em>[</em><a class="reference internal" href="cgn.problem.html#cgn.problem.constraint.Constraint" title="cgn.problem.constraint.Constraint"><em>cgn.problem.constraint.Constraint</em></a><em>]</em>) – List of constraints that the parameters have to satisfy.</p></li>
+<li><p><strong>scale</strong> (<em>float</em>) – The scale of the cost function. This only matters for the optimization.
+If provided, the cost function is divided by the scale. A good default choice for this parameter is m.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py property">
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">constraints</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="cgn.problem.html#cgn.problem.constraint.Constraint" title="cgn.problem.constraint.Constraint"><span class="pre">cgn.problem.constraint.Constraint</span></a><span class="p"><span class="pre">]</span></span></em></dt>
+<dd><p>The constraints given to the problem in initialization.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">costfun</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Returns the cost function.</p>
+<div class="math notranslate nohighlight">
+\[\phi(x_1,\ldots, x_p) = \frac{1}{2} \left( ||Q F(x_1,...,x_p)||_2^2 + \beta_1 ||R_1(x_1 - m_1)||_2^2 +
+\ldots + \beta_p ||R_p(x_p - m_p)||_2^2 \right).\]</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>args</strong> – The number of args should be equal to <code class="xref py py-attr docutils literal notranslate"><span class="pre">nparams</span></code>.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Value of the cost function at given parameters.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">costgrad</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Returns the gradient of the cost function:</p>
+<div class="math notranslate nohighlight">
+\[\nabla \phi(x_1,\ldots,x_p) = (QF'(x_1,\ldots,x_p))^\top Q F(x_1,\ldots,x_p) +
+\beta_1 R_1^\top R_1 (x_1 - m_1) + \ldots + \beta_p R_p^\top R_p (x_p - m_p).\]</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>args</strong> – The number of args should be equal to <code class="xref py py-attr docutils literal notranslate"><span class="pre">nparams</span></code>.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><span class="math notranslate nohighlight">\(\nabla \phi\)</span>, of shape (n,).</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>numpy.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">nparams</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>The number of parameters on which the problem depends.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">parameter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pname</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Gives access to the parameter of the given name.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>pname</strong> (<em>str</em>) – The name of the parameter.</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>Exception</strong> – If no parameter of name <code class="docutils literal notranslate"><span class="pre">pname</span></code> is found.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="cgn.problem.html#cgn.problem.parameter.Parameter" title="cgn.problem.parameter.Parameter">cgn.problem.parameter.Parameter</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">parameters</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="cgn.problem.html#cgn.problem.parameter.Parameter" title="cgn.problem.parameter.Parameter"><span class="pre">cgn.problem.parameter.Parameter</span></a><span class="p"><span class="pre">]</span></span></em></dt>
+<dd><p>The parameters of the optimization problem.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">shape</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></em></dt>
+<dd><p>The shape of the problem. For example, if the problem depends on 3 parameters of dimensions 3, 5, 7,
+then <code class="docutils literal notranslate"><span class="pre">Problem.shape</span></code> returns a tuple (3, 5, 7).</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="defining-linear-constraints">
+<h2>Defining linear constraints<a class="headerlink" href="#defining-linear-constraints" title="Permalink to this headline"></a></h2>
+<p>Linear constraints of the form <span class="math notranslate nohighlight">\(\mathbf A \mathbf x = \mathbf b\)</span> or <span class="math notranslate nohighlight">\(\mathbf C \mathbf
+x \geq \mathbf d\)</span>, have to be defined as <code class="xref py py-class docutils literal notranslate"><span class="pre">cgn.LinearConstraint</span></code> objects.</p>
+<dl class="py class">
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">LinearConstraint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parameters</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ctype</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Represents a linear constraint. Either an equality constraint <span class="math notranslate nohighlight">\(Ax = b\)</span>, or an inequality constraint
+<span class="math notranslate nohighlight">\(Ax \geq b\)</span>, where <span class="math notranslate nohighlight">\(A \in \mathbb{R}^{c \times n}\)</span>.</p>
+<p>Represents a linear constraint. Either an equality constraint <span class="math notranslate nohighlight">\(Ax = b\)</span>, or an inequality constraint
+<span class="math notranslate nohighlight">\(Ax \geq b\)</span>, where <span class="math notranslate nohighlight">\(A \in \mathbb{R}^{c \times n}\)</span>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>parameters</strong> (<em>List</em><em>[</em><a class="reference internal" href="cgn.problem.html#cgn.problem.parameter.Parameter" title="cgn.problem.parameter.Parameter"><em>cgn.problem.parameter.Parameter</em></a><em>]</em>) – A list of the parameters involved in the constraint. If the list contains more than one
+element, the constraint will be defined with respect to the concatenated parameter vector.</p></li>
+<li><p><strong>a</strong> (<em>numpy.ndarray</em>) – Of shape (c, n). The constraint matrix. The number of columns <cite>n</cite> must be equal to the dimension of
+the concatenated parameter vector.</p></li>
+<li><p><strong>b</strong> (<em>numpy.ndarray</em>) – The right hand side of the constraint. Must have shape (c,).</p></li>
+<li><p><strong>ctype</strong> (<em>Literal</em><em>[</em><em>'eq'</em><em>, </em><em>'ineq'</em><em>]</em>) – The type of the constraint.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py property">
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">a</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">numpy.ndarray</span></em></dt>
+<dd><p>The constraint matrix <span class="math notranslate nohighlight">\(A\)</span>.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">b</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">numpy.ndarray</span></em></dt>
+<dd><p>The constraint vector <span class="math notranslate nohighlight">\(b\)</span>.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">cdim</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em></dt>
+<dd><p>The constraint dimension <span class="math notranslate nohighlight">\(c\)</span>.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="defining-nonlinear-constraints">
+<h2>Defining nonlinear constraints<a class="headerlink" href="#defining-nonlinear-constraints" title="Permalink to this headline"></a></h2>
+<p>Nonlinear constraints of the form <span class="math notranslate nohighlight">\(\mathbf G(\mathbf x) = \mathbf 0\)</span> or
+<span class="math notranslate nohighlight">\(\mathbf H(\mathbf x) \geq \mathbf 0\)</span> have to be defined as <code class="xref py py-class docutils literal notranslate"><span class="pre">cgn.NonlinearConstraint</span></code> objects.</p>
+<dl class="py class">
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">NonlinearConstraint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parameters</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fun</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">jac</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ctype</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Represents a nonlinear constraint. Either an equality constraint <span class="math notranslate nohighlight">\(G(x)=0\)</span> or an inequality constraint
+<span class="math notranslate nohighlight">\(G(x)&gt;=0\)</span>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>parameters</strong> (<em>List</em><em>[</em><a class="reference internal" href="cgn.problem.html#cgn.problem.parameter.Parameter" title="cgn.problem.parameter.Parameter"><em>cgn.problem.parameter.Parameter</em></a><em>]</em>) – A list of the parameters involved in the constraint. If the list contains more than one
+element, the constraint will be defined with respect to the concatenated parameter vector.</p></li>
+<li><p><strong>fun</strong> (<em>callable</em>) – The function that determines the constraint. Must take <code class="docutils literal notranslate"><span class="pre">len(parameters)</span></code> arguments and return
+a numpy array of shape (c,).</p></li>
+<li><p><strong>jac</strong> (<em>callable</em>) – The Jacobian of <cite>fun</cite>. Must take arguments of the same form as <cite>fun</cite>, and return a numpy array
+of shape (c, n), where n is the dimension of the concatenated parameter vector.</p></li>
+<li><p><strong>ctype</strong> (<em>Literal</em><em>[</em><em>'eq'</em><em>, </em><em>'ineq'</em><em>]</em>) – The type of the constraint.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="defining-bound-constraints">
+<h2>Defining bound constraints<a class="headerlink" href="#defining-bound-constraints" title="Permalink to this headline"></a></h2>
+<p>In order to define a bound constraint of the form <span class="math notranslate nohighlight">\(\mathbf l \leq \mathbf x \leq \mathbf u\)</span> on a parameter
+<span class="math notranslate nohighlight">\(\mathbf x\)</span>, simply change the attributes of corresponding <code class="xref py py-class docutils literal notranslate"><span class="pre">cgn.Parameter</span></code> object.</p>
+<p>As an example, the following code defines a 3-dimensional parameter <span class="math notranslate nohighlight">\(\mathbf x\)</span> with bound constraints
+<span class="math notranslate nohighlight">\(0 \leq x_1 \leq 1\)</span> and <span class="math notranslate nohighlight">\(0 \leq x_2\)</span>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">cgn</span><span class="o">.</span><span class="n">Parameter</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">)</span>
+<span class="n">x</span><span class="o">.</span><span class="n">lb</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">])</span>
+<span class="n">x</span><span class="o">.</span><span class="n">ub</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">])</span>
+</pre></div>
+</div>
+</section>
+<section id="defining-regularization-terms">
+<h2>Defining regularization terms<a class="headerlink" href="#defining-regularization-terms" title="Permalink to this headline"></a></h2>
+<p>When you set up a parameter <span class="math notranslate nohighlight">\(\mathbf x \in \mathbb R^n\)</span> in <code class="docutils literal notranslate"><span class="pre">cgn</span></code>, it automatically creates a regularization term of the form
+<span class="math notranslate nohighlight">\(\beta ||\mathbf R (\mathbf x - \mathbf m)||\)</span> with default values</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\beta &amp; = 0, \\
+\mathbf R &amp; = \mathbf{I}_n, \\
+\mathbf m &amp; = \mathbf 0,\end{split}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\mathbf I_n \in \mathbb R^{n \times n}\)</span> denotes the identity matrix. Because <span class="math notranslate nohighlight">\(\beta = 0\)</span>,
+this regularization term has no effect. You can change the regularization term by adapting the corresponding
+attributes of the <code class="xref py py-class docutils literal notranslate"><span class="pre">cgn.Parameter</span></code> object. For example, the following code sets up an <cite>n</cite>-dimensional
+parameter with regularization term <span class="math notranslate nohighlight">\(0.3\cdot ||\mathbf R(\mathbf x - \mathbf 1_n)||\)</span>, where
+<span class="math notranslate nohighlight">\(\mathbf R = \mathrm{diag}(1, \frac{1}{2}, \ldots, \frac{1}{n})\)</span>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">cgn</span><span class="o">.</span><span class="n">Parameter</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="n">n</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">)</span>
+<span class="n">x</span><span class="o">.</span><span class="n">beta</span> <span class="o">=</span> <span class="mf">0.3</span>
+<span class="n">x</span><span class="o">.</span><span class="n">mean</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+<span class="n">R</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">divide</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">n</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">)))</span>
+<span class="n">x</span><span class="o">.</span><span class="n">regop</span> <span class="o">=</span> <span class="n">R</span>
+</pre></div>
+</div>
+<p>The regularization operator <code class="code docutils literal notranslate"><span class="pre">x.regop</span></code> can be either a 2-dimensional numpy array, or a
+<code class="xref py py-class docutils literal notranslate"><span class="pre">scipy.sparse.linalg.LinearOperator</span></code>.</p>
+</section>
+<section id="setting-up-the-solver">
+<h2>Setting up the solver<a class="headerlink" href="#setting-up-the-solver" title="Permalink to this headline"></a></h2>
+<p>Before you can solve your optimization problem, you need to create a <code class="xref py py-class docutils literal notranslate"><span class="pre">cgn.CGN</span></code> object.
+This represent the solver.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">solver</span> <span class="o">=</span> <span class="n">cgn</span><span class="o">.</span><span class="n">CGN</span><span class="p">()</span>
+</pre></div>
+</div>
+<dl class="py class">
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">CGN</span></span></dt>
+<dd><p>Constrained Gauss-Newton solver for nonlinear least-squares problems with linear constraints.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>options</strong> – Allows to modify the options for the solver. See
+<a class="reference internal" href="cgn.cnls_solve.html#cgn.cnls_solve.solveroptions.Solveroptions" title="cgn.cnls_solve.solveroptions.Solveroptions"><code class="xref py py-class docutils literal notranslate"><span class="pre">cgn.cnls_solve.solveroptions.Solveroptions</span></code></a> for the modifiable options.</p></li>
+<li><p><strong>linesearch</strong> – Allows to set options for the linesearch method.
+See <a class="reference internal" href="cgn.cnls_solve.html#cgn.cnls_solve.linesearch_options.LinesearchOptions" title="cgn.cnls_solve.linesearch_options.LinesearchOptions"><code class="xref py py-class docutils literal notranslate"><span class="pre">cgn.cnls_solve.linesearch_options.LinesearchOptions</span></code></a> for the modifiable options.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">solve</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">problem</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Computes the solution of the constrained nonlinear least-squares problem using the
+constrained Gauss-Newton method.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>problem</strong> (<a class="reference internal" href="cgn.problem.html#cgn.problem.problem.Problem" title="cgn.problem.problem.Problem"><em>cgn.problem.problem.Problem</em></a>) – The optimization problem to solve.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The solution to the optimization problem.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="cgn.problem.html#cgn.problem.problem_solution.ProblemSolution" title="cgn.problem.problem_solution.ProblemSolution">cgn.problem.problem_solution.ProblemSolution</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<p>You can then set the solver options by modifying the <code class="xref py py-attr docutils literal notranslate"><span class="pre">cgn.CGN.solveroptions</span></code> attribute.
+As an example, the following code changes the maximum number of iterations to 300:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">solver</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">maxiter</span> <span class="o">=</span> <span class="mi">300</span>
+</pre></div>
+</div>
+<dl class="py class">
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Solveroptions</span></span></dt>
+<dd><p>The options for the constrained Gauss-Newton method.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>maxiter</strong> – The maximum number of iterations. Defaults to 100.</p></li>
+<li><p><strong>tol</strong> – The tolerance. The solver stops once the difference between the current (c0) and the last (c1) value of
+the scaled costfunction is less or equal to <cite>tol * scale</cite>, where <cite>scale = max(abs(c0), abs(c1), 1)</cite>.
+Defaults to 1e-10.</p></li>
+<li><p><strong>timeout</strong> – Gives the number of minutes after which the solver automatically terminates due to timeout.
+Default timeout is 60 minutes.</p></li>
+<li><p><strong>logfile</strong> – Specifies the name of the logfile for the solver output.</p></li>
+<li><p><strong>ctol</strong> – The tolerance for the constraint violation. The solver will only try to satisfy the constraint up to
+a tolerance specified by <cite>ctol</cite>. The default value is 1e-15.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">set_verbosity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lvl</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Controls the amount of information displayed during and after the iteration.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>lvl</strong> (<em>int</em>) – <dl class="simple">
+<dt>The verbosity level. There are currently 2 levels of verbosity:</dt><dd><ul class="simple">
+<li><p>0: no output</p></li>
+<li><p>1: output to logfile (specified by <code class="xref py py-attr docutils literal notranslate"><span class="pre">logfile</span></code>.)</p></li>
+<li><p>2: output to console at running time</p></li>
+<li><p>3: output both to console and logfile</p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="solving-the-optimization-problem">
+<h2>Solving the optimization problem<a class="headerlink" href="#solving-the-optimization-problem" title="Permalink to this headline"></a></h2>
+<p>Suppose you have successfully set up a <code class="xref py py-class docutils literal notranslate"><span class="pre">cgn.Problem</span></code> object <code class="docutils literal notranslate"><span class="pre">myproblem</span></code> and a
+:py:class:cgn.CGN` object <code class="docutils literal notranslate"><span class="pre">solver</span></code>. As a last step, you need to set up the starting values
+for the parameters. This must be a list of the same length as <code class="docutils literal notranslate"><span class="pre">myproblem.parameters</span></code>,
+and each element is a numpy vector that defines the starting value for the corresponding parameter.</p>
+<p>Note that if your problem is constrained, then the starting values must satisfy these constraints.</p>
+<p>Afterwards, you can call the solver using the code</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">solution</span> <span class="o">=</span> <span class="n">solver</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">problem</span><span class="o">=</span><span class="n">my_problem</span><span class="p">,</span> <span class="n">starting_values</span><span class="o">=</span><span class="n">my_starting_values</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The output <cite>solution</cite> is an object of type <code class="xref py py-class docutils literal notranslate"><span class="pre">cgn.ProblemSolution</span></code>.</p>
+<dl class="py class">
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ProblemSolution</span></span></dt>
+<dd><p>Container for the solution of an optimization problem defined as instance of <code class="xref py py-class docutils literal notranslate"><span class="pre">cgn.Problem</span></code>.</p>
+<dl class="py property">
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">cost</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em></dt>
+<dd><p>The minimum of the cost function.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">minimizer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pname</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Returns the minimizer for the parameter of given name.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>pname</strong> (<em>str</em>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>numpy.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">minimizer_tuple</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">]</span></span></em></dt>
+<dd><p>The tuple of minimizers.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">niter</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em></dt>
+<dd><p>The number of iterations.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">precision</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">numpy.ndarray</span></em></dt>
+<dd><p>The posterior precision matrix. Of shape (n,n), where n is the overall parameter dimension.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">success</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em></dt>
+<dd><p><cite>True</cite>, if the iteration converged successfully. <cite>False</cite>, if the iteration stopped for other reasons.</p>
+</dd></dl>
+
+</dd></dl>
+
+<section id="template">
+<h3>Template<a class="headerlink" href="#template" title="Permalink to this headline"></a></h3>
+<p>If you want to quickly set up your problem in <code class="docutils literal notranslate"><span class="pre">cgn</span></code>, you can copy and adapt the following template
+that defines a generic nonlinear least-squares
+problem with constraints. The free parameter <span class="math notranslate nohighlight">\(\mathbf x \in \mathbb{R}^n\)</span> is separated
+into two variables <span class="math notranslate nohighlight">\(\mathbf x_1 \in \mathbb{R}^{n_1}\)</span> and <span class="math notranslate nohighlight">\(\mathbf x_2 \in \mathbb{R}^{n_2}\)</span>,
+where <span class="math notranslate nohighlight">\(n = n_1 + n_2\)</span>.
+This is just for convenience, as it allows to set constraints for these two variables separately.
+Computationally, the result will be the same if you formulate the problem in terms of the concatenated
+vector <span class="math notranslate nohighlight">\(\mathbf x\)</span>. It should be self-explanatory how to adapt this template to 3 or more separate
+parameters.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">cgn</span>
+
+
+<span class="c1">######## ADAPT THESE:</span>
+
+
+<span class="c1"># Set the dimensions of the two parameters x_1 and x_2:</span>
+<span class="n">n_1</span> <span class="o">=</span> <span class="o">...</span>
+<span class="n">n_2</span> <span class="o">=</span> <span class="o">...</span>
+
+<span class="c1"># Implement the function F.</span>
+<span class="k">def</span> <span class="nf">F</span><span class="p">(</span><span class="n">x_1</span><span class="p">,</span> <span class="n">x_2</span><span class="p">):</span>
+    <span class="o">...</span>
+
+<span class="c1"># Implement the Jacobian of F.</span>
+<span class="k">def</span> <span class="nf">F_jacobian</span><span class="p">(</span><span class="n">x_1</span><span class="p">,</span> <span class="n">x_2</span><span class="p">):</span>
+    <span class="o">...</span>
+
+<span class="c1"># Define the matrix Q</span>
+<span class="n">Q</span> <span class="o">=</span> <span class="o">...</span>
+
+<span class="c1"># Implement the function G that determines the nonlinear equality constraint G(x) = 0.</span>
+<span class="k">def</span> <span class="nf">G</span><span class="p">(</span><span class="n">x_1</span><span class="p">,</span> <span class="n">x_2</span><span class="p">):</span>
+    <span class="o">...</span>
+
+<span class="c1"># Implement the Jacobian of G.</span>
+<span class="k">def</span> <span class="nf">G_jacobian</span><span class="p">(</span><span class="n">x_1</span><span class="p">,</span> <span class="n">x_2</span><span class="p">):</span>
+    <span class="o">...</span>
+
+<span class="c1"># Implement the function H that determines the nonlinear inequality constraint H(x) &gt;= 0.</span>
+<span class="k">def</span> <span class="nf">H</span><span class="p">(</span><span class="n">x_1</span><span class="p">,</span> <span class="n">x_2</span><span class="p">):</span>
+    <span class="o">...</span>
+
+<span class="c1"># Implement the Jacobian of H.</span>
+<span class="k">def</span> <span class="nf">H_jacobian</span><span class="p">(</span><span class="n">x_1</span><span class="p">,</span> <span class="n">x_2</span><span class="p">):</span>
+    <span class="o">...</span>
+
+<span class="c1"># Set the linear equality constraint A x = b.</span>
+<span class="n">A</span> <span class="o">=</span> <span class="o">...</span>
+<span class="n">b</span> <span class="o">=</span> <span class="o">...</span>
+<span class="c1"># Set the linear inequality constraint C x &gt;= d.</span>
+<span class="n">C</span> <span class="o">=</span> <span class="o">...</span>
+<span class="n">d</span> <span class="o">=</span> <span class="o">...</span>
+<span class="c1"># Set the regularization terms</span>
+<span class="c1"># ... for x_1:</span>
+<span class="n">beta_1</span> <span class="o">=</span> <span class="o">...</span>
+<span class="n">R_1</span> <span class="o">=</span> <span class="o">...</span>
+<span class="c1"># ... for x_2:</span>
+<span class="n">beta_2</span> <span class="o">=</span> <span class="o">...</span>
+<span class="n">R_2</span> <span class="o">=</span> <span class="o">...</span>
+
+<span class="c1"># Set the lower and upper bound constraints</span>
+<span class="c1"># ... for x_1:</span>
+<span class="n">lb_1</span> <span class="o">=</span> <span class="o">...</span>
+<span class="n">ub_1</span> <span class="o">=</span> <span class="o">...</span>
+<span class="c1"># ... for x_2:</span>
+<span class="n">lb_2</span> <span class="o">=</span> <span class="o">...</span>
+<span class="n">ub_2</span> <span class="o">=</span> <span class="o">...</span>
+
+<span class="c1"># Set initial guesses for x_1 and x_2 (mandatory!)</span>
+<span class="n">x_1_guess</span> <span class="o">=</span> <span class="o">...</span>
+<span class="n">x_2_guess</span> <span class="o">=</span> <span class="o">...</span>
+
+
+<span class="c1">######## SET UP CGN:</span>
+
+
+<span class="c1"># Initialize cgn.Parameter objects</span>
+<span class="n">x_1</span> <span class="o">=</span> <span class="n">cgn</span><span class="o">.</span><span class="n">Parameter</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="n">n_1</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;x1&quot;</span><span class="p">)</span>
+<span class="n">x_2</span> <span class="o">=</span> <span class="n">cgn</span><span class="o">.</span><span class="n">Parameter</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="n">n_2</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;x2&quot;</span><span class="p">)</span>
+<span class="c1"># Set the regularization terms.</span>
+<span class="n">x_1</span><span class="o">.</span><span class="n">beta</span> <span class="o">=</span> <span class="n">beta_1</span>
+<span class="n">x_1</span><span class="o">.</span><span class="n">regop</span> <span class="o">=</span> <span class="n">R_1</span>
+<span class="n">x_2</span><span class="o">.</span><span class="n">beta</span> <span class="o">=</span> <span class="n">beta_2</span>
+<span class="n">x_2</span><span class="o">.</span><span class="n">regop</span> <span class="o">=</span> <span class="n">R_2</span>
+<span class="c1"># Set the bound constraints.</span>
+<span class="n">x_1</span><span class="o">.</span><span class="n">lb</span> <span class="o">=</span> <span class="n">lb_1</span>
+<span class="n">x_1</span><span class="o">.</span><span class="n">ub</span> <span class="o">=</span> <span class="n">ub_1</span>
+<span class="n">x_2</span><span class="o">.</span><span class="n">lb</span> <span class="o">=</span> <span class="n">lb_2</span>
+<span class="n">x_2</span><span class="o">.</span><span class="n">ub</span> <span class="o">=</span> <span class="n">ub_2</span>
+<span class="c1"># Initialize the constraint objects</span>
+<span class="n">linear_equality</span> <span class="o">=</span> <span class="n">cgn</span><span class="o">.</span><span class="n">LinearConstraint</span><span class="p">(</span><span class="n">parameters</span><span class="o">=</span><span class="p">[</span><span class="n">x_1</span><span class="p">,</span> <span class="n">x_2</span><span class="p">],</span> <span class="n">a</span><span class="o">=</span><span class="n">A</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="n">b</span><span class="p">,</span> <span class="n">ctype</span><span class="o">=</span><span class="s2">&quot;eq&quot;</span><span class="p">)</span>
+<span class="n">linear_inequality</span> <span class="o">=</span> <span class="n">cgn</span><span class="o">.</span><span class="n">LinearConstraint</span><span class="p">(</span><span class="n">parameters</span><span class="o">=</span><span class="p">[</span><span class="n">x_1</span><span class="p">,</span> <span class="n">x_2</span><span class="p">],</span> <span class="n">a</span><span class="o">=</span><span class="n">C</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="n">d</span><span class="p">,</span> <span class="n">ctype</span><span class="o">=</span><span class="s2">&quot;ineq&quot;</span><span class="p">)</span>
+<span class="n">nonlinear_equality</span> <span class="o">=</span> <span class="n">cgn</span><span class="o">.</span><span class="n">NonlinearConstraint</span><span class="p">(</span><span class="n">parameters</span><span class="o">=</span><span class="p">[</span><span class="n">x_1</span><span class="p">,</span> <span class="n">x_2</span><span class="p">],</span> <span class="n">fun</span><span class="o">=</span><span class="n">G</span><span class="p">,</span> <span class="n">jac</span><span class="o">=</span><span class="n">G_jacobian</span><span class="p">,</span> <span class="n">ctype</span><span class="o">=</span><span class="s2">&quot;eq&quot;</span><span class="p">)</span>
+<span class="n">nonlinear_inequality</span> <span class="o">=</span> <span class="n">cgn</span><span class="o">.</span><span class="n">NonlinearConstraint</span><span class="p">(</span><span class="n">parameters</span><span class="o">=</span><span class="p">[</span><span class="n">x_1</span><span class="p">,</span> <span class="n">x_2</span><span class="p">],</span> <span class="n">fun</span><span class="o">=</span><span class="n">H</span><span class="p">,</span> <span class="n">jac</span><span class="o">=</span><span class="n">H_jacobian</span><span class="p">,</span> <span class="n">ctype</span><span class="o">=</span><span class="s2">&quot;ineq&quot;</span><span class="p">)</span>
+<span class="n">constraint_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">linear_equality</span><span class="p">,</span> <span class="n">linear_inequality</span><span class="p">,</span> <span class="n">nonlinear_equality</span><span class="p">,</span> <span class="n">nonlinear_inequality</span><span class="p">]</span>
+
+<span class="c1"># Finally, create a cgn.Problem object</span>
+<span class="n">optimization_problem</span> <span class="o">=</span> <span class="n">cgn</span><span class="o">.</span><span class="n">Problem</span><span class="p">(</span><span class="n">parameters</span><span class="o">=</span><span class="p">[</span><span class="n">x_1</span><span class="p">,</span> <span class="n">x_2</span><span class="p">],</span>
+                                   <span class="n">fun</span><span class="o">=</span><span class="n">F</span><span class="p">,</span>
+                                   <span class="n">jac</span><span class="o">=</span><span class="n">G</span><span class="p">,</span>
+                                   <span class="n">q</span><span class="o">=</span><span class="n">Q</span><span class="p">,</span>
+                                   <span class="n">constraints</span><span class="o">=</span><span class="n">constraint_list</span><span class="p">)</span>
+
+<span class="c1"># Create a cgn.CGN solver object</span>
+<span class="n">solver</span> <span class="o">=</span> <span class="n">cgn</span><span class="o">.</span><span class="n">CGN</span><span class="p">()</span>
+
+<span class="c1"># You can configure the solver by adapting `solver.options`.</span>
+<span class="c1"># For example, set the maximum number of iterations:</span>
+<span class="n">solver</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">maxiter</span> <span class="o">=</span> <span class="o">...</span>
+
+<span class="c1"># Solve the problem</span>
+<span class="n">solution</span> <span class="o">=</span> <span class="n">solver</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">problem</span><span class="o">=</span><span class="n">optimization_problem</span><span class="p">,</span> <span class="n">starting_values</span><span class="o">=</span><span class="p">[</span><span class="n">x_1_guess</span><span class="p">,</span> <span class="n">x_2_guess</span><span class="p">])</span>
+
+<span class="c1"># Now, the solutions can be accessed via</span>
+<span class="n">x_1_solution</span> <span class="o">=</span> <span class="n">solution</span><span class="o">.</span><span class="n">minimizer</span><span class="p">(</span><span class="s2">&quot;x1&quot;</span><span class="p">)</span>
+<span class="n">x_2_solution</span> <span class="o">=</span> <span class="n">solution</span><span class="o">.</span><span class="n">minimizer</span><span class="p">(</span><span class="s2">&quot;x2&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="installation.html" class="btn btn-neutral float-left" title="Installation Guide" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="cgn.html" class="btn btn-neutral float-right" title="cgn package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, Fabian Parzer.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

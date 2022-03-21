@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>cgn.cnls_solve package &mdash; cgn 1.0.0 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="cgn.problem package" href="cgn.problem.html" />
+    <link rel="prev" title="cgn.cls_solve package" href="cgn.cls_solve.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> cgn
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorial</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="cgn.html">cgn package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="cgn.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="cgn.cls_solve.html">cgn.cls_solve package</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">cgn.cnls_solve package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-cgn.cnls_solve.cgn_state">cgn.cnls_solve.cgn_state module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-cgn.cnls_solve.cnls">cgn.cnls_solve.cnls module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-cgn.cnls_solve.cnls_constraint">cgn.cnls_solve.cnls_constraint module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-cgn.cnls_solve.cnls_solution">cgn.cnls_solve.cnls_solution module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-cgn.cnls_solve.cnls_solve">cgn.cnls_solve.cnls_solve module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-cgn.cnls_solve.constrained_gauss_newton">cgn.cnls_solve.constrained_gauss_newton module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-cgn.cnls_solve.linesearch_options">cgn.cnls_solve.linesearch_options module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-cgn.cnls_solve.logger">cgn.cnls_solve.logger module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-cgn.cnls_solve.solveroptions">cgn.cnls_solve.solveroptions module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-cgn.cnls_solve.waechter_biegler">cgn.cnls_solve.waechter_biegler module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-cgn.cnls_solve">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="cgn.problem.html">cgn.problem package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cgn.regop.html">cgn.regop package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cgn.translator.html">cgn.translator package</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cgn.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cgn.html#module-cgn.cgn">cgn.cgn module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cgn.html#module-cgn">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">cgn</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="cgn.html">cgn package</a> &raquo;</li>
+      <li>cgn.cnls_solve package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/cgn.cnls_solve.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="cgn-cnls-solve-package">
+<h1>cgn.cnls_solve package<a class="headerlink" href="#cgn-cnls-solve-package" title="Permalink to this headline"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline"></a></h2>
+</section>
+<section id="module-cgn.cnls_solve.cgn_state">
+<span id="cgn-cnls-solve-cgn-state-module"></span><h2>cgn.cnls_solve.cgn_state module<a class="headerlink" href="#module-cgn.cnls_solve.cgn_state" title="Permalink to this headline"></a></h2>
+<p>Contains class “CGNState”</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="cgn.cnls_solve.cgn_state.CGNState">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">CGNState</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">jac</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">q</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cgn.cnls_solve.cgn_state.CGNState" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Manages the state of the bounded Gauss-Newton method.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>jac</strong> (<em>callable</em>) – </p></li>
+<li><p><strong>q</strong> (<a class="reference internal" href="cgn.regop.html#cgn.regop.regularization_operator.RegularizationOperator" title="cgn.regop.regularization_operator.RegularizationOperator"><em>cgn.regop.regularization_operator.RegularizationOperator</em></a>) – </p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py property">
+<dt class="sig sig-object py" id="cgn.cnls_solve.cgn_state.CGNState.jac">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">jac</span></span><a class="headerlink" href="#cgn.cnls_solve.cgn_state.CGNState.jac" title="Permalink to this definition"></a></dt>
+<dd><p>If called for the first time, it computes the Jacobian at State.x.
+If called a second time, it uses the stored value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>The Jacobian at State.x</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-cgn.cnls_solve.cnls">
+<span id="cgn-cnls-solve-cnls-module"></span><h2>cgn.cnls_solve.cnls module<a class="headerlink" href="#module-cgn.cnls_solve.cnls" title="Permalink to this headline"></a></h2>
+<p>Contains class CNLS.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="cgn.cnls_solve.cnls.CNLS">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">CNLS</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">jac</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">q</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eqcon</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">incon</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lb</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ub</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cgn.cnls_solve.cnls.CNLS" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Contained class that manages the user-provided description of the
+constrained nonlinear least-squares problem:</p>
+<div class="math notranslate nohighlight">
+\[min_x (1/scale) * ( 0.5*||Q F(x) ||^2 + 0.5*||R(x-m)||^2 )
+s.t. G(x) = 0, H(x) \geq 0, l \leq x \leq u.\]</div>
+<p>The regularization term is optional.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>func</strong> (<em>callable</em>) – </p></li>
+<li><p><strong>jac</strong> (<em>callable</em>) – </p></li>
+<li><p><strong>q</strong> (<a class="reference internal" href="cgn.regop.html#cgn.regop.regularization_operator.RegularizationOperator" title="cgn.regop.regularization_operator.RegularizationOperator"><em>cgn.regop.regularization_operator.RegularizationOperator</em></a>) – </p></li>
+<li><p><strong>m</strong> (<em>numpy.ndarray</em>) – </p></li>
+<li><p><strong>r</strong> (<a class="reference internal" href="cgn.regop.html#cgn.regop.regularization_operator.RegularizationOperator" title="cgn.regop.regularization_operator.RegularizationOperator"><em>cgn.regop.regularization_operator.RegularizationOperator</em></a>) – </p></li>
+<li><p><strong>eqcon</strong> (<a class="reference internal" href="#cgn.cnls_solve.cnls_constraint.CNLSConstraint" title="cgn.cnls_solve.cnls_constraint.CNLSConstraint"><em>cgn.cnls_solve.cnls_constraint.CNLSConstraint</em></a>) – </p></li>
+<li><p><strong>incon</strong> (<a class="reference internal" href="#cgn.cnls_solve.cnls_constraint.CNLSConstraint" title="cgn.cnls_solve.cnls_constraint.CNLSConstraint"><em>cgn.cnls_solve.cnls_constraint.CNLSConstraint</em></a>) – </p></li>
+<li><p><strong>lb</strong> (<em>numpy.ndarray</em>) – </p></li>
+<li><p><strong>ub</strong> (<em>numpy.ndarray</em>) – </p></li>
+<li><p><strong>scale</strong> (<em>float</em>) – </p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="cgn.cnls_solve.cnls.CNLS.constraint_violation">
+<span class="sig-name descname"><span class="pre">constraint_violation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cgn.cnls_solve.cnls.CNLS.constraint_violation" title="Permalink to this definition"></a></dt>
+<dd><p>Computes the constraint violation</p>
+<div class="math notranslate nohighlight">
+\[v = ||(ub - x)^-||_1 + ||(x - lb)^-||_1 + ||g(x)||_1 + ||h(x)^-||_1.\]</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>x</strong> (<em>numpy.ndarray</em>) – Of shape (<cite>self.dim</cite>, ). The input vector.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The constraint violation <span class="math notranslate nohighlight">\(v\)</span>.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cgn.cnls_solve.cnls.CNLS.satisfies_constraints">
+<span class="sig-name descname"><span class="pre">satisfies_constraints</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-05</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cgn.cnls_solve.cnls.CNLS.satisfies_constraints" title="Permalink to this definition"></a></dt>
+<dd><p>Assert that given vector satisfies constraints up to a given tolerance.
+The error norm is the l^1-norm</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-cgn.cnls_solve.cnls_constraint">
+<span id="cgn-cnls-solve-cnls-constraint-module"></span><h2>cgn.cnls_solve.cnls_constraint module<a class="headerlink" href="#module-cgn.cnls_solve.cnls_constraint" title="Permalink to this headline"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="cgn.cnls_solve.cnls_constraint.CNLSConstraint">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">CNLSConstraint</span></span><a class="headerlink" href="#cgn.cnls_solve.cnls_constraint.CNLSConstraint" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py property">
+<dt class="sig sig-object py" id="cgn.cnls_solve.cnls_constraint.CNLSConstraint.cdim">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">cdim</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#cgn.cnls_solve.cnls_constraint.CNLSConstraint.cdim" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cgn.cnls_solve.cnls_constraint.CNLSConstraint.dim">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">dim</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#cgn.cnls_solve.cnls_constraint.CNLSConstraint.dim" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cgn.cnls_solve.cnls_constraint.CNLSConstraint.fun">
+<span class="sig-name descname"><span class="pre">fun</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cgn.cnls_solve.cnls_constraint.CNLSConstraint.fun" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>x</strong> (<em>numpy.ndarray</em>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>numpy.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cgn.cnls_solve.cnls_constraint.CNLSConstraint.jac">
+<span class="sig-name descname"><span class="pre">jac</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cgn.cnls_solve.cnls_constraint.CNLSConstraint.jac" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>x</strong> (<em>numpy.ndarray</em>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>numpy.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cgn.cnls_solve.cnls_constraint.ConcreteConstraint">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ConcreteConstraint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dim</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fun</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">jac</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cgn.cnls_solve.cnls_constraint.ConcreteConstraint" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#cgn.cnls_solve.cnls_constraint.CNLSConstraint" title="cgn.cnls_solve.cnls_constraint.CNLSConstraint"><code class="xref py py-class docutils literal notranslate"><span class="pre">cgn.cnls_solve.cnls_constraint.CNLSConstraint</span></code></a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dim</strong> (<em>int</em>) – </p></li>
+<li><p><strong>fun</strong> (<em>callable</em>) – </p></li>
+<li><p><strong>jac</strong> (<em>callable</em>) – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cgn.cnls_solve.cnls_constraint.NullConstraint">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">NullConstraint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dim</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cgn.cnls_solve.cnls_constraint.NullConstraint" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#cgn.cnls_solve.cnls_constraint.CNLSConstraint" title="cgn.cnls_solve.cnls_constraint.CNLSConstraint"><code class="xref py py-class docutils literal notranslate"><span class="pre">cgn.cnls_solve.cnls_constraint.CNLSConstraint</span></code></a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>dim</strong> (<em>int</em>) – </p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-cgn.cnls_solve.cnls_solution">
+<span id="cgn-cnls-solve-cnls-solution-module"></span><h2>cgn.cnls_solve.cnls_solution module<a class="headerlink" href="#module-cgn.cnls_solve.cnls_solution" title="Permalink to this headline"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="cgn.cnls_solve.cnls_solution.CNLSSolution">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">CNLSSolution</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">minimizer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">precision</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_cost</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">status</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cgn.cnls_solve.cnls_solution.OptimizationStatus" title="cgn.cnls_solve.cnls_solution.OptimizationStatus"><span class="pre">cgn.cnls_solve.cnls_solution.OptimizationStatus</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">niter</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cgn.cnls_solve.cnls_solution.CNLSSolution" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>minimizer</strong> (<em>numpy.ndarray</em>) – </p></li>
+<li><p><strong>precision</strong> (<em>numpy.ndarray</em>) – </p></li>
+<li><p><strong>min_cost</strong> (<em>float</em>) – </p></li>
+<li><p><strong>status</strong> (<a class="reference internal" href="#cgn.cnls_solve.cnls_solution.OptimizationStatus" title="cgn.cnls_solve.cnls_solution.OptimizationStatus"><em>cgn.cnls_solve.cnls_solution.OptimizationStatus</em></a>) – </p></li>
+<li><p><strong>niter</strong> (<em>int</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cgn.cnls_solve.cnls_solution.CNLSSolution.min_cost">
+<span class="sig-name descname"><span class="pre">min_cost</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#cgn.cnls_solve.cnls_solution.CNLSSolution.min_cost" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cgn.cnls_solve.cnls_solution.CNLSSolution.minimizer">
+<span class="sig-name descname"><span class="pre">minimizer</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">numpy.ndarray</span></em><a class="headerlink" href="#cgn.cnls_solve.cnls_solution.CNLSSolution.minimizer" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cgn.cnls_solve.cnls_solution.CNLSSolution.niter">
+<span class="sig-name descname"><span class="pre">niter</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#cgn.cnls_solve.cnls_solution.CNLSSolution.niter" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cgn.cnls_solve.cnls_solution.CNLSSolution.precision">
+<span class="sig-name descname"><span class="pre">precision</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">numpy.ndarray</span></em><a class="headerlink" href="#cgn.cnls_solve.cnls_solution.CNLSSolution.precision" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cgn.cnls_solve.cnls_solution.CNLSSolution.status">
+<span class="sig-name descname"><span class="pre">status</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#cgn.cnls_solve.cnls_solution.OptimizationStatus" title="cgn.cnls_solve.cnls_solution.OptimizationStatus"><span class="pre">cgn.cnls_solve.cnls_solution.OptimizationStatus</span></a></em><a class="headerlink" href="#cgn.cnls_solve.cnls_solution.CNLSSolution.status" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cgn.cnls_solve.cnls_solution.OptimizationStatus">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">OptimizationStatus</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cgn.cnls_solve.cnls_solution.OptimizationStatus" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">enum.Enum</span></code></p>
+<p>An enumeration.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cgn.cnls_solve.cnls_solution.OptimizationStatus.constraint_violated">
+<span class="sig-name descname"><span class="pre">constraint_violated</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'constraint</span> <span class="pre">violated'</span></em><a class="headerlink" href="#cgn.cnls_solve.cnls_solution.OptimizationStatus.constraint_violated" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cgn.cnls_solve.cnls_solution.OptimizationStatus.converged">
+<span class="sig-name descname"><span class="pre">converged</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'converged'</span></em><a class="headerlink" href="#cgn.cnls_solve.cnls_solution.OptimizationStatus.converged" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cgn.cnls_solve.cnls_solution.OptimizationStatus.error">
+<span class="sig-name descname"><span class="pre">error</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'error'</span></em><a class="headerlink" href="#cgn.cnls_solve.cnls_solution.OptimizationStatus.error" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cgn.cnls_solve.cnls_solution.OptimizationStatus.maxout">
+<span class="sig-name descname"><span class="pre">maxout</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'maxout'</span></em><a class="headerlink" href="#cgn.cnls_solve.cnls_solution.OptimizationStatus.maxout" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cgn.cnls_solve.cnls_solution.OptimizationStatus.timeout">
+<span class="sig-name descname"><span class="pre">timeout</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'timeout'</span></em><a class="headerlink" href="#cgn.cnls_solve.cnls_solution.OptimizationStatus.timeout" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-cgn.cnls_solve.cnls_solve">
+<span id="cgn-cnls-solve-cnls-solve-module"></span><h2>cgn.cnls_solve.cnls_solve module<a class="headerlink" href="#module-cgn.cnls_solve.cnls_solve" title="Permalink to this headline"></a></h2>
+<p>Contains function “cnls_solve”</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="cgn.cnls_solve.cnls_solve.cnls_solve">
+<span class="sig-name descname"><span class="pre">cnls_solve</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cnls</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">options</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">linesearch_options</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cgn.cnls_solve.cnls_solve.cnls_solve" title="Permalink to this definition"></a></dt>
+<dd><p>Solves an CNLS problem using the constrained Gauss-Newton method.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cnls</strong> (<a class="reference internal" href="#cgn.cnls_solve.cnls.CNLS" title="cgn.cnls_solve.cnls.CNLS"><em>cgn.cnls_solve.cnls.CNLS</em></a>) – </p></li>
+<li><p><strong>start</strong> (<em>numpy.ndarray</em>) – </p></li>
+<li><p><strong>options</strong> (<a class="reference internal" href="#cgn.cnls_solve.solveroptions.Solveroptions" title="cgn.cnls_solve.solveroptions.Solveroptions"><em>cgn.cnls_solve.solveroptions.Solveroptions</em></a>) – </p></li>
+<li><p><strong>linesearch_options</strong> (<a class="reference internal" href="#cgn.cnls_solve.linesearch_options.LinesearchOptions" title="cgn.cnls_solve.linesearch_options.LinesearchOptions"><em>cgn.cnls_solve.linesearch_options.LinesearchOptions</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#cgn.cnls_solve.cnls_solution.CNLSSolution" title="cgn.cnls_solve.cnls_solution.CNLSSolution">cgn.cnls_solve.cnls_solution.CNLSSolution</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-cgn.cnls_solve.constrained_gauss_newton">
+<span id="cgn-cnls-solve-constrained-gauss-newton-module"></span><h2>cgn.cnls_solve.constrained_gauss_newton module<a class="headerlink" href="#module-cgn.cnls_solve.constrained_gauss_newton" title="Permalink to this headline"></a></h2>
+<p>Contains class “BoundedGaussNewton”
+See the mathematical documentation for a formal description of the algorithm.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="cgn.cnls_solve.constrained_gauss_newton.ConstrainedGaussNewton">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ConstrainedGaussNewton</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cnls</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">options</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">linesearch_options</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cgn.cnls_solve.constrained_gauss_newton.ConstrainedGaussNewton" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>This class manages the bounded Gauss-Newton iteration.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cnls</strong> (<a class="reference internal" href="#cgn.cnls_solve.cnls.CNLS" title="cgn.cnls_solve.cnls.CNLS"><em>cgn.cnls_solve.cnls.CNLS</em></a>) – </p></li>
+<li><p><strong>options</strong> (<a class="reference internal" href="#cgn.cnls_solve.solveroptions.Solveroptions" title="cgn.cnls_solve.solveroptions.Solveroptions"><em>cgn.cnls_solve.solveroptions.Solveroptions</em></a>) – </p></li>
+<li><p><strong>linesearch_options</strong> (<a class="reference internal" href="#cgn.cnls_solve.linesearch_options.LinesearchOptions" title="cgn.cnls_solve.linesearch_options.LinesearchOptions"><em>cgn.cnls_solve.linesearch_options.LinesearchOptions</em></a>) – </p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="cgn.cnls_solve.constrained_gauss_newton.ConstrainedGaussNewton.solve">
+<span class="sig-name descname"><span class="pre">solve</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">start</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cgn.cnls_solve.constrained_gauss_newton.ConstrainedGaussNewton.solve" title="Permalink to this definition"></a></dt>
+<dd><p>Manages the outer loop of the iteration.
+:param start: starting value for the iteration
+:return: CNLSSolution</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#cgn.cnls_solve.cnls_solution.CNLSSolution" title="cgn.cnls_solve.cnls_solution.CNLSSolution">cgn.cnls_solve.cnls_solution.CNLSSolution</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-cgn.cnls_solve.linesearch_options">
+<span id="cgn-cnls-solve-linesearch-options-module"></span><h2>cgn.cnls_solve.linesearch_options module<a class="headerlink" href="#module-cgn.cnls_solve.linesearch_options" title="Permalink to this headline"></a></h2>
+<p>Contains class “LinesearchOptions”</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="cgn.cnls_solve.linesearch_options.LinesearchOptions">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">LinesearchOptions</span></span><a class="headerlink" href="#cgn.cnls_solve.linesearch_options.LinesearchOptions" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+</dd></dl>
+
+</section>
+<section id="module-cgn.cnls_solve.logger">
+<span id="cgn-cnls-solve-logger-module"></span><h2>cgn.cnls_solve.logger module<a class="headerlink" href="#module-cgn.cnls_solve.logger" title="Permalink to this headline"></a></h2>
+<p>Contains class “Logger”</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="cgn.cnls_solve.logger.Logger">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Logger</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">verbosity</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cgn.cnls_solve.logger.Logger" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>verbosity</strong> – int
+Level of verbosity:
+- 0: no output
+- 1: output to logfile
+- 2: output to console at running time
+- 3: output both to console and logfile</p></li>
+<li><p><strong>filename</strong> – str, optional
+Specifies name of logfile. Defaults to “cgn.log”.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="cgn.cnls_solve.logger.Logger.print_column_names">
+<span class="sig-name descname"><span class="pre">print_column_names</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cgn.cnls_solve.logger.Logger.print_column_names" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cgn.cnls_solve.logger.Logger.print_epilogue">
+<span class="sig-name descname"><span class="pre">print_epilogue</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">solution</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cgn.cnls_solve.logger.Logger.print_epilogue" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>solution</strong> (<a class="reference internal" href="#cgn.cnls_solve.cnls_solution.CNLSSolution" title="cgn.cnls_solve.cnls_solution.CNLSSolution"><em>cgn.cnls_solve.cnls_solution.CNLSSolution</em></a>) – </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cgn.cnls_solve.logger.Logger.print_iteration_info">
+<span class="sig-name descname"><span class="pre">print_iteration_info</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">k</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cost</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cviol</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">steplength</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cgn.cnls_solve.logger.Logger.print_iteration_info" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cgn.cnls_solve.logger.Logger.print_preamble">
+<span class="sig-name descname"><span class="pre">print_preamble</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cost_start</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cgn.cnls_solve.logger.Logger.print_preamble" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>cost_start</strong> (<em>float</em>) – </p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-cgn.cnls_solve.solveroptions">
+<span id="cgn-cnls-solve-solveroptions-module"></span><h2>cgn.cnls_solve.solveroptions module<a class="headerlink" href="#module-cgn.cnls_solve.solveroptions" title="Permalink to this headline"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="cgn.cnls_solve.solveroptions.Solveroptions">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Solveroptions</span></span><a class="headerlink" href="#cgn.cnls_solve.solveroptions.Solveroptions" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>The options for the constrained Gauss-Newton method.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>maxiter</strong> – The maximum number of iterations. Defaults to 100.</p></li>
+<li><p><strong>tol</strong> – The tolerance. The solver stops once the difference between the current (c0) and the last (c1) value of
+the scaled costfunction is less or equal to <cite>tol * scale</cite>, where <cite>scale = max(abs(c0), abs(c1), 1)</cite>.
+Defaults to 1e-10.</p></li>
+<li><p><strong>timeout</strong> – Gives the number of minutes after which the solver automatically terminates due to timeout.
+Default timeout is 60 minutes.</p></li>
+<li><p><strong>logfile</strong> – Specifies the name of the logfile for the solver output.</p></li>
+<li><p><strong>ctol</strong> – The tolerance for the constraint violation. The solver will only try to satisfy the constraint up to
+a tolerance specified by <cite>ctol</cite>. The default value is 1e-15.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="cgn.cnls_solve.solveroptions.Solveroptions.set_verbosity">
+<span class="sig-name descname"><span class="pre">set_verbosity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lvl</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cgn.cnls_solve.solveroptions.Solveroptions.set_verbosity" title="Permalink to this definition"></a></dt>
+<dd><p>Controls the amount of information displayed during and after the iteration.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>lvl</strong> (<em>int</em>) – <dl class="simple">
+<dt>The verbosity level. There are currently 2 levels of verbosity:</dt><dd><ul class="simple">
+<li><p>0: no output</p></li>
+<li><p>1: output to logfile (specified by <code class="xref py py-attr docutils literal notranslate"><span class="pre">logfile</span></code>.)</p></li>
+<li><p>2: output to console at running time</p></li>
+<li><p>3: output both to console and logfile</p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cgn.cnls_solve.solveroptions.Solveroptions.verbosity">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">verbosity</span></span><a class="headerlink" href="#cgn.cnls_solve.solveroptions.Solveroptions.verbosity" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-cgn.cnls_solve.waechter_biegler">
+<span id="cgn-cnls-solve-waechter-biegler-module"></span><h2>cgn.cnls_solve.waechter_biegler module<a class="headerlink" href="#module-cgn.cnls_solve.waechter_biegler" title="Permalink to this headline"></a></h2>
+<p>Contains classes “WaechterBiegler” and “WBState”</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="cgn.cnls_solve.waechter_biegler.WBState">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">WBState</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phi</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">theta</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cgn.cnls_solve.waechter_biegler.WBState" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>This class manages the state of the Waechter-Biegler line search, in the sense that it contains all the
+quantities that have to be computed for every new step length.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>state</strong> (<a class="reference internal" href="#cgn.cnls_solve.cgn_state.CGNState" title="cgn.cnls_solve.cgn_state.CGNState"><em>cgn.cnls_solve.cgn_state.CGNState</em></a>) – </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cgn.cnls_solve.waechter_biegler.WaechterBiegler">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">WaechterBiegler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">create_state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cnls</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">costfun</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">options</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cgn.cnls_solve.waechter_biegler.WaechterBiegler" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Implements the Lagrange-multiplier-free linesearch algorithm proposed by
+Wächter and Biegler in “Line Search LinearFilter Methods for Nonlinear Programming: Motivation and
+Global Convergence” (2005).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cnls</strong> (<a class="reference internal" href="#cgn.cnls_solve.cnls.CNLS" title="cgn.cnls_solve.cnls.CNLS"><em>cgn.cnls_solve.cnls.CNLS</em></a>) – </p></li>
+<li><p><strong>costfun</strong> (<em>callable</em>) – </p></li>
+<li><p><strong>options</strong> (<a class="reference internal" href="#cgn.cnls_solve.linesearch_options.LinesearchOptions" title="cgn.cnls_solve.linesearch_options.LinesearchOptions"><em>cgn.cnls_solve.linesearch_options.LinesearchOptions</em></a>) – </p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="cgn.cnls_solve.waechter_biegler.WaechterBiegler.next_position">
+<span class="sig-name descname"><span class="pre">next_position</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cost_gradient</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cgn.cnls_solve.waechter_biegler.WaechterBiegler.next_position" title="Permalink to this definition"></a></dt>
+<dd><p>Implements the actual line search iteration.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>state</strong> – Current state.</p></li>
+<li><p><strong>p</strong> – Proposed direction vector.</p></li>
+<li><p><strong>cost_gradient</strong> – Gradient of cost function associated to current state.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>(next_state, phi_next, aborted, h)
+next_state: The state at the next position.
+phi_next: The cost function at the next position.
+aborted: A Boolean that indicates whether the line search was unsuccessful (True) or successful (False).
+h: The determined step length.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><em>Tuple</em>[<a class="reference internal" href="#cgn.cnls_solve.cgn_state.CGNState" title="cgn.cnls_solve.cgn_state.CGNState">cgn.cnls_solve.cgn_state.CGNState</a>, float, bool, float]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-cgn.cnls_solve">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-cgn.cnls_solve" title="Permalink to this headline"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="cgn.cls_solve.html" class="btn btn-neutral float-left" title="cgn.cls_solve package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="cgn.problem.html" class="btn btn-neutral float-right" title="cgn.problem package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, Fabian Parzer.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

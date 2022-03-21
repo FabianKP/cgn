@@ -1,7 +1,7 @@
 .pytest_cache
 tests/cgn.log
 tests/test.log
-docs/build
+docsrc/build
 TODO.txt
 cgn.egg-info
 .idea

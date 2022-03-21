@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>cgn.regop.operators package &mdash; cgn 1.0.0 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="cgn.translator package" href="cgn.translator.html" />
+    <link rel="prev" title="cgn.regop package" href="cgn.regop.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> cgn
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorial</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="cgn.html">cgn package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="cgn.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="cgn.cls_solve.html">cgn.cls_solve package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cgn.cnls_solve.html">cgn.cnls_solve package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cgn.problem.html">cgn.problem package</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="cgn.regop.html">cgn.regop package</a><ul class="current">
+<li class="toctree-l4 current"><a class="reference internal" href="cgn.regop.html#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cgn.regop.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cgn.regop.html#module-cgn.regop.regularization_operator">cgn.regop.regularization_operator module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cgn.regop.html#module-cgn.regop">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="cgn.translator.html">cgn.translator package</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cgn.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cgn.html#module-cgn.cgn">cgn.cgn module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cgn.html#module-cgn">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">cgn</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="cgn.html">cgn package</a> &raquo;</li>
+          <li><a href="cgn.regop.html">cgn.regop package</a> &raquo;</li>
+      <li>cgn.regop.operators package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/cgn.regop.operators.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="cgn-regop-operators-package">
+<h1>cgn.regop.operators package<a class="headerlink" href="#cgn-regop-operators-package" title="Permalink to this headline"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline"></a></h2>
+</section>
+<section id="module-cgn.regop.operators.block_operator">
+<span id="cgn-regop-operators-block-operator-module"></span><h2>cgn.regop.operators.block_operator module<a class="headerlink" href="#module-cgn.regop.operators.block_operator" title="Permalink to this headline"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="cgn.regop.operators.block_operator.BlockOperator">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">BlockOperator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">operator_list</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cgn.regop.operators.block_operator.BlockOperator" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="cgn.regop.html#cgn.regop.regularization_operator.RegularizationOperator" title="cgn.regop.regularization_operator.RegularizationOperator"><code class="xref py py-class docutils literal notranslate"><span class="pre">cgn.regop.regularization_operator.RegularizationOperator</span></code></a></p>
+<p>Given a list of regularization operators <span class="math notranslate nohighlight">\(P_1, \ldots, P_l\)</span>, we form the block operator
+<span class="math notranslate nohighlight">\(P = \mathrm{diag}(P_1, P_2, ..., P_l)\)</span>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>operator_list</strong> (<em>List</em><em>[</em><a class="reference internal" href="cgn.regop.html#cgn.regop.regularization_operator.RegularizationOperator" title="cgn.regop.regularization_operator.RegularizationOperator"><em>cgn.regop.regularization_operator.RegularizationOperator</em></a><em>]</em>) – </p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="cgn.regop.operators.block_operator.BlockOperator.adj">
+<span class="sig-name descname"><span class="pre">adj</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">v</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cgn.regop.operators.block_operator.BlockOperator.adj" title="Permalink to this definition"></a></dt>
+<dd><p>See <code class="xref py py-attr docutils literal notranslate"><span class="pre">RegularizationOperator.adj</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>v</strong> (<em>numpy.ndarray</em>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>numpy.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cgn.regop.operators.block_operator.BlockOperator.fwd">
+<span class="sig-name descname"><span class="pre">fwd</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">v</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cgn.regop.operators.block_operator.BlockOperator.fwd" title="Permalink to this definition"></a></dt>
+<dd><p>See <code class="xref py py-attr docutils literal notranslate"><span class="pre">RegularizationOperator.fwd</span></code></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>v</strong> (<em>numpy.ndarray</em>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>numpy.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-cgn.regop.operators.diagonal_operator">
+<span id="cgn-regop-operators-diagonal-operator-module"></span><h2>cgn.regop.operators.diagonal_operator module<a class="headerlink" href="#module-cgn.regop.operators.diagonal_operator" title="Permalink to this headline"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="cgn.regop.operators.diagonal_operator.DiagonalOperator">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">DiagonalOperator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dim</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">s</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cgn.regop.operators.diagonal_operator.DiagonalOperator" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="cgn.regop.html#cgn.regop.regularization_operator.RegularizationOperator" title="cgn.regop.regularization_operator.RegularizationOperator"><code class="xref py py-class docutils literal notranslate"><span class="pre">cgn.regop.regularization_operator.RegularizationOperator</span></code></a></p>
+<p>Tool to form diagonal regularization operators of the form <span class="math notranslate nohighlight">\(R = \mathrm{diag}(s_1, \ldots, s_n)\)</span>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>s</strong> (<em>Union</em><em>[</em><em>float</em><em>, </em><em>numpy.ndarray</em><em>]</em>) – All entries must me larger than 0.
+If s is a float, the resulting diagonal operator will be <span class="math notranslate nohighlight">\(R = \mathrm{diag}(s, \ldots, s)\)</span>.
+If s is a vector, the resulting diagonal operator will be <span class="math notranslate nohighlight">\(R = \mathrm{diag}(s_1, \ldots, s_n)\)</span>.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="cgn.regop.operators.diagonal_operator.DiagonalOperator.adj">
+<span class="sig-name descname"><span class="pre">adj</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">v</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cgn.regop.operators.diagonal_operator.DiagonalOperator.adj" title="Permalink to this definition"></a></dt>
+<dd><p>See <code class="xref py py-attr docutils literal notranslate"><span class="pre">RegularizationOperator.adj</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>v</strong> (<em>numpy.ndarray</em>) – </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cgn.regop.operators.diagonal_operator.DiagonalOperator.fwd">
+<span class="sig-name descname"><span class="pre">fwd</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">v</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cgn.regop.operators.diagonal_operator.DiagonalOperator.fwd" title="Permalink to this definition"></a></dt>
+<dd><p>See <code class="xref py py-attr docutils literal notranslate"><span class="pre">RegularizationOperator.fwd</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>v</strong> (<em>numpy.ndarray</em>) – </p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-cgn.regop.operators.identity_operator">
+<span id="cgn-regop-operators-identity-operator-module"></span><h2>cgn.regop.operators.identity_operator module<a class="headerlink" href="#module-cgn.regop.operators.identity_operator" title="Permalink to this headline"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="cgn.regop.operators.identity_operator.IdentityOperator">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">IdentityOperator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dim</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cgn.regop.operators.identity_operator.IdentityOperator" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="cgn.regop.html#cgn.regop.regularization_operator.RegularizationOperator" title="cgn.regop.regularization_operator.RegularizationOperator"><code class="xref py py-class docutils literal notranslate"><span class="pre">cgn.regop.regularization_operator.RegularizationOperator</span></code></a></p>
+<p>Corresponds to to the identity operator <span class="math notranslate nohighlight">\(I(v) = v\)</span>.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="cgn.regop.operators.identity_operator.IdentityOperator.adj">
+<span class="sig-name descname"><span class="pre">adj</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">v</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cgn.regop.operators.identity_operator.IdentityOperator.adj" title="Permalink to this definition"></a></dt>
+<dd><p>See <code class="xref py py-attr docutils literal notranslate"><span class="pre">RegularizationOperator.adj</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>v</strong> (<em>numpy.ndarray</em>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>numpy.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cgn.regop.operators.identity_operator.IdentityOperator.fwd">
+<span class="sig-name descname"><span class="pre">fwd</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">v</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cgn.regop.operators.identity_operator.IdentityOperator.fwd" title="Permalink to this definition"></a></dt>
+<dd><p>See <code class="xref py py-attr docutils literal notranslate"><span class="pre">RegularizationOperator.fwd</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>v</strong> (<em>numpy.ndarray</em>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>numpy.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-cgn.regop.operators.make_block_operator">
+<span id="cgn-regop-operators-make-block-operator-module"></span><h2>cgn.regop.operators.make_block_operator module<a class="headerlink" href="#module-cgn.regop.operators.make_block_operator" title="Permalink to this headline"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="cgn.regop.operators.make_block_operator.make_block_operator">
+<span class="sig-name descname"><span class="pre">make_block_operator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">operator_list</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cgn.regop.operators.make_block_operator.make_block_operator" title="Permalink to this definition"></a></dt>
+<dd><p>Given a list of regularization operators, creates a block operator as a direct sum.
+:param operator_list:
+:return: The resulting operator might either be a <code class="xref py py-class docutils literal notranslate"><span class="pre">BlockOperator',</span> <span class="pre">or</span> <span class="pre">a</span> <span class="pre">:py:class:`NullOperator</span></code>
+if all operators in the list are of instances of <code class="xref py py-class docutils literal notranslate"><span class="pre">NullOperator</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>operator_list</strong> (<em>List</em>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="cgn.regop.html#cgn.regop.regularization_operator.RegularizationOperator" title="cgn.regop.regularization_operator.RegularizationOperator">cgn.regop.regularization_operator.RegularizationOperator</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-cgn.regop.operators.matrix_operator">
+<span id="cgn-regop-operators-matrix-operator-module"></span><h2>cgn.regop.operators.matrix_operator module<a class="headerlink" href="#module-cgn.regop.operators.matrix_operator" title="Permalink to this headline"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="cgn.regop.operators.matrix_operator.MatrixOperator">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">MatrixOperator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mat</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cgn.regop.operators.matrix_operator.MatrixOperator" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="cgn.regop.html#cgn.regop.regularization_operator.RegularizationOperator" title="cgn.regop.regularization_operator.RegularizationOperator"><code class="xref py py-class docutils literal notranslate"><span class="pre">cgn.regop.regularization_operator.RegularizationOperator</span></code></a></p>
+<p>Builds regularization operator from matrix.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>mat</strong> (<em>numpy.ndarray</em>) – </p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="cgn.regop.operators.matrix_operator.MatrixOperator.adj">
+<span class="sig-name descname"><span class="pre">adj</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">v</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cgn.regop.operators.matrix_operator.MatrixOperator.adj" title="Permalink to this definition"></a></dt>
+<dd><p>See <code class="xref py py-attr docutils literal notranslate"><span class="pre">RegularizationOperator.adj</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>v</strong> (<em>numpy.ndarray</em>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>numpy.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cgn.regop.operators.matrix_operator.MatrixOperator.fwd">
+<span class="sig-name descname"><span class="pre">fwd</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">v</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cgn.regop.operators.matrix_operator.MatrixOperator.fwd" title="Permalink to this definition"></a></dt>
+<dd><p>See <code class="xref py py-attr docutils literal notranslate"><span class="pre">RegularizationOperator.fwd</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>v</strong> (<em>numpy.ndarray</em>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>numpy.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-cgn.regop.operators.multiplied_operator">
+<span id="cgn-regop-operators-multiplied-operator-module"></span><h2>cgn.regop.operators.multiplied_operator module<a class="headerlink" href="#module-cgn.regop.operators.multiplied_operator" title="Permalink to this headline"></a></h2>
+<p>Contains class multiplied operator</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="cgn.regop.operators.multiplied_operator.MultipliedOperator">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">MultipliedOperator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">regop</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">q</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cgn.regop.operators.multiplied_operator.MultipliedOperator" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="cgn.regop.html#cgn.regop.regularization_operator.RegularizationOperator" title="cgn.regop.regularization_operator.RegularizationOperator"><code class="xref py py-class docutils literal notranslate"><span class="pre">cgn.regop.regularization_operator.RegularizationOperator</span></code></a></p>
+<p>Implements a regularization operator that is created by right-multiplying a given regularization operator
+with a matrix. That is, given a regularization operator :math`R` and a matrix <span class="math notranslate nohighlight">\(Q\)</span>, the
+new regularization operator corresponds to <span class="math notranslate nohighlight">\(R Q\)</span>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>regop</strong> (<a class="reference internal" href="cgn.regop.html#cgn.regop.regularization_operator.RegularizationOperator" title="cgn.regop.regularization_operator.RegularizationOperator"><em>cgn.regop.regularization_operator.RegularizationOperator</em></a>) – The regularization operator <span class="math notranslate nohighlight">\(R\)</span>.</p></li>
+<li><p><strong>q</strong> (<em>numpy.ndarray</em>) – The matrix <span class="math notranslate nohighlight">\(Q\)</span> by which the regularization operator is multiplied. It must have shape (n,m),
+where n = <code class="code docutils literal notranslate"><span class="pre">regop.dim</span></code>.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="cgn.regop.operators.multiplied_operator.MultipliedOperator.adj">
+<span class="sig-name descname"><span class="pre">adj</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">v</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cgn.regop.operators.multiplied_operator.MultipliedOperator.adj" title="Permalink to this definition"></a></dt>
+<dd><p>See <code class="xref py py-attr docutils literal notranslate"><span class="pre">RegularizationOperator.adj</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>v</strong> (<em>numpy.ndarray</em>) – </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cgn.regop.operators.multiplied_operator.MultipliedOperator.fwd">
+<span class="sig-name descname"><span class="pre">fwd</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">v</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cgn.regop.operators.multiplied_operator.MultipliedOperator.fwd" title="Permalink to this definition"></a></dt>
+<dd><p>See <code class="xref py py-attr docutils literal notranslate"><span class="pre">RegularizationOperator.fwd</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>v</strong> (<em>numpy.ndarray</em>) – </p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-cgn.regop.operators.null_operator">
+<span id="cgn-regop-operators-null-operator-module"></span><h2>cgn.regop.operators.null_operator module<a class="headerlink" href="#module-cgn.regop.operators.null_operator" title="Permalink to this headline"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="cgn.regop.operators.null_operator.NullOperator">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">NullOperator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dim</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cgn.regop.operators.null_operator.NullOperator" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="cgn.regop.html#cgn.regop.regularization_operator.RegularizationOperator" title="cgn.regop.regularization_operator.RegularizationOperator"><code class="xref py py-class docutils literal notranslate"><span class="pre">cgn.regop.regularization_operator.RegularizationOperator</span></code></a></p>
+<p>The null operator <span class="math notranslate nohighlight">\(R(v) = 0\)</span>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>dim</strong> (<em>int</em>) – </p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="cgn.regop.operators.null_operator.NullOperator.adj">
+<span class="sig-name descname"><span class="pre">adj</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">v</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cgn.regop.operators.null_operator.NullOperator.adj" title="Permalink to this definition"></a></dt>
+<dd><p>Always returns Nothing.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>v</strong> (<em>numpy.ndarray</em>) – </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cgn.regop.operators.null_operator.NullOperator.fwd">
+<span class="sig-name descname"><span class="pre">fwd</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">v</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cgn.regop.operators.null_operator.NullOperator.fwd" title="Permalink to this definition"></a></dt>
+<dd><p>Always return Nothing.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>v</strong> (<em>numpy.ndarray</em>) – </p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-cgn.regop.operators.scale_operator">
+<span id="cgn-regop-operators-scale-operator-module"></span><h2>cgn.regop.operators.scale_operator module<a class="headerlink" href="#module-cgn.regop.operators.scale_operator" title="Permalink to this headline"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="cgn.regop.operators.scale_operator.scale_operator">
+<span class="sig-name descname"><span class="pre">scale_operator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">regop</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cgn.regop.operators.scale_operator.scale_operator" title="Permalink to this definition"></a></dt>
+<dd><p>Scales a regularization operator: Given a regularization operator <span class="math notranslate nohighlight">\(P\)</span> and a constant <span class="math notranslate nohighlight">\(lpha\)</span>,
+the new operator is <span class="math notranslate nohighlight">\(\sqrt(\alpha) P\)</span>.
+:param regop:
+:param alpha:
+:returns: If <cite>alpha</cite> is close to 0, then the returned operator is a <code class="xref py py-class docutils literal notranslate"><span class="pre">NullOperator</span></code>. Otherwise, it is a
+<code class="xref py py-class docutils literal notranslate"><span class="pre">ScaledOperator</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>regop</strong> (<a class="reference internal" href="cgn.regop.html#cgn.regop.regularization_operator.RegularizationOperator" title="cgn.regop.regularization_operator.RegularizationOperator"><em>cgn.regop.regularization_operator.RegularizationOperator</em></a>) – </p></li>
+<li><p><strong>alpha</strong> (<em>float</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="cgn.regop.html#cgn.regop.regularization_operator.RegularizationOperator" title="cgn.regop.regularization_operator.RegularizationOperator">cgn.regop.regularization_operator.RegularizationOperator</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-cgn.regop.operators.scaled_operator">
+<span id="cgn-regop-operators-scaled-operator-module"></span><h2>cgn.regop.operators.scaled_operator module<a class="headerlink" href="#module-cgn.regop.operators.scaled_operator" title="Permalink to this headline"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="cgn.regop.operators.scaled_operator.ScaledOperator">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ScaledOperator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">regop</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cgn.regop.operators.scaled_operator.ScaledOperator" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="cgn.regop.html#cgn.regop.regularization_operator.RegularizationOperator" title="cgn.regop.regularization_operator.RegularizationOperator"><code class="xref py py-class docutils literal notranslate"><span class="pre">cgn.regop.regularization_operator.RegularizationOperator</span></code></a></p>
+<p>Represents a scaled regularization operator <span class="math notranslate nohighlight">\(R = \alpha P\)</span>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>regop</strong> (<a class="reference internal" href="cgn.regop.html#cgn.regop.regularization_operator.RegularizationOperator" title="cgn.regop.regularization_operator.RegularizationOperator"><em>cgn.regop.regularization_operator.RegularizationOperator</em></a>) – </p></li>
+<li><p><strong>alpha</strong> (<em>float</em>) – </p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="cgn.regop.operators.scaled_operator.ScaledOperator.adj">
+<span class="sig-name descname"><span class="pre">adj</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">v</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cgn.regop.operators.scaled_operator.ScaledOperator.adj" title="Permalink to this definition"></a></dt>
+<dd><p>See <code class="xref py py-attr docutils literal notranslate"><span class="pre">RegularizationOperator.adj</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>v</strong> (<em>numpy.ndarray</em>) – </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cgn.regop.operators.scaled_operator.ScaledOperator.fwd">
+<span class="sig-name descname"><span class="pre">fwd</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">v</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cgn.regop.operators.scaled_operator.ScaledOperator.fwd" title="Permalink to this definition"></a></dt>
+<dd><p>See <code class="xref py py-attr docutils literal notranslate"><span class="pre">RegularizationOperator.fwd</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>v</strong> (<em>numpy.ndarray</em>) – </p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-cgn.regop.operators">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-cgn.regop.operators" title="Permalink to this headline"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="cgn.regop.html" class="btn btn-neutral float-left" title="cgn.regop package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="cgn.translator.html" class="btn btn-neutral float-right" title="cgn.translator package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, Fabian Parzer.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

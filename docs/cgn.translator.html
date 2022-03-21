@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>cgn.translator package &mdash; cgn 1.0.0 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="cgn.regop.operators package" href="cgn.regop.operators.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> cgn
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorial</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="cgn.html">cgn package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="cgn.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="cgn.cls_solve.html">cgn.cls_solve package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cgn.cnls_solve.html">cgn.cnls_solve package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cgn.problem.html">cgn.problem package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cgn.regop.html">cgn.regop package</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">cgn.translator package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-cgn.translator.get_sub_matrix">cgn.translator.get_sub_matrix module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-cgn.translator.multiparameter">cgn.translator.multiparameter module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-cgn.translator.translated_solution">cgn.translator.translated_solution module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-cgn.translator.translator">cgn.translator.translator module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-cgn.translator">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cgn.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cgn.html#module-cgn.cgn">cgn.cgn module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cgn.html#module-cgn">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">cgn</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="cgn.html">cgn package</a> &raquo;</li>
+      <li>cgn.translator package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/cgn.translator.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="cgn-translator-package">
+<h1>cgn.translator package<a class="headerlink" href="#cgn-translator-package" title="Permalink to this headline"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline"></a></h2>
+</section>
+<section id="module-cgn.translator.get_sub_matrix">
+<span id="cgn-translator-get-sub-matrix-module"></span><h2>cgn.translator.get_sub_matrix module<a class="headerlink" href="#module-cgn.translator.get_sub_matrix" title="Permalink to this headline"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="cgn.translator.get_sub_matrix.get_sub_matrix">
+<span class="sig-name descname"><span class="pre">get_sub_matrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mat</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">constraint</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">i</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cgn.translator.get_sub_matrix.get_sub_matrix" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the sub-matrix of the constraint that corresponds to the i-th parameter in the constraint.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>mat</strong> (<em>numpy.ndarray</em>) – </p></li>
+<li><p><strong>constraint</strong> (<a class="reference internal" href="cgn.problem.html#cgn.problem.constraint.Constraint" title="cgn.problem.constraint.Constraint"><em>cgn.problem.constraint.Constraint</em></a>) – </p></li>
+<li><p><strong>i</strong> (<em>int</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>numpy.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-cgn.translator.multiparameter">
+<span id="cgn-translator-multiparameter-module"></span><h2>cgn.translator.multiparameter module<a class="headerlink" href="#module-cgn.translator.multiparameter" title="Permalink to this headline"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="cgn.translator.multiparameter.MultiParameter">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">MultiParameter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parameters</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cgn.translator.multiparameter.MultiParameter" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">collections.UserList</span></code></p>
+<p>Manages a list of parameters. Individual parameters can be accessed via []</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>parameters</strong> (<em>Tuple</em><em>[</em><a class="reference internal" href="cgn.problem.html#cgn.problem.parameter.Parameter" title="cgn.problem.parameter.Parameter"><em>cgn.problem.parameter.Parameter</em></a><em>]</em>) – </p>
+</dd>
+</dl>
+<dl class="py property">
+<dt class="sig sig-object py" id="cgn.translator.multiparameter.MultiParameter.dim">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">dim</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#cgn.translator.multiparameter.MultiParameter.dim" title="Permalink to this definition"></a></dt>
+<dd><p>The overall dimension.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cgn.translator.multiparameter.MultiParameter.get_indices">
+<span class="sig-name descname"><span class="pre">get_indices</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parameters</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cgn.translator.multiparameter.MultiParameter.get_indices" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the indices of the given list of parameters in the multi parameter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>parameters</strong> (<em>List</em><em>[</em><a class="reference internal" href="cgn.problem.html#cgn.problem.parameter.Parameter" title="cgn.problem.parameter.Parameter"><em>cgn.problem.parameter.Parameter</em></a><em>]</em>) – </p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><em>List</em>[int]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cgn.translator.multiparameter.MultiParameter.lb">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">lb</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">numpy.ndarray</span></em><a class="headerlink" href="#cgn.translator.multiparameter.MultiParameter.lb" title="Permalink to this definition"></a></dt>
+<dd><p>The combined lower bound.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cgn.translator.multiparameter.MultiParameter.mean">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">mean</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">numpy.ndarray</span></em><a class="headerlink" href="#cgn.translator.multiparameter.MultiParameter.mean" title="Permalink to this definition"></a></dt>
+<dd><p>The combined mean.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cgn.translator.multiparameter.MultiParameter.nparams">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">nparams</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#cgn.translator.multiparameter.MultiParameter.nparams" title="Permalink to this definition"></a></dt>
+<dd><p>The number of components of the multi-parameter.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cgn.translator.multiparameter.MultiParameter.position">
+<span class="sig-name descname"><span class="pre">position</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cgn.translator.multiparameter.MultiParameter.position" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the starting index of the i-th component in the concatenated parameter vector.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cgn.translator.multiparameter.MultiParameter.position_by_name">
+<span class="sig-name descname"><span class="pre">position_by_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cgn.translator.multiparameter.MultiParameter.position_by_name" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the starting index of the parameter with name <code class="docutils literal notranslate"><span class="pre">name</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>name</strong> (<em>str</em>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cgn.translator.multiparameter.MultiParameter.rdim">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">rdim</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#cgn.translator.multiparameter.MultiParameter.rdim" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cgn.translator.multiparameter.MultiParameter.regop">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">regop</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="cgn.regop.html#cgn.regop.regularization_operator.RegularizationOperator" title="cgn.regop.regularization_operator.RegularizationOperator"><span class="pre">cgn.regop.regularization_operator.RegularizationOperator</span></a></em><a class="headerlink" href="#cgn.translator.multiparameter.MultiParameter.regop" title="Permalink to this definition"></a></dt>
+<dd><p>The combined regularization operator.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cgn.translator.multiparameter.MultiParameter.split">
+<span class="sig-name descname"><span class="pre">split</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cgn.translator.multiparameter.MultiParameter.split" title="Permalink to this definition"></a></dt>
+<dd><p>Given a vector of size <code class="docutils literal notranslate"><span class="pre">self.dim</span></code>, return a tuple of length <code class="docutils literal notranslate"><span class="pre">self.nparams</span></code> of vectors.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>x</strong> (<em>numpy.ndarray</em>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><em>List</em>[numpy.ndarray]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cgn.translator.multiparameter.MultiParameter.ub">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ub</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">numpy.ndarray</span></em><a class="headerlink" href="#cgn.translator.multiparameter.MultiParameter.ub" title="Permalink to this definition"></a></dt>
+<dd><p>The combined upper bound.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-cgn.translator.translated_solution">
+<span id="cgn-translator-translated-solution-module"></span><h2>cgn.translator.translated_solution module<a class="headerlink" href="#module-cgn.translator.translated_solution" title="Permalink to this headline"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="cgn.translator.translated_solution.TranslatedSolution">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">TranslatedSolution</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parameters</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">minimizers</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">precision</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cost</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">success</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">niter</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cgn.translator.translated_solution.TranslatedSolution" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="cgn.problem.html#cgn.problem.problem_solution.ProblemSolution" title="cgn.problem.problem_solution.ProblemSolution"><code class="xref py py-class docutils literal notranslate"><span class="pre">cgn.problem.problem_solution.ProblemSolution</span></code></a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>parameters</strong> (<em>Sequence</em><em>[</em><a class="reference internal" href="cgn.problem.html#cgn.problem.parameter.Parameter" title="cgn.problem.parameter.Parameter"><em>cgn.problem.parameter.Parameter</em></a><em>]</em>) – </p></li>
+<li><p><strong>minimizers</strong> (<em>Sequence</em><em>[</em><em>numpy.ndarray</em><em>]</em>) – </p></li>
+<li><p><strong>precision</strong> (<em>numpy.ndarray</em>) – </p></li>
+<li><p><strong>cost</strong> (<em>float</em>) – </p></li>
+<li><p><strong>success</strong> (<em>bool</em>) – </p></li>
+<li><p><strong>niter</strong> (<em>int</em>) – </p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="cgn.translator.translated_solution.TranslatedSolution.minimizer">
+<span class="sig-name descname"><span class="pre">minimizer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pname</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cgn.translator.translated_solution.TranslatedSolution.minimizer" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p>Exception, if no parameter with name <code class="docutils literal notranslate"><span class="pre">pname</span></code> is found.</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><p><strong>pname</strong> (<em>str</em>) – </p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>numpy.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-cgn.translator.translator">
+<span id="cgn-translator-translator-module"></span><h2>cgn.translator.translator module<a class="headerlink" href="#module-cgn.translator.translator" title="Permalink to this headline"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="cgn.translator.translator.Translator">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Translator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">problem</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cgn.translator.translator.Translator" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Translates a cgn.Problem object to a CNLS object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>problem</strong> (<a class="reference internal" href="cgn.problem.html#cgn.problem.problem.Problem" title="cgn.problem.problem.Problem"><em>cgn.problem.problem.Problem</em></a>) – </p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="cgn.translator.translator.Translator.combine_x">
+<span class="sig-name descname"><span class="pre">combine_x</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x_list</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cgn.translator.translator.Translator.combine_x" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cgn.translator.translator.Translator.translate">
+<span class="sig-name descname"><span class="pre">translate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cgn.translator.translator.Translator.translate" title="Permalink to this definition"></a></dt>
+<dd><p>Returns a CNLS equivalent to the :py:class``Problem`` object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="cgn.cnls_solve.html#cgn.cnls_solve.cnls.CNLS" title="cgn.cnls_solve.cnls.CNLS">cgn.cnls_solve.cnls.CNLS</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cgn.translator.translator.Translator.translate_solution">
+<span class="sig-name descname"><span class="pre">translate_solution</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cnls_solution</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cgn.translator.translator.Translator.translate_solution" title="Permalink to this definition"></a></dt>
+<dd><p>Translates the solution of the CNLS problem to the solution of the original, multi-parameter problem</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>cnls_solution</strong> (<a class="reference internal" href="cgn.cnls_solve.html#cgn.cnls_solve.cnls_solution.CNLSSolution" title="cgn.cnls_solve.cnls_solution.CNLSSolution"><em>cgn.cnls_solve.cnls_solution.CNLSSolution</em></a>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#cgn.translator.translated_solution.TranslatedSolution" title="cgn.translator.translated_solution.TranslatedSolution">cgn.translator.translated_solution.TranslatedSolution</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-cgn.translator">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-cgn.translator" title="Permalink to this headline"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="cgn.regop.operators.html" class="btn btn-neutral float-left" title="cgn.regop.operators package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, Fabian Parzer.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
