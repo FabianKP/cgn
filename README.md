@@ -8,6 +8,8 @@ problems of the form
 
 ![image](ncnlsp.png)
 
+Such problems arise frequently in maximum likelihood estimation or in Bayesian maximum-a-posteriori estimation with 
+Gaussian priors.
 
 Installation
 ============
