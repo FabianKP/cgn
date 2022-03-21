@@ -12,15 +12,19 @@ folder.
 Defining parametes
 ------------------
 
-The free parameter :math:`\mathbf x` has to be declared as a :py:class:`cgn.Parameter` object.
+The free parameter :math:`\mathbf x` has to be modelled as a :py:class:`cgn.Parameter` object. During initialization the
+user has to provide a name for the parameter and a first guess. Note that this guess has to be a feasible point, i.e.
+it has to satisfy all the constraints of your optimization problem (see below).
 
-For example, the following code declares a parameter ``x`` of dimension 12 with name "x".
+For example, the following code declares a parameter ``x`` of dimension 12 with name "x" and starting guess equal to
+the zero vector.
 
 .. code-block:: python
 
     import cgn
+    import numpy as np
 
-    x = cgn.Parameter(dim=12, name="x")
+    x = cgn.Parameter(name="x", start=np.zeros(12))
 
 In a lot of applications, your free parameter :math:`\mathbf x` will actually be a concatenation
 of various one- or multi-dimensional parameters that deal with different aspects of your model.
@@ -68,7 +72,7 @@ Defining nonlinear constraints
 Nonlinear constraints of the form :math:`\mathbf G(\mathbf x) = \mathbf 0` or
 :math:`\mathbf H(\mathbf x) \geq \mathbf 0` have to be defined as :py:class:`cgn.NonlinearConstraint` objects.
 
-.. autoclass:: cgn.NonlinearConstraint
+.. automodule:: cgn.NonlinearConstraint
     :noindex:
     :members:
 
@@ -85,7 +89,7 @@ As an example, the following code defines a 3-dimensional parameter :math:`\math
 
     import numpy as np
 
-    x = cgn.Parameter(dim=3, name="x")
+    x = cgn.Parameter(name="x", start=np.zeros(3))
     x.lb = np.array([0., 0., -np.inf])
     x.ub = np.array([1., np.inf, np.inf])
 
@@ -102,7 +106,11 @@ When you set up a parameter :math:`\mathbf x \in \mathbb R^n` in ``cgn``, it aut
 
 where :math:`\mathbf I_n \in \mathbb R^{n \times n}` denotes the identity matrix. Because :math:`\beta = 0`,
 this regularization term has no effect. You can change the regularization term by adapting the corresponding
-attributes of the :py:class:`cgn.Parameter` object. For example, the following code sets up an `n`-dimensional
+attributes of the :py:class:`cgn.Parameter` object. Note that this can even be done after the `cgn.Problem`-object has
+been initialized. For example, you can create a problem, solve it, then adapt some parameters, and solve it again,
+without having to create two different `cgn.Problem` objects.
+
+The following code sets up an `n`-dimensional
 parameter with regularization term :math:`0.3\cdot ||\mathbf R(\mathbf x - \mathbf 1_n)||`, where
 :math:`\mathbf R = \mathrm{diag}(1, \frac{1}{2}, \ldots, \frac{1}{n})`:
 
@@ -110,14 +118,18 @@ parameter with regularization term :math:`0.3\cdot ||\mathbf R(\mathbf x - \math
 
     import numpy as np
 
-    x = cgn.Parameter(dim=n, name="x")
+    x = cgn.Parameter(name="x", start=np.zeros(n))
     x.beta = 0.3
     x.mean = np.ones(n)
     R = np.diag(np.divide(np.ones(n), np.arange(1, n+1)))
     x.regop = R
 
 The regularization operator :code:`x.regop` can be either a 2-dimensional numpy array, or a
-:py:class:`scipy.sparse.linalg.LinearOperator`.
+:py:class:`cgn.RegularizationOperator`.
+
+.. automodule:: cgn.RegularizationOperator
+    :noindex:
+    :members:
 
 Setting up the solver
 ---------------------
@@ -158,7 +170,7 @@ Afterwards, you can call the solver using the code
 
 .. code-block:: python
 
-    solution = solver.solve(problem=my_problem, starting_values=my_starting_values)
+    solution = solver.solve(problem=my_problem)
 
 The output `solution` is an object of type :py:class:`cgn.ProblemSolution`.
 
@@ -184,12 +196,7 @@ parameters.
     import cgn
 
 
-    ######## ADAPT THESE:
-
-
-    # Set the dimensions of the two parameters x_1 and x_2:
-    n_1 = ...
-    n_2 = ...
+    ######## PROBLEM DEFINITION
 
     # Implement the function F.
     def F(x_1, x_2):
@@ -249,8 +256,8 @@ parameters.
 
 
     # Initialize cgn.Parameter objects
-    x_1 = cgn.Parameter(dim=n_1, name="x1")
-    x_2 = cgn.Parameter(dim=n_2, name="x2")
+    x_1 = cgn.Parameter(name="x1", start=x_1_guess)
+    x_2 = cgn.Parameter(name="x2", start=x_2_guess)
     # Set the regularization terms.
     x_1.beta = beta_1
     x_1.regop = R_1
