@@ -3,7 +3,7 @@ CGN
 
 **CGN** stands for "Constrained Gauss-Newton method".
 This package contains a **Python** implementation of the Gauss-Newton method for nonlinear least-squares
-problems with linear constraints. That is, CGN provides a method for solving constrained optimization
+problems with nonlinear constraints. That is, CGN provides a method for solving constrained optimization
 problems of the form
 
 ![image](ncnlsp.png)
